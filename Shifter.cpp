@@ -11,10 +11,10 @@ class Shifter: public Device
 {
 public:
     //Constructer
-    Shifter(Port data, Port position_to_shift, int32_t control)
+    Shifter(Latch data, Latch position_to_shift, int32_t control)
     {
-    in[0] = data;
-    in[1]=  position_to_shift;
+    in[0].connection = data;
+    in[1].connection = position_to_shift;
     control_signal = control;
     cout << "Shifter is being created" << endl;
     } 
@@ -49,12 +49,12 @@ private:
 int main()
 {
     //Initialize Ports
-    Port port1, port2;
-    port1.connection.after = 1024;
-    port2.connection.after = 8;
+    Latch latch1,latch2;
+    latch1.after = 1024;
+    latch2.after = 8;
     //Create shifter
-    Shifter shifter (port1, port2 , 1);
+    Shifter shifter (latch1, latch2 , 1);
     shifter.do_function();
     //Receive the clk and see the result
-    cout << shifter.get_latch_result()<<endl;
+    cout << shifter.get_latch_result() <<endl;
 }
