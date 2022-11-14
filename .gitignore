@@ -1,3 +1,4 @@
-.gitattributes
-.json
-.DS_Store
+*.gitattributes
+*.json
+*.DS_Store
+*.vscode
