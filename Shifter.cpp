@@ -10,6 +10,9 @@ using namespace std;
 class Shifter: public Device
 {
 public:
+    const static int cycles = 1;
+    const static int area = 200;
+    const static double power = 0.5;
     //Constructer
     Shifter(Latch data, Latch position_to_shift, int32_t control)
     {
@@ -53,7 +56,7 @@ int main()
     latch1.after = 1024;
     latch2.after = 8;
     //Create shifter
-    Shifter shifter (latch1, latch2 , 1);
+    Shifter shifter (latch1, latch2 , 0);
     shifter.do_function();
     //Receive the clk and see the result
     cout << shifter.get_latch_result() <<endl;
