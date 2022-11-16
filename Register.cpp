@@ -21,7 +21,7 @@ public:
         cout << "Register  is being created" << endl;
     } 
 
-    receive_clock() { out.before = result;}
+    void receive_clock() { out.before = result;}
 
     //Inherit
     void do_function()

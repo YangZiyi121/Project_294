@@ -23,8 +23,11 @@ public:
         control_signal = control;
         cout << "Mux is being created" << endl;
     } 
-
-    receive_clock() { out.before = result;}
+    //Inherit
+    void receive_clock() 
+    { 
+        out.before = result;
+    }
 
     //Inherit
     void do_function()
@@ -73,8 +76,9 @@ int main()
     latch[2].after = 512;
     latch[3].after = 2;
     //Create shifter
-    Multiplexer multiplexer (latch, 0x11);
+    Multiplexer multiplexer (latch, 0x10);
     multiplexer.do_function();
     //Receive the clk and see the result
+    multiplexer.receive_clock();
     cout << multiplexer.get_latch_result() <<endl;
 }

@@ -17,12 +17,15 @@ public:
     //Constructer
     Comparator(Latch data1, Latch data2)
     {
-    in[0].connection = data1;
-    in[1].connection = data2;
-    cout << "Comparator is being created" << endl;
+        in[0].connection = data1;
+        in[1].connection = data2;
+        cout << "Comparator is being created" << endl;
     } 
-
-    receive_clock() { out.before = result;}
+    //Inherit
+    void receive_clock()
+    { 
+        out.before = result;
+    }
 
     //Inherit
     void do_function()
@@ -61,6 +64,7 @@ int main()
     Comparator comparator (latch1, latch2);
     comparator.do_function();
     //Receive the clk and see the result
+    comparator.receive_clock();
     cout << comparator.get_latch_result() <<endl;
-    cout << comparator.power << endl;
+    //cout << comparator.power << endl;
 }

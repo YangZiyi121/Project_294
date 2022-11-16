@@ -21,9 +21,11 @@ public:
     control_signal = control;
     cout << "Shifter is being created" << endl;
     } 
-
-    receive_clock() { out.before = result;}
-
+    //Inherit
+    void receive_clock() 
+    { 
+        out.before = result;
+    }
     //Inherit
     void do_function()
     {
@@ -63,5 +65,6 @@ int main()
     Shifter shifter (latch1, latch2 , 0);
     shifter.do_function();
     //Receive the clk and see the result
+    shifter.receive_clock();
     cout << shifter.get_latch_result() <<endl;
 }

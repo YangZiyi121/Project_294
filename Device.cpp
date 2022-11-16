@@ -1,2 +1,3 @@
 #include "Device.h" // header in local directory
-virtual void Device::do_function(){};
+void Device::do_function(){};
+void Device::receive_clock(){};
