@@ -23,11 +23,12 @@ class Logic : Device
     static int area = 600;
     static double power = 0.75;
 
-    Logic(Latch input1, Latch input2, Latch controlN)
+    Logic(Latch input1, Latch input2, Latch controlN, Latch output)
     {
-        in[0] = input1;
-        in[1] = input2;
-        control = controlN;
+        in[0].connection = input1;
+        in[1].connection = input2;
+        control.connection = controlN;
+        out = output;
     }
 
     receive_clock() { out.before = result;}
