@@ -59,7 +59,6 @@ private:
     Port in[4];
     Latch out; 
     int32_t control_signal;
-
     long long result;
 };
 
