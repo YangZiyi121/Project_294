@@ -5,21 +5,21 @@
 
 using namespace std;
 
-/*Function of Comparator*/
-/*Compares the signed value present at the first input port with the value present at the second port. Produces 0 if they are equal, 1 otherwise.*/
-class Comparator: public Device
+/*Function of Multiplier*/
+/*Multiplies the signed values present at the input ports and produces a signed value.*/
+class Multiplier: public Device
 {
 public:
-    static const int cycles = 1;
-    static const int area = 400;
-    static const double power = 0.5;
+    static const int cycles = 3;
+    static const int area = 2000;
+    static const double power = 1.5;
 
     //Constructer
-    Comparator(Latch data1, Latch data2)
+    Multiplier(Latch data1, Latch data2)
     {
-    in[0].connection = data1;
-    in[1].connection = data2;
-    cout << "Comparator is being created" << endl;
+        in[0].connection = data1;
+        in[1].connection = data2;
+        cout << "Multiplier is being created" << endl;
     } 
 
     receive_clock() { out.before = result;}
@@ -27,14 +27,9 @@ public:
     //Inherit
     void do_function()
     {
-        if (in[0].connection.after == in[1].connection.after)
-        {
-            result = 0;
-        }
-        else
-        {
-            result = 1;
-        }
+
+        result = in[0].connection.after * in[1].connection.after;
+
     }
 
     //Result getter
@@ -55,8 +50,8 @@ int main()
 {
     //Initialize Ports
     Latch latch1,latch2;
-    latch1.after = 0;
-    latch2.after = 0;
+    latch1.after = 5;
+    latch2.after = 12;
     //Create shifter
     Comparator comparator (latch1, latch2);
     comparator.do_function();

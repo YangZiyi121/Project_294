@@ -22,16 +22,18 @@ public:
     cout << "Shifter is being created" << endl;
     } 
 
+    receive_clock() { out.before = result;}
+
     //Inherit
     void do_function()
     {
         if (control_signal == 0)  //0x00 for right
         {
-            out.before = in[0].connection.after >> in[1].connection.after;
+            result = in[0].connection.after >> in[1].connection.after;
         }
         else if (control_signal == 1)//0x01 for left
         {
-            out.before = in[0].connection.after << in[1].connection.after;
+            result = in[0].connection.after << in[1].connection.after;
         }
     }
 
@@ -45,6 +47,8 @@ private:
     Port in[2];
     Latch out; 
     int32_t control_signal;
+
+    long long result;
 };
 
 

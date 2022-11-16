@@ -1,6 +1,1 @@
-#include "Latch.h"
-class Port
-{
-    public:
-        Latch connection;
-};
+//Placeholder for sophistication

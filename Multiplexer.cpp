@@ -24,22 +24,24 @@ public:
         cout << "Mux is being created" << endl;
     } 
 
+    receive_clock() { out.before = result;}
+
     //Inherit
     void do_function()
     {
         switch (control_signal)
         {
         case 0x00:
-            out.before = in[0].connection.after;
+            result = in[0].connection.after;
             break;
         case 0x01:
-            out.before = in[1].connection.after;
+            result = in[1].connection.after;
             break;
         case 0x10:
-            out.before = in[2].connection.after;
+            result = in[2].connection.after;
             break;
         case 0x11:
-            out.before = in[3].connection.after;
+            result = in[3].connection.after;
             break;
         default:
             cout << "No control signal for MUX" << endl;
@@ -57,6 +59,8 @@ private:
     Port in[4];
     Latch out; 
     int32_t control_signal;
+
+    long long result;
 };
 
 
