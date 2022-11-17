@@ -6,7 +6,7 @@
 class Port
 {
     public:
-        Latch connection;
+        Latch *connection;
 };
 
 #endif
