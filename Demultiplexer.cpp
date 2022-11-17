@@ -20,12 +20,14 @@ class Demultiplexer : Device
         out[3] = &output4;
     }
 
-    void receive_clock() { out[control.connection->after]->before = result;}
-
-    void receive_clock_latches() 
-    {
-        
+    void receive_clock() 
+    { 
+        out[(control.connection->after+0)%4]->before = result;
+        out[(control.connection->after+1)%4]->before = 0;
+        out[(control.connection->after+2)%4]->before = 0;
+        out[(control.connection->after+3)%4]->before = 0;
     }
+
 
     void do_function()
     {
