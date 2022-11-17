@@ -10,7 +10,7 @@ class Demultiplexer : Device
     static const int area = 500;
     static const double power = 0.25;
 
-    Demultiplexer(Latch& input1, Latch& controlN, Latch& output1, , Latch& output2, Latch& output3, Latch& output4)
+    Demultiplexer(Latch& input1, Latch& controlN, Latch& output1 , Latch& output2, Latch& output3, Latch& output4)
     {
         in[0].connection = &input1;
         control.connection = &controlN;
