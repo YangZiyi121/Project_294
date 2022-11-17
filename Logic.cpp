@@ -10,7 +10,7 @@ class Logic : Device
     static const int area = 600;
     static const double power = 0.75;
 
-    Logic(Latch& input1, Latch& input2, Latch& controlN, Latch& output)
+    Logic(Latch &input1, Latch &input2, Latch &controlN, Latch &output)
     {
         in[0].connection = &input1;
         in[1].connection = &input2;

@@ -38,4 +38,5 @@ int main()
     //result should now be output.before 
     std::cout << output.before <<std::endl;
     std::cout << std::bitset<10>(output.before) <<std::endl;
+    
 }

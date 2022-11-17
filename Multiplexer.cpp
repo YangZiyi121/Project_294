@@ -1,4 +1,5 @@
 #include <iostream>
+#include <typeinfo>
 #include "Latch.h"
 #include "Device.h"
 #include "Port.h"
@@ -14,71 +15,93 @@ public:
     const static int area = 500;
     const static double power = 0.25;
     //Constructer
-    Multiplexer(Latch data[4], int32_t control)
+    Multiplexer(Latch &data1, Latch &data2, Latch &data3, Latch &data4, Latch &control_input, Latch &output)
     {
-        for (int i = 0; i < 4; i++){
-            in[i].connection = data[i];
-        }
-
-        control_signal = control;
-        cout << "Mux is being created" << endl;
+        Multiplexer::in0.connection = &data1;
+        Multiplexer::in1.connection = &data2;
+        Multiplexer::in2.connection = &data3;
+        Multiplexer::in3.connection = &data4;
+        Multiplexer::control.connection = &control_input;
+        Multiplexer::out = &output;
+        std::cout << "Mux is being created" << std::endl;
     } 
-    //Inherit
+    //Inherit from Device
     void receive_clock() 
     { 
-        out.before = result;
+        Multiplexer::out->before = result;
     }
 
     //Inherit
     void do_function()
     {
-        switch (control_signal)
+        switch (Multiplexer::control.connection->after)
         {
         case 0x00:
-            result = in[0].connection.after;
+            result = Multiplexer::in0.connection->after;
             break;
         case 0x01:
-            result = in[1].connection.after;
+            result = Multiplexer::in1.connection->after;
             break;
         case 0x10:
-            result = in[2].connection.after;
+            result = Multiplexer::in2.connection->after;
             break;
         case 0x11:
-            result = in[3].connection.after;
+            result = Multiplexer::in3.connection->after;
             break;
         default:
-            cout << "No control signal for MUX" << endl;
+            std::cout << "No control signal for MUX" << std::endl;
             break;
         }
     }
 
-    //Result getter
-    long long get_latch_result()
-    {
-        return out.before;
-    }
-
 private:
-    Port in[4];
-    Latch out; 
-    int32_t control_signal;
+    Port in0, in1, in2, in3;
+    Latch *out; 
+    Port control;
     long long result;
 };
 
 
+// steps to blackbox test a device:
+//1- initialize all input and output latches for your device and set the before values for the input latches
+//2- create the device using the created latches
+//3- send a clock signal to all latches
+//4- call do_function of device
+//5- call receive_clock of device
+//6- result should now be in before of output latch
+
 /*Testing*/
 int main()
 {
-    //Initialize Ports
-    Latch latch[4];
-    latch[0].after = 1024;
-    latch[1].after = 256;
-    latch[2].after = 512;
-    latch[3].after = 2;
-    //Create shifter
-    Multiplexer multiplexer (latch, 0x10);
-    multiplexer.do_function();
-    //Receive the clk and see the result
-    multiplexer.receive_clock();
-    cout << multiplexer.get_latch_result() <<endl;
+    Latch input[4];
+    Latch control, output;
+
+    //Initialize latches
+    input[0].before = 0b1010100011;
+    input[1].before = 0b1110000000;
+    input[2].before = 0b0000111101; //use this format if you want binary representation
+    input[3].before = 0b0000000010;
+    control.before = 0b00;
+
+    //std::cout<< typeid(input[1]).name() <<std::endl;
+    //std::cout<< typeid(control).name() <<std::endl;
+
+    //Create Device
+    Multiplexer device (input[0], input[1], input[2], input[3], control, output);
+    
+    //send clock to latches
+    for (int i = 0; i < 4; i++){
+        input[i].receive_clock();
+    }
+    control.receive_clock();
+    output.receive_clock();
+
+    //propogate data through device
+    device.do_function();
+    device.receive_clock();
+
+    //result should now be output.before 
+    std::cout << output.before <<std::endl;
+    std::cout << std::bitset<10>(output.before) <<std::endl;
+    
 }
