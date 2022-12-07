@@ -4,7 +4,6 @@
 #include "Device.h"
 #include "Port.h"
 
-using namespace std;
 
 /*Function of Mux*/
 /*Routes the input on the input port specified by the control signal to the output latch.*/
@@ -71,37 +70,37 @@ private:
 //6- result should now be in before of output latch
 
 /*Testing*/
-int main()
-{
-    Latch input[4];
-    Latch control, output;
+// int main()
+// {
+//     Latch input[4];
+//     Latch control, output;
 
-    //Initialize latches
-    input[0].before = 0b1010100011;
-    input[1].before = 0b1110000000;
-    input[2].before = 0b0000111101; //use this format if you want binary representation
-    input[3].before = 0b0000000010;
-    control.before = 0b00;
+//     //Initialize latches
+//     input[0].before = 0b1010100011;
+//     input[1].before = 0b1110000000;
+//     input[2].before = 0b0000111101; //use this format if you want binary representation
+//     input[3].before = 0b0000000010;
+//     control.before = 0b00;
 
-    //std::cout<< typeid(input[1]).name() <<std::endl;
-    //std::cout<< typeid(control).name() <<std::endl;
+//     //std::cout<< typeid(input[1]).name() <<std::endl;
+//     //std::cout<< typeid(control).name() <<std::endl;
 
-    //Create Device
-    Multiplexer device (input[0], input[1], input[2], input[3], control, output);
+//     //Create Device
+//     Multiplexer device (input[0], input[1], input[2], input[3], control, output);
     
-    //send clock to latches
-    for (int i = 0; i < 4; i++){
-        input[i].receive_clock();
-    }
-    control.receive_clock();
-    output.receive_clock();
+//     //send clock to latches
+//     for (int i = 0; i < 4; i++){
+//         input[i].receive_clock();
+//     }
+//     control.receive_clock();
+//     output.receive_clock();
 
-    //propogate data through device
-    device.do_function();
-    device.receive_clock();
+//     //propogate data through device
+//     device.do_function();
+//     device.receive_clock();
 
-    //result should now be output.before 
-    std::cout << output.before <<std::endl;
-    std::cout << std::bitset<10>(output.before) <<std::endl;
+//     //result should now be output.before 
+//     std::cout << output.before <<std::endl;
+//     std::cout << std::bitset<10>(output.before) <<std::endl;
     
-}
+// }

@@ -3,7 +3,7 @@
 #include "Device.h"
 #include "Port.h"
 
-class Adder : Device {
+class Adder : public Device {
 public:
 	static const int cycles = 1;
 	static const int area = 400;
@@ -35,28 +35,28 @@ private:
 	long long result;
 };
 
-/*Testing*/
-int main()
-{
-	//Initialize Ports
-	Latch latch1, latch2, output;
-	latch1.before = 1050;
-	latch2.before = 1000;
+// /*Testing*/
+// int main()
+// {
+// 	//Initialize Ports
+// 	Latch latch1, latch2, output;
+// 	latch1.before = 1050;
+// 	latch2.before = 1000;
 
-	//Create device
-	Adder Adder(latch1, latch2, output);
+// 	//Create device
+// 	Adder Adder(latch1, latch2, output);
 
-	//Send clk to latches
-	latch1.receive_clock();
-	latch2.receive_clock();
-	output.receive_clock();
+// 	//Send clk to latches
+// 	latch1.receive_clock();
+// 	latch2.receive_clock();
+// 	output.receive_clock();
 
-	//propagate data through device
-	Adder.do_function();
-	Adder.receive_clock();
+// 	//propagate data through device
+// 	Adder.do_function();
+// 	Adder.receive_clock();
 
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
 
-}
+// }
 

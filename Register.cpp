@@ -40,24 +40,24 @@ private:
     long long result;
 };
 
-/*Testing*/
-int main()
-{
-    //Initialize Ports
-    Latch input, output;
-    input.before = 100;
+// /*Testing*/
+// int main()
+// {
+//     //Initialize Ports
+//     Latch input, output;
+//     input.before = 100;
 
-    //Create Device
-    Register reg(input, output);
+//     //Create Device
+//     Register reg(input, output);
 
-    //send clock to latches
-    input.receive_clock();
-    output.receive_clock();
+//     //send clock to latches
+//     input.receive_clock();
+//     output.receive_clock();
 
-    //propagate data 
-    reg.do_function();
-    reg.receive_clock();
+//     //propagate data 
+//     reg.do_function();
+//     reg.receive_clock();
 
-    //result
-    std::cout << output.before << std::endl;
-}
+//     //result
+//     std::cout << output.before << std::endl;
+// }

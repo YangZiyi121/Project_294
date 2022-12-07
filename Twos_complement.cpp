@@ -3,7 +3,7 @@
 #include "Device.h"
 #include "Port.h"
 
-class Twos_complement : Device
+class Twos_complement : public Device
 {
     public:
     static const int cycles = 1;

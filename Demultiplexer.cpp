@@ -3,7 +3,7 @@
 #include "Device.h"
 #include "Port.h"
 
-class Demultiplexer : Device
+class Demultiplexer : public Device
 {
     public:
     static const int cycles = 1;

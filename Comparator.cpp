@@ -53,28 +53,28 @@ private:
 //5- call receive_clock of device
 //6- result should now be in before of output latch
 
-/*Testing*/
-int main()
-{
-    Latch input1, input2, output;
+// /*Testing*/
+// int main()
+// {
+//     Latch input1, input2, output;
 
-    //Initialize latches
-    input1.before = 0b0000111101; //use this format if you want binary representation
-    input2.before = 0b0000111101;
+//     //Initialize latches
+//     input1.before = 0b0000111101; //use this format if you want binary representation
+//     input2.before = 0b0000111101;
 
-    //Create Device
-    Comparator device (input1, input2, output);
+//     //Create Device
+//     Comparator device (input1, input2, output);
     
-    //send clock to latches
-    input1.receive_clock();input2.receive_clock();output.receive_clock();
-    //std::cout << input1.after <<std::endl;
+//     //send clock to latches
+//     input1.receive_clock();input2.receive_clock();output.receive_clock();
+//     //std::cout << input1.after <<std::endl;
 
-    //propogate data through device
-    device.do_function();
-    device.receive_clock();
+//     //propogate data through device
+//     device.do_function();
+//     device.receive_clock();
 
-    //result should now be output.before 
-    std::cout << output.before <<std::endl;
-    std::cout << std::bitset<10>(output.before) <<std::endl;
+//     //result should now be output.before 
+//     std::cout << output.before <<std::endl;
+//     std::cout << std::bitset<10>(output.before) <<std::endl;
     
-}
+// }

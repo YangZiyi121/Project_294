@@ -45,17 +45,17 @@ private:
     long long result;
 };
 
-/*Testing*/
-int main()
-{
-    //Initialize Ports
-    Latch latch1,latch2;
-    latch1.after = 5;
-    latch2.after = 12;
-    //Create shifter
-    Comparator comparator (latch1, latch2);
-    comparator.do_function();
-    //Receive the clk and see the result
-    cout << comparator.get_latch_result() <<endl;
-    cout << comparator.power << endl;
-}
+// /*Testing*/
+// int main()
+// {
+//     //Initialize Ports
+//     Latch latch1,latch2;
+//     latch1.after = 5;
+//     latch2.after = 12;
+//     //Create shifter
+//     Comparator comparator (latch1, latch2);
+//     comparator.do_function();
+//     //Receive the clk and see the result
+//     cout << comparator.get_latch_result() <<endl;
+//     cout << comparator.power << endl;
+// }

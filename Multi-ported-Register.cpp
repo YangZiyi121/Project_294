@@ -4,27 +4,6 @@
 #include "Port.h"
 using namespace std;
 
-class Latch
-{
-public:
-    long long before;
-    long long after;
-    long long receive_clock();
-};
-
-class Port
-{
-public:
-    Latch* connection;
-};
-
-class Device {
-
-public:
-    virtual void do_function() {};
-    virtual void receive_clock() {};
-};
-
 /*Function of Register File*/
 /*Stores an array of 32 registers of 64-bit each. Results varies according to the control signals.*/
 class MultiportRegs: public Device
@@ -124,9 +103,9 @@ private:
     //TODO: extremely meticulous level: a register is a group of parallelly signaled (by the same clock) latches. A register file is a group of serialized registers.
 };
 
-/*Testing*/
-int main()
-{
-    //TODO:
-    //make a test for each case
-}
+// /*Testing*/
+// int main()
+// {
+//     //TODO:
+//     //make a test for each case
+// }

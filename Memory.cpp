@@ -4,7 +4,7 @@
 #include "Device.h"
 #include <map>
 
-class Memory : Device{
+class Memory : public Device{
     public:
         std::map <int64_t, int64_t> storage; // <address, value >
         //Constructer
@@ -46,45 +46,45 @@ class Memory : Device{
 };
 
 
-int main(){
-    Latch address, write_value, read_value, r_w;
-    Memory memory(address, write_value, read_value, r_w);
+// int main(){
+//     Latch address, write_value, read_value, r_w;
+//     Memory memory(address, write_value, read_value, r_w);
     
-    /*Write testing*/
-    address.before  = 0x1000;  //64-bit
-    r_w.before = 0x1; //write
-    write_value.before = 0x5000;
-    //send clock to latches
-    address.receive_clock(); r_w.receive_clock(); write_value.receive_clock(); 
-    //propogate data through device
-    memory.do_function();
-    memory.receive_clock();
+//     /*Write testing*/
+//     address.before  = 0x1000;  //64-bit
+//     r_w.before = 0x1; //write
+//     write_value.before = 0x5000;
+//     //send clock to latches
+//     address.receive_clock(); r_w.receive_clock(); write_value.receive_clock(); 
+//     //propogate data through device
+//     memory.do_function();
+//     memory.receive_clock();
 
 
-    /*Read testing*/
+//     /*Read testing*/
 
-    /* The address has been stored already*/
-    //initialization
-    address.before  = 0x1000;  //64-bit
-    r_w.before = 0x0; //read
-    //send clock to latches
-    address.receive_clock(); r_w.receive_clock(); 
-    //propagate data through device
-    memory.do_function();
-    memory.receive_clock();
-    //result
-    std::cout << "Read: The value "<< std::hex << read_value.before << " is on 0x "<< std::hex << address.after <<std::endl;
+//     /* The address has been stored already*/
+//     //initialization
+//     address.before  = 0x1000;  //64-bit
+//     r_w.before = 0x0; //read
+//     //send clock to latches
+//     address.receive_clock(); r_w.receive_clock(); 
+//     //propagate data through device
+//     memory.do_function();
+//     memory.receive_clock();
+//     //result
+//     std::cout << "Read: The value "<< std::hex << read_value.before << " is on 0x "<< std::hex << address.after <<std::endl;
 
 
-    /*The address has not stored yet*/
-    address.before  = 0x12345;  //64-bit
-    r_w.before = 0x0; //read
-    //send clock to latches
-    address.receive_clock(); r_w.receive_clock(); 
-    //propagate data through device
-    memory.do_function();
-    memory.receive_clock();
-    //result
-    //std::cout << "Read: The value "<< std::hex << read_value.before << " is on 0x"<< std::hex << address.after <<std::endl;
+//     /*The address has not stored yet*/
+//     address.before  = 0x12345;  //64-bit
+//     r_w.before = 0x0; //read
+//     //send clock to latches
+//     address.receive_clock(); r_w.receive_clock(); 
+//     //propagate data through device
+//     memory.do_function();
+//     memory.receive_clock();
+//     //result
+//     //std::cout << "Read: The value "<< std::hex << read_value.before << " is on 0x"<< std::hex << address.after <<std::endl;
 
-} 
+// } 

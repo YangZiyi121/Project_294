@@ -64,59 +64,59 @@ private:
     //TODO: extremely meticulous level: a register is a group of parallelly signaled (by the same clock) latches. A register file is a group of serialized registers.
 };
 
-/*Testing*/
-int main()
-{
-    //TODO:
-    //make a test for each case
-    Latch input1, input2, output1, output2, control;
+// /*Testing*/
+// int main()
+// {
+//     //TODO:
+//     //make a test for each case
+//     Latch input1, input2, output1, output2, control;
 
-    //Write test
-    input1.before = 1000; //use this format if you want binary representation
-    input2.before = 1;
-    control.before = 0x11;
+//     //Write test
+//     input1.before = 1000; //use this format if you want binary representation
+//     input2.before = 1;
+//     control.before = 0x11;
 
-    //Create Device
-    RegisterFile device (input1, input2, output1, output2, control);
+//     //Create Device
+//     RegisterFile device (input1, input2, output1, output2, control);
     
-    //send clock to latches
-    input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
+//     //send clock to latches
+//     input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
 
 
-    //propogate data through device
-    device.do_function();
-    device.receive_clock();
+//     //propogate data through device
+//     device.do_function();
+//     device.receive_clock();
 
-    //Write test
-    input1.before = 2000; //use this format if you want binary representation
-    input2.before = 2;
-    control.before = 0x11;
+//     //Write test
+//     input1.before = 2000; //use this format if you want binary representation
+//     input2.before = 2;
+//     control.before = 0x11;
     
-    //send clock to latches
-    input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
+//     //send clock to latches
+//     input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
 
-    //propogate data through device
-    device.do_function();
-    device.receive_clock();
+//     //propogate data through device
+//     device.do_function();
+//     device.receive_clock();
 
     
 
-    //Read 0x01
-    input1.before = 1;
-    control.before = 0x01;
-    input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
-    device.do_function();
-    device.receive_clock();
-    std::cout << "Read 0x01 "<< output1.before << std::endl;
+//     //Read 0x01
+//     input1.before = 1;
+//     control.before = 0x01;
+//     input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
+//     device.do_function();
+//     device.receive_clock();
+//     std::cout << "Read 0x01 "<< output1.before << std::endl;
 
-    //Read 0x10
-    input1.before = 1;
-    input2.before = 2;
-    control.before = 0x10;
-    input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
-    device.do_function();
-    device.receive_clock();
-    std::cout << "Read 0x10 " << output1.before << " " << output2.before << std::endl;
+//     //Read 0x10
+//     input1.before = 1;
+//     input2.before = 2;
+//     control.before = 0x10;
+//     input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
+//     device.do_function();
+//     device.receive_clock();
+//     std::cout << "Read 0x10 " << output1.before << " " << output2.before << std::endl;
 
 
-}
+// }

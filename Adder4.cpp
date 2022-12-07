@@ -4,7 +4,7 @@
 #include "Port.h"
 
 
-class Adder4 : Device {
+class Adder4 : public Device {
 public:
 	static const int cycles = 1;
 	static const int area = 100;
@@ -36,24 +36,24 @@ private:
 	long long result;
 };
 
-/*Testing*/
-int main()
-{
-	//Initialize Ports
-	Latch latch1, output;
-	latch1.before = 1000;
+// /*Testing*/
+// int main()
+// {
+// 	//Initialize Ports
+// 	Latch latch1, output;
+// 	latch1.before = 1000;
 
-	//Create Adder
-	Adder4 Adder4(latch1, output);
+// 	//Create Adder
+// 	Adder4 Adder4(latch1, output);
 
-    //send clk to latches
-    latch1.receive_clock();
+//     //send clk to latches
+//     latch1.receive_clock();
 
-    //propagate data through device
-	Adder4.do_function();
-	Adder4.receive_clock();
+//     //propagate data through device
+// 	Adder4.do_function();
+// 	Adder4.receive_clock();
 	
-    //results
-    std::cout << output.before <<std::endl;
-}
+//     //results
+//     std::cout << output.before <<std::endl;
+// }
 

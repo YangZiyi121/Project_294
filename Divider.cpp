@@ -4,7 +4,7 @@
 #include "Port.h"
 
 
-class Divider : Device {
+class Divider : public Device {
 public:
 	static const int cycles = 8;
 	static const int area = 5000;
@@ -45,28 +45,28 @@ private:
 	long long result;
 };
 
-/*Testing*/
-int main()
-{
-	//Initialize Ports
-	Latch latch1, latch2, output;
-	latch1.before = 1050;
-	latch2.before = 50;
+// /*Testing*/
+// int main()
+// {
+// 	//Initialize Ports
+// 	Latch latch1, latch2, output;
+// 	latch1.before = 1050;
+// 	latch2.before = 50;
 
-	//Create divider
-	Divider divider(latch1, latch2, output);
+// 	//Create divider
+// 	Divider divider(latch1, latch2, output);
 
-	//send clk to latches
-	latch1.receive_clock();
-	latch2.receive_clock();
-	output.receive_clock();
+// 	//send clk to latches
+// 	latch1.receive_clock();
+// 	latch2.receive_clock();
+// 	output.receive_clock();
 
-	//propagate data 
-	divider.do_function();
-	divider.receive_clock();
+// 	//propagate data 
+// 	divider.do_function();
+// 	divider.receive_clock();
 
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
 
-}
+// }
 

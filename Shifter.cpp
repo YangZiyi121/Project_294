@@ -54,29 +54,29 @@ private:
 //5- call receive_clock of device
 //6- result should now be in before of output latch
 
-/*Testing*/
-int main()
-{
-    Latch input1, input2, control, output;
+// /*Testing*/
+// int main()
+// {
+//     Latch input1, input2, control, output;
 
-    //Initialize latches
-    input1.before = 0b0000111101; //use this format if you want binary representation
-    input2.before = 0b0000000010;
-    control.before = 0b00;
+//     //Initialize latches
+//     input1.before = 0b0000111101; //use this format if you want binary representation
+//     input2.before = 0b0000000010;
+//     control.before = 0b00;
 
-    //Create Device
-    Shifter device (input1, input2, control, output);
+//     //Create Device
+//     Shifter device (input1, input2, control, output);
     
-    //send clock to latches
-    input1.receive_clock();input2.receive_clock();control.receive_clock();output.receive_clock();
-    //std::cout << input1.after <<std::endl;
+//     //send clock to latches
+//     input1.receive_clock();input2.receive_clock();control.receive_clock();output.receive_clock();
+//     //std::cout << input1.after <<std::endl;
 
-    //propogate data through device
-    device.do_function();
-    device.receive_clock();
+//     //propogate data through device
+//     device.do_function();
+//     device.receive_clock();
 
-    //result should now be output.before 
-    std::cout << output.before <<std::endl;
-    std::cout << std::bitset<10>(output.before) <<std::endl;
+//     //result should now be output.before 
+//     std::cout << output.before <<std::endl;
+//     std::cout << std::bitset<10>(output.before) <<std::endl;
     
-}
+// }

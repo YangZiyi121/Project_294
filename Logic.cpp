@@ -3,7 +3,7 @@
 #include "Device.h"
 #include "Port.h"
 
-class Logic : Device
+class Logic : public Device
 {
     public:
     static const int cycles = 1;
