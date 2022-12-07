@@ -10,7 +10,7 @@ class Memory : Device{
         //Constructer
         Memory(Latch &address, Latch &write_value, Latch &read_value, Latch &r_w){
             //original memory
-            storage.insert(std::pair<int64_t, int64_t>(0x0000000011111111, 0x1111111100000000));
+            //storage.insert(std::pair<int64_t, int64_t>(0x0000000011111111, 0x1111111100000000));
             Memory::address.connection = &address;
             Memory::write_value.connection = &write_value;
             Memory::r_w.connection = &r_w;
@@ -86,4 +86,5 @@ int main(){
     memory.receive_clock();
     //result
     //std::cout << "Read: The value "<< std::hex << read_value.before << " is on 0x"<< std::hex << address.after <<std::endl;
+
 } 

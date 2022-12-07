@@ -1,9 +1,8 @@
 #include <iostream>
+#include <type_traits>
 #include "Latch.h"
 #include "Device.h"
 #include "Port.h"
-
-using namespace std;
 
 /*Function of Register File*/
 /*Stores an array of 32 registers of 64-bit each. Results varies according to the control signals.*/
@@ -15,33 +14,41 @@ public:
     static const double power = 4;
 
     //Constructer
-    RegisterFile(Latch data1, Latch data2, int64_t control)
+    RegisterFile(Latch &data1, Latch &data2, Latch &output1, Latch &output2, Latch &control_in)
     {
-        in[0].connection = data1;
-        in[1].connection = data2;
-        control_signal.connection = control;
-        cout << "Register File is being created" << endl;
+        in[0].connection = &data1;
+        in[1].connection = &data2;
+        out[0] = &output1;
+        out[1] = &output2;
+        control.connection = &control_in;
+        std::cout << "Register File is being created" << std::endl;
     } 
 
-    receive_clock() { out[0].before = result[0]; out[1].before = result[1];}
+    void receive_clock() { 
+        out[0]->before = result[0];
+        out[1]->before = result[1];
+
+    }
 
     //Inherit
     void do_function()
     {
-        switch (control_signal)
+        switch (control.connection->after)
         {
             case 0x00:
                 break;
             case 0x01:
-                result[0].before = rf[in[0].connection.after];
+                result[0] = rf[in[0].connection->after];
                 break;
             case 0x10:
-                static_assert (in[0].connection.after != in[1].connection.after, "Register File access failure. The RR (0x10) control signal is accompanied with two input that refer to the same register.");
-                result[0].before = rf[in[0].connection.after];
-                result[1].before = rf[in[1].connection.after];
+                if (!(in[0].connection->after != in[1].connection->after))
+                std::cout << "Register File access failure. The RR (0x10) control signal is accompanied with two input that refer to the same register." << std::endl;
+                assert (in[0].connection->after != in[1].connection->after);
+                result[0] = rf[in[0].connection->after];
+                result[1] = rf[in[1].connection->after];
                 break;
             case 0x11:
-                rf[in[1].connection.after] = in[0].connection.after;
+                rf[in[1].connection->after] = in[0].connection->after;
                 break;
         }
     }
@@ -50,12 +57,10 @@ public:
 
 private:
     Port in[2];
-    Latch out[2];
-    int64_t control_signal; 
-
+    Latch* out[2];
+    Port control; 
     long long result[2];
-
-    Latch rf[32]; //The register file container. The register is basically an array of latches (of course, here an abuse of notion for the sake of a simple simulation).
+    int64_t rf[32]; //The register file container. The register is basically an array of latches (of course, here an abuse of notion for the sake of a simple simulation).
     //TODO: extremely meticulous level: a register is a group of parallelly signaled (by the same clock) latches. A register file is a group of serialized registers.
 };
 
@@ -64,4 +69,54 @@ int main()
 {
     //TODO:
     //make a test for each case
+    Latch input1, input2, output1, output2, control;
+
+    //Write test
+    input1.before = 1000; //use this format if you want binary representation
+    input2.before = 1;
+    control.before = 0x11;
+
+    //Create Device
+    RegisterFile device (input1, input2, output1, output2, control);
+    
+    //send clock to latches
+    input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
+
+
+    //propogate data through device
+    device.do_function();
+    device.receive_clock();
+
+    //Write test
+    input1.before = 2000; //use this format if you want binary representation
+    input2.before = 2;
+    control.before = 0x11;
+    
+    //send clock to latches
+    input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
+
+    //propogate data through device
+    device.do_function();
+    device.receive_clock();
+
+    
+
+    //Read 0x01
+    input1.before = 1;
+    control.before = 0x01;
+    input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
+    device.do_function();
+    device.receive_clock();
+    std::cout << "Read 0x01 "<< output1.before << std::endl;
+
+    //Read 0x10
+    input1.before = 1;
+    input2.before = 2;
+    control.before = 0x10;
+    input1.receive_clock();input2.receive_clock();control.receive_clock();output1.receive_clock(); output2.receive_clock();
+    device.do_function();
+    device.receive_clock();
+    std::cout << "Read 0x10 " << output1.before << " " << output2.before << std::endl;
+
+
 }
