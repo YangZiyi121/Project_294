@@ -3,28 +3,6 @@
 #include "Device.h"
 #include "Port.h"
 
-using namespace std;
-
-class Latch
-{
-public:
-	long long before;
-	long long after;
-	long long receive_clock();
-};
-
-class Port
-{
-public:
-	Latch* connection;
-};
-
-class Device {
-
-public:
-	virtual void do_function() {};
-	virtual void receive_clock() {};
-};
 
 class Divider : Device {
 public:
@@ -39,11 +17,14 @@ public:
 		Divider::in[1].connection = &input2;
 		Divider::out = &output;
 
-		cout << "Divider is being created" << endl;
+		std::cout << "Divider is being created" << std::endl;
 
 		//cycles = cycles + 1;
 	} // Initialize the input ports and the latch as necessary
-	void receive_clock() { Divider::out->before = Divider::result; cout << "   " << Divider::out->before << endl; }
+	void receive_clock() { 
+		Divider::out->before = Divider::result; 
+		//std::cout << "   " << Divider::out->before << std::endl; 
+	}
 	void do_function()
 	{
 		if (Divider::in[1].connection->after != 0)
@@ -52,7 +33,7 @@ public:
 		}
 		else
 		{
-			throw runtime_error("Math error: Attempted to divide by Zero\n");
+			throw std::runtime_error("Math error: Attempted to divide by Zero\n");
 		}
 		
 
@@ -69,15 +50,23 @@ int main()
 {
 	//Initialize Ports
 	Latch latch1, latch2, output;
-	latch1.after = 1050;
-	latch2.after = 1050;
-	//Create shifter
+	latch1.before = 1050;
+	latch2.before = 50;
 
-	Divider Divider(latch1, latch2, output);
+	//Create divider
+	Divider divider(latch1, latch2, output);
 
-	Divider.do_function();
-	Divider.receive_clock();
+	//send clk to latches
+	latch1.receive_clock();
+	latch2.receive_clock();
+	output.receive_clock();
+
+	//propagate data 
+	divider.do_function();
+	divider.receive_clock();
+
 	//Receive the clk and see the result
+	std::cout << output.before <<std::endl;
 
 }
 

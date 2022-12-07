@@ -3,7 +3,6 @@
 #include "Device.h"
 #include "Port.h"
 
-using namespace std;
 
 /*Function of Register*/
 /*Holds a value in an individual register outside the purview of the register file.*/
@@ -15,35 +14,50 @@ public:
     static const double power = 0.05;
 
     //Constructer
-    Register(Latch data)
+    Register(Latch &input, Latch &output)
     {
-        in.connection = data1;
-        cout << "Register  is being created" << endl;
+        Register::in.connection = &input;
+        Register::out = &output;
+        std::cout << "Register  is being created" << std::endl;
     } 
 
-    void receive_clock() { out.before = result;}
+    void receive_clock() { 
+        Register::out->before = Register::result;
+        
+    }
 
     //Inherit
     void do_function()
     {
-        reg = in.connection;
-        result = reg.after;
+        Register::result = Register::in.connection->after;
     }
 
 
 
 private:
     Port in;
-    Latch out;
-
+    Latch* out;
     long long result;
-
-    Latch reg;
 };
 
 /*Testing*/
 int main()
 {
-    //TODO:
-    //make a test
+    //Initialize Ports
+    Latch input, output;
+    input.before = 100;
+
+    //Create Device
+    Register reg(input, output);
+
+    //send clock to latches
+    input.receive_clock();
+    output.receive_clock();
+
+    //propagate data 
+    reg.do_function();
+    reg.receive_clock();
+
+    //result
+    std::cout << output.before << std::endl;
 }

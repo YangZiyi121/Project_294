@@ -3,29 +3,6 @@
 #include "Device.h"
 #include "Port.h"
 
-using namespace std;
-
-class Latch
-{
-public:
-	long long before;
-	long long after;
-	long long receive_clock();
-};
-
-class Port
-{
-public:
-	Latch* connection;
-};
-
-class Device {
-
-public:
-	virtual void do_function() {};
-	virtual void receive_clock() {};
-};
-
 class Adder : Device {
 public:
 	static const int cycles = 1;
@@ -39,11 +16,12 @@ public:
 		Adder::in[1].connection = &input2;
 		Adder::out = &output;
 
-		cout << "Adder is being created" << endl;
+		std::cout << "Adder is being created" << std::endl;
 
 		//cycles = cycles + 1;
 	} // Initialize the input ports and the latch as necessary
-	void receive_clock() { Adder::out->before = Adder::result; cout << "   " << Adder::out->before << endl; }
+	void receive_clock() { Adder::out->before = Adder::result; //cout << "   " << Adder::out->before << endl; 
+	}
 	void do_function()
 	{
 
@@ -62,15 +40,23 @@ int main()
 {
 	//Initialize Ports
 	Latch latch1, latch2, output;
-	latch1.after = 1050;
-	latch2.after = 1050;
-	//Create shifter
+	latch1.before = 1050;
+	latch2.before = 1000;
 
+	//Create device
 	Adder Adder(latch1, latch2, output);
 
+	//Send clk to latches
+	latch1.receive_clock();
+	latch2.receive_clock();
+	output.receive_clock();
+
+	//propagate data through device
 	Adder.do_function();
 	Adder.receive_clock();
+
 	//Receive the clk and see the result
+	std::cout << output.before <<std::endl;
 
 }
 
