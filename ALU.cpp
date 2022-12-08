@@ -6,30 +6,30 @@
 
 //TODO: Define those codes based on the architectural needs
 
-#define ADDcode
-#define MULTcode
-#define DIVcode
-#define NOTCcode
-#define ANDcode
-#define ORcode
-#define XORcode
-#define SRLcode
-#define SLLcode
+// #define ADDcode
+// #define MULTcode
+// #define DIVcode
+// #define NOTCcode
+// #define ANDcode
+// #define ORcode
+// #define XORcode
+// #define SRLcode
+// #define SLLcode
 
 //FOR TESTING PURPOSES
 
-// #define ADDcode 1
-// #define SUBcode 2
-// #define MULTcode 3
-// #define DIVcode 4
-// #define NOTcode 5
-// #define ANDcode 6
-// #define ORcode 7
-// #define XORcode 8
-// #define SRLcode 9
-// #define SLLcode 10
-// #define PASS0code 11
-// #define PASS1code 12
+#define ADDcode 1
+#define SUBcode 2
+#define MULTcode 3
+#define DIVcode 4
+#define NOTcode 5
+#define ANDcode 6
+#define ORcode 7
+#define XORcode 8
+#define SRLcode 9
+#define SLLcode 10
+#define PASS0code 11
+#define PASS1code 12
 
 
 class ALU : public Device {
