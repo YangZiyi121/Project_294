@@ -11,9 +11,10 @@
 #include "Multiplexer.cpp"
 #include "ALU.cpp"
 #include "MemoryInst.cpp"
+#include "MemoryData.cpp"
 
-int const NUM_LATCHES = 6;
-int const NUM_DEVICES = 2;
+int const NUM_LATCHES = 42;
+int const NUM_DEVICES = 24;
 Latch latches[NUM_LATCHES];
 std::vector<Device*> devices;
 
@@ -198,4 +199,27 @@ int build_arch()
     Latch *ALU_output = &latches[36];
     Latch *ALU_c = &latches[37];
     devices.push_back(new ALU(*ALU_RD1, *ALU_mux4, *ALU_output, *ALU_c));
+
+    //output of ALU is buffered multiple time to sync up with other outputs
+    // Latch *ALU_output_buffer_in_1 = ALU_output;
+    // Latch *ALU_output_buffer_out_1 = &latches[38];
+    // devices.push_back(new Register(*ALU_output_buffer_in_1, *ALU_output_buffer_out_1));
+
+    //adder that computes write data
+    Latch *ADDER_WD_RD2 = RF_RD2;
+    Latch *ADDER_WD_L = IM_L_buffer_out_5;
+    Latch *ADDER_WD_WD = &latches[39];
+    devices.push_back(new Adder(*ADDER_WD_RD2, *ADDER_WD_L, *ADDER_WD_WD));
+
+    //output of adder is buffered multiple time to sync up with other outputs
+    Latch *WD_buffer_in_1 = ADDER_WD_WD;
+    Latch *WD_buffer_out_1 = &latches[38];
+    devices.push_back(new Register(*WD_buffer_in_1, *WD_buffer_out_1));
+
+    //DM component
+    Latch *DM_adress = ALU_output;
+    Latch *DM_WD = WD_buffer_out_1;
+    Latch *DM_output = &latches[40];
+    Latch *DM_c = &latches[41];
+    devices.push_back(new MemoryData(*DM_adress, *DM_WD, *DM_output, *DM_c));
 }
