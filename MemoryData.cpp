@@ -3,7 +3,7 @@
 #include "Port.h"
 #include "Device.h"
 #include "Memory.h"
-
+#include <limits>
 
 //assume only use the last 16 bits for address
 class MemoryData : public Device{
@@ -23,6 +23,7 @@ class MemoryData : public Device{
                 std::memcpy(&result, p, sizeof(int64_t));
             }else{      //write
                 //Memory::storage.insert(std::pair<int64_t, int64_t>(address.connection->after, write_value.connection->after));
+                result = std::numeric_limits<int64_t>::max(); //infinite impedance
                 p = storage + address.connection->after;
                 std::memcpy(p, &write_value.connection->after, sizeof(int64_t));
                 std::cout << "Write: The value "<< std::hex << write_value.connection->after << " is inserted on 0x"<< std::hex << address.connection->after <<std::endl;
