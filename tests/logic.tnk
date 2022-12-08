@@ -1,0 +1,38 @@
+# Test all arithmetic instructions 
+	addi r0,127
+	addi r1,128
+	and  r3,r0,r1
+	movi r30,120
+	brnz r30,r3
+	xor  r4,r4,r4
+	brnz r30,r4
+	not  r4,r4
+	or  r5,r4,r4
+	xor  r6,r4,r5
+	brnz r30,r6
+	movi r8,128
+	shftri r8,1
+	movi r9,64
+	xor  r10,r8,r9
+	brnz r30,r10
+	movi r8,64
+	shftli r8,1
+	movi r9,128
+	xor  r10,r8,r9
+	brnz r30,r10
+	xor  r0,r0,r0
+	movi r0,33
+	xor  r1,r1,r1
+	movi r1,1
+	out  r1,r0
+	movi r0,13
+	out  r1,r0
+	halt
+	xor  r0,r0,r0
+	movi r0,63
+	xor  r1,r1,r1
+	movi r1,1
+	out  r1,r0
+	movi r0,13
+	out  r1,r0
+	halt

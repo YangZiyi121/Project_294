@@ -1,0 +1,23 @@
+# Compute the factorial of 6
+# r0: the loop varible
+# r1: the loop limit
+# r2: the accumulated result
+# r3: the beginning of the loop
+# r4: Output port 0
+# r5: Output port 1
+# r6: For printing a new line
+	movi	r1,6
+	movi	r0,1
+	movi	r2,1
+	movi	r3,16
+# Loop
+	mul	r2,r2,r1
+	addi	r0,1
+	subi	r1,1
+	brnz	r3,r1
+	xor	r4,r4,r4
+	out	r4,r2
+	movi	r5,1
+	movi	r6,13
+	out	r5,r6
+	halt

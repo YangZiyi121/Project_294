@@ -1,0 +1,25 @@
+All files with .tnk extensions are source assembly files.
+The source assembly files are included to show you what the program does. It is not used by your code.
+All files with .obj extensions are object files. These are the binary files that should be read and interpreted by your code.
+All codes start at address 0x0. 
+Input and output ports are used to provide input and output, respectively.
+Convention:
+Port 0 (input or output) is for integers.
+Port 1 (input or output) is for characters.
+Port 2 (input or output) is for floating point numbers.
+You should load the binary file into your memory array and start executing at address zero.
+
+Files:
+0. hello:
+	A program that does what every first program does :-)
+	Expected output: Hello World!
+1. arithmetic:
+	A program that tests the arithmetic instructions.
+	Expected output: It prints 22
+2. Logic: 
+	A program that tests the logic instructions.
+	Expected output: It prints !. If it prints ?, then you have a problem!
+3. fact6: 
+	A program to compute the factorial of 6. 
+	Expected output: It prints 720
+2. 
