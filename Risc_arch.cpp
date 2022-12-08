@@ -10,6 +10,7 @@
 #include "Register.cpp"
 #include "Multiplexer.cpp"
 #include "ALU.cpp"
+#include "MemoryInst.cpp"
 
 int const NUM_LATCHES = 6;
 int const NUM_DEVICES = 2;
@@ -98,7 +99,7 @@ int build_arch()
     Latch *IM_Rt = &latches[3];
     Latch *IM_L = &latches[4];
     Latch *IM_Rd = &latches[5];
-    devices.push_back(new IM(*IM_PC, *IM_OP, *IM_Rs, *IM_Rt, *IM_L, *IM_Rd));
+    devices.push_back(new MemoryInst(*IM_PC, *IM_OP, *IM_Rd, *IM_Rs, *IM_Rt, *IM_L));
 
     //output of IM is buffered multiple time to sync up with control signals and other outputs
     Latch *IM_Rs_buffer_in_1 = IM_Rs;
