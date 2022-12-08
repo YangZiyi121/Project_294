@@ -2,7 +2,7 @@
 #include "Latch.h"
 #include "Device.h"
 #include "Port.h"
-
+#include <assert.h>
 
 //TODO: Define those codes based on the architectural needs
 
@@ -19,7 +19,7 @@
 //FOR TESTING PURPOSES
 
 #define ADDcode 1
-#define ADDcode 2
+#define SUBcode 2
 #define MULTcode 3
 #define DIVcode 4
 #define NOTCcode 5
@@ -123,7 +123,7 @@ int main()
 {
 	//Initialize Ports
 	Latch latch1, latch2, output;
-	Port control; 
+	Latch control; 
 
 	//Create device
 	ALU ALU(latch1, latch2, output, control);
@@ -138,5 +138,6 @@ int main()
 	//Receive the clk and see the result
 	std::cout << output.before <<std::endl;
 
+	return 0;
 }
 
