@@ -58,7 +58,12 @@ public:
 
 		//cycles = cycles + 1;
 	} // Initialize the input ports and the latch as necessary
-	void receive_clock() { ALU::out->before = ALU::result; //cout << "   " << ALU::out->before << endl; 
+	void receive_clock() {
+		if(--delay > 0){
+			;
+		}
+		else
+			ALU::out->before = ALU::result; //cout << "   " << ALU::out->before << endl; 
 	}
 	void do_function()
 	{
@@ -75,9 +80,11 @@ public:
                 break;
             case MULTcode:
                 ALU::result = ALU::in[0].connection->after * ALU::in[1].connection->after;
+				delay = 3;
                 break;
             case DIVcode:
                 ALU::result = ALU::in[0].connection->after / ALU::in[1].connection->after;
+				delay = 8;
                 break;
             case NOTcode:
                 ALU::result = ~ ALU::in[0].connection->after;
@@ -116,6 +123,8 @@ private:
 	Latch* out;
 	long long result;
 	Port control; 
+	char delay = 1;
+
 };
 
 // /*Testing*/
@@ -145,7 +154,7 @@ private:
 // 	//Send clk to latches
 // 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
 // 	//Propagate data through device
-// 	ALU.do_function();ALU.receive_clock();
+// 	ALU.do_function();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();
 // 	//Receive the clk and see the result
 // 	std::cout << output.before <<std::endl;
 // 	assert(output.before == 25400);
@@ -165,9 +174,9 @@ private:
 // 	std::cout << "DIV TEST" << std::endl;
 // 	control.before = DIVcode; latch1.before = 100; latch2.before = 2;
 // 	//Send clk to latches
-// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();
 // 	//Propagate data through device
-// 	ALU.do_function();ALU.receive_clock();
+// 	ALU.do_function();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();
 // 	//Receive the clk and see the result
 // 	std::cout << output.before <<std::endl;
 // 	assert(output.before == 50);

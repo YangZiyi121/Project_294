@@ -3,6 +3,7 @@
 #include "Latch.h"
 #include "Device.h"
 #include "Port.h"
+#include <limits>
 
 /*Function of Register File*/
 /*Stores an array of 32 registers of 64-bit each. Results varies according to the control signals.*/
@@ -36,9 +37,12 @@ public:
         switch (control.connection->after)
         {
             case 0x00:
+                result[0] = std::numeric_limits<int64_t>::max(); //infinite impedance
+                result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
                 break;
             case 0x01:
                 result[0] = rf[in[0].connection->after];
+                result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
                 break;
             case 0x10:
                 if (!(in[0].connection->after != in[1].connection->after))
@@ -49,6 +53,8 @@ public:
                 break;
             case 0x11:
                 rf[in[1].connection->after] = in[0].connection->after;
+                result[0] = std::numeric_limits<int64_t>::max(); //infinite impedance
+                result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
                 break;
         }
     }
