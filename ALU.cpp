@@ -128,147 +128,147 @@ private:
 };
 
 // /*Testing*/
-int main()
-{
-	//Initialize Ports
-	Latch latch1, latch2, output;
-	Latch control; 
+// int main()
+// {
+// 	//Initialize Ports
+// 	Latch latch1, latch2, output;
+// 	Latch control; 
 
-	//Create device
-	ALU ALU(latch1, latch2, output, control);
+// 	//Create device
+// 	ALU ALU(latch1, latch2, output, control);
 
-	//ADD TEST
-	std::cout << "ADD TEST" << std::endl;
-	control.before = ADDcode; latch1.before = 100; latch2.before = 254;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 354);
+// 	//ADD TEST
+// 	std::cout << "ADD TEST" << std::endl;
+// 	control.before = ADDcode; latch1.before = 100; latch2.before = 254;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 354);
 
-	//MULT TEST
-	std::cout << "MULT TEST" << std::endl;
-	control.before = MULTcode; latch1.before = 100; latch2.before = 254;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 25400);
+// 	//MULT TEST
+// 	std::cout << "MULT TEST" << std::endl;
+// 	control.before = MULTcode; latch1.before = 100; latch2.before = 254;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 25400);
 
-	//SUB TEST
-	std::cout << "SUB TEST" << std::endl;
-	control.before = SUBcode; latch1.before = 1000; latch2.before = 254;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 746);
+// 	//SUB TEST
+// 	std::cout << "SUB TEST" << std::endl;
+// 	control.before = SUBcode; latch1.before = 1000; latch2.before = 254;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 746);
 
-	//DIV TEST
-	std::cout << "DIV TEST" << std::endl;
-	control.before = DIVcode; latch1.before = 100; latch2.before = 2;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 50);
+// 	//DIV TEST
+// 	std::cout << "DIV TEST" << std::endl;
+// 	control.before = DIVcode; latch1.before = 100; latch2.before = 2;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 50);
 
-	//NOT TEST
-	std::cout << "NOT TEST" << std::endl;
-	control.before = NOTcode; latch1.before = 0b1111/*That's a 15 and should be flipped into -16 (ones-complement?)*/; latch2.before = 0;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::bitset<16> y(output.before);
-	assert(output.before == -16);
+// 	//NOT TEST
+// 	std::cout << "NOT TEST" << std::endl;
+// 	control.before = NOTcode; latch1.before = 0b1111/*That's a 15 and should be flipped into -16 (ones-complement?)*/; latch2.before = 0;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::bitset<16> y(output.before);
+// 	assert(output.before == -16);
 
-	//AND TEST
-	std::cout << "AND TEST" << std::endl;
-	control.before = ANDcode; latch1.before = 0b1101; latch2.before = 0b1010;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 0b1000);
+// 	//AND TEST
+// 	std::cout << "AND TEST" << std::endl;
+// 	control.before = ANDcode; latch1.before = 0b1101; latch2.before = 0b1010;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 0b1000);
 
-	//OR TEST
-	std::cout << "OR TEST" << std::endl;
-	control.before = ORcode; latch1.before = 0b1101; latch2.before = 0b1010;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 0b1111);
+// 	//OR TEST
+// 	std::cout << "OR TEST" << std::endl;
+// 	control.before = ORcode; latch1.before = 0b1101; latch2.before = 0b1010;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 0b1111);
 
-	//XOR TEST
-	std::cout << "XOR TEST" << std::endl;
-	control.before = XORcode; latch1.before = 0b1101; latch2.before = 0b1010;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 0b0111);
+// 	//XOR TEST
+// 	std::cout << "XOR TEST" << std::endl;
+// 	control.before = XORcode; latch1.before = 0b1101; latch2.before = 0b1010;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 0b0111);
 
-	//SRL TEST
-	std::cout << "SRL TEST" << std::endl;
-	control.before = SRLcode; latch1.before = 0b1000; latch2.before = 0b10;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 0b10);
+// 	//SRL TEST
+// 	std::cout << "SRL TEST" << std::endl;
+// 	control.before = SRLcode; latch1.before = 0b1000; latch2.before = 0b10;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 0b10);
 
-	//SLL TEST
-	std::cout << "SLL TEST" << std::endl;
-	control.before = SLLcode; latch1.before = 0b1000; latch2.before = 0b10;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 0b100000);
+// 	//SLL TEST
+// 	std::cout << "SLL TEST" << std::endl;
+// 	control.before = SLLcode; latch1.before = 0b1000; latch2.before = 0b10;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 0b100000);
 
-	//PASS0 TEST
-	std::cout << "PASS0 TEST" << std::endl;
-	control.before = PASS0code; latch1.before = 0b1101; latch2.before = 0b1010;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 0b1101);
+// 	//PASS0 TEST
+// 	std::cout << "PASS0 TEST" << std::endl;
+// 	control.before = PASS0code; latch1.before = 0b1101; latch2.before = 0b1010;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 0b1101);
 
-	//PASS1 TEST
-	std::cout << "PASS1 TEST" << std::endl;
-	control.before = PASS1code; latch1.before = 0b1101; latch2.before = 0b1010;
-	//Send clk to latches
-	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
-	//Propagate data through device
-	ALU.do_function();ALU.receive_clock();
-	//Receive the clk and see the result
-	std::cout << output.before <<std::endl;
-	assert(output.before == 0b1010);
+// 	//PASS1 TEST
+// 	std::cout << "PASS1 TEST" << std::endl;
+// 	control.before = PASS1code; latch1.before = 0b1101; latch2.before = 0b1010;
+// 	//Send clk to latches
+// 	latch1.receive_clock();latch2.receive_clock();control.receive_clock();output.receive_clock();
+// 	//Propagate data through device
+// 	ALU.do_function();ALU.receive_clock();
+// 	//Receive the clk and see the result
+// 	std::cout << output.before <<std::endl;
+// 	assert(output.before == 0b1010);
 
-	return 0;
-}
+// 	return 0;
+// }
 
