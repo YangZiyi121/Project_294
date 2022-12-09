@@ -5,8 +5,8 @@
 #include "Port.h"
 #include "Device.h"
 #include "Memory.h"
-#include "instruction.cpp"
-#include "Readfile.cpp"
+#include "Instruction.cpp"
+#include "ReadFile.cpp"
 
 class MemoryInst : public Device{
     public:
@@ -47,30 +47,30 @@ class MemoryInst : public Device{
        unsigned instruction;
 };
 
-int main(){
-    readfile(1); //load the hello.obj
-    /*Testing*/
-    Latch pc, op, rd, rs, rt, l;
-    MemoryInst device (pc, op, rd, rs, rt, l);
+// int main(){
+//     readfile(1); //load the hello.obj
+//     /*Testing*/
+//     Latch pc, op, rd, rs, rt, l;
+//     MemoryInst device (pc, op, rd, rs, rt, l);
 
-    //Initilization
-    unsigned * ptrStorage; //pointer to memory
-    ptrStorage = storage;
-    pc.before= reinterpret_cast<long long>(ptrStorage);
+//     //Initilization
+//     unsigned * ptrStorage; //pointer to memory
+//     ptrStorage = storage;
+//     pc.before= reinterpret_cast<long long>(ptrStorage);
 
-    //send clks to latches
-    pc.receive_clock(); op.receive_clock(); rd.receive_clock(); rs.receive_clock(); l.receive_clock();
+//     //send clks to latches
+//     pc.receive_clock(); op.receive_clock(); rd.receive_clock(); rs.receive_clock(); l.receive_clock();
 
-    //propagate data to device
-    device.do_function();
-    device.receive_clock();
+//     //propagate data to device
+//     device.do_function();
+//     device.receive_clock();
 
-    //result should now be output.before 
-    std::cout << "This is the result of latches" <<std::endl;
-    printf("%x\n", op.before);
-    printf("%x\n", rd.before);
-    printf("%x\n", rs.before);
-    printf("%x\n", rt.before);
-    printf("%x\n", l.before);
+//     //result should now be output.before 
+//     std::cout << "This is the result of latches" <<std::endl;
+//     printf("%x\n", op.before);
+//     printf("%x\n", rd.before);
+//     printf("%x\n", rs.before);
+//     printf("%x\n", rt.before);
+//     printf("%x\n", l.before);
 
-}
+// }
