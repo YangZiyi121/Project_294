@@ -111,7 +111,7 @@ public:
 				ALU::result = ALU::in[1].connection->after;
                 break;
 			default:
-				assert(false); //Dangerous if this code is edited. Never forget to put the breaks
+				//assert(false); //Dangerous if this code is edited. Never forget to put the breaks
 				break;
 			//TODO: Substruction?
         }
