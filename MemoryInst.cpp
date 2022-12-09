@@ -4,9 +4,10 @@
 #include "Latch.h"
 #include "Port.h"
 #include "Device.h"
-#include "Memory.h"
 #include "instruction.cpp"
 #include "ReadFile.cpp"
+
+extern unsigned storage[SIZE];
 
 class MemoryInst : public Device{
     public:
