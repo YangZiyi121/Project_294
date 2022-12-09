@@ -21,8 +21,7 @@ class MemoryInst : public Device{
         }
 
         void do_function(){
-            std::cout << pc.connection->before << std::endl;
-            std::memcpy(&instruction, reinterpret_cast<unsigned int *>(pc.connection->before), sizeof(unsigned));
+            instruction = static_cast<unsigned int>(pc.connection->before);
             instruction_decoder(instruction);
             opResult = opcode;
             rdResult = reg_d;
