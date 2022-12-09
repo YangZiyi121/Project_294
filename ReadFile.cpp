@@ -13,9 +13,9 @@ const void readfile(int file_num){
     char file_name [30];
     switch (file_num)
     {
-        case 1: strcpy(file_name, "tests/hello.obj");
-        case 2: strcpy(file_name, "tests/logic.obj");
-        case 3: strcpy(file_name, "tests/fact6.obj");
+        case 1: strcpy(file_name, "tests/hello.obj"); break;
+        case 2: strcpy(file_name, "tests/logic.obj"); break;
+        case 3: strcpy(file_name, "tests/fact6.obj"); break;
         default: strcpy(file_name, "tests/hello.obj");
     }
 
