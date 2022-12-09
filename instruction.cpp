@@ -6,6 +6,7 @@ static unsigned reg_s;
 static unsigned reg_t_code;
 static unsigned literal;
 
+/*This const function takes an unsigned instruction, decode it and give the decoded results*/
 const void instruction_decoder(unsigned instr){
     opcode = instr >> 27;
     reg_d  = instr >> 22 & 0x1f;
@@ -18,10 +19,7 @@ const void instruction_decoder(unsigned instr){
     std::cout << "Got reg_s code " << reg_s << std::endl;
     std::cout << "Got reg_t code " << reg_t_code << std::endl;
     std::cout << "Got literal code " << literal << std::endl;
-
-    //return opcode, reg_d, reg_s, reg_t, literal;
-
-}
+};
 
 // int main()
 // {

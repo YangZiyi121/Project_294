@@ -5,7 +5,8 @@
 #include "Port.h"
 #include "Device.h"
 #include "Memory.h"
-#include "Instruction.cpp"
+#include "instruction.cpp"
+#include "Readfile.cpp"
 
 class MemoryInst : public Device{
     public:
@@ -46,51 +47,30 @@ class MemoryInst : public Device{
        unsigned instruction;
 };
 
-// int main(){
-//     /*Load the instruction from the file to the storage*/
-//     //Open files
-//     FILE *fp;
-//     char ch;
-//     fp = fopen("tests/hello.obj","rb");  // r for read, b for binary
-//     unsigned * ptrStorage; //pointer to memory
-//     unsigned buffer;
-//     ptrStorage = storage;
+int main(){
+    readfile(1); //load the hello.obj
+    /*Testing*/
+    Latch pc, op, rd, rs, rt, l;
+    MemoryInst device (pc, op, rd, rs, rt, l);
 
-  
-//     /*Load all instructions to the memory*/
-//     for (int i = 0; i < 25; i++) 
-//    {
-//         fread((char *) &buffer, sizeof(unsigned), 1, fp);
-//         //printf("%x\n", buffer);
-//         std::memcpy(ptrStorage, &buffer, sizeof(unsigned));
-//         ptrStorage = ptrStorage + 1; //move to the next position
-//     }
+    //Initilization
+    unsigned * ptrStorage; //pointer to memory
+    ptrStorage = storage;
+    pc.before= reinterpret_cast<long long>(ptrStorage);
 
-//     // //validate
-//     // printf("%x\n", storage[0]);
-//     // printf("%x\n", storage[1]);
+    //send clks to latches
+    pc.receive_clock(); op.receive_clock(); rd.receive_clock(); rs.receive_clock(); l.receive_clock();
 
-//     /*Testing*/
-//     Latch pc, op, rd, rs, rt, l;
-//     MemoryInst device (pc, op, rd, rs, rt, l);
+    //propagate data to device
+    device.do_function();
+    device.receive_clock();
 
-//     //Initilization
-//     ptrStorage = storage;
-//     pc.before= reinterpret_cast<long long>(ptrStorage + 1);
+    //result should now be output.before 
+    std::cout << "This is the result of latches" <<std::endl;
+    printf("%x\n", op.before);
+    printf("%x\n", rd.before);
+    printf("%x\n", rs.before);
+    printf("%x\n", rt.before);
+    printf("%x\n", l.before);
 
-//     //send clks to latches
-//     pc.receive_clock(); op.receive_clock(); rd.receive_clock(); rs.receive_clock(); l.receive_clock();
-
-//     //propagate data to device
-//     device.do_function();
-//     device.receive_clock();
-
-//     //result should now be output.before 
-//     std::cout << "This is the result of latches" <<std::endl;
-//     printf("%x\n", op.before);
-//     printf("%x\n", rd.before);
-//     printf("%x\n", rs.before);
-//     printf("%x\n", rt.before);
-//     printf("%x\n", l.before);
-    
-// }
+}
