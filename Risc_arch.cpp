@@ -201,9 +201,9 @@ int build_arch()
     devices.push_back(new ALU(*ALU_RD1, *ALU_mux4, *ALU_output, *ALU_c));
 
     //output of ALU is buffered multiple time to sync up with other outputs
-    // Latch *ALU_output_buffer_in_1 = ALU_output;
-    // Latch *ALU_output_buffer_out_1 = &latches[38];
-    // devices.push_back(new Register(*ALU_output_buffer_in_1, *ALU_output_buffer_out_1));
+    Latch *ALU_output_buffer_in_1 = ALU_output;
+    Latch *ALU_output_buffer_out_1 = &latches[45];
+    devices.push_back(new Register(*ALU_output_buffer_in_1, *ALU_output_buffer_out_1));
 
     //adder that computes write data
     Latch *ADDER_WD_RD2 = RF_RD2;
@@ -217,9 +217,35 @@ int build_arch()
     devices.push_back(new Register(*WD_buffer_in_1, *WD_buffer_out_1));
 
     //DM component
-    Latch *DM_adress = ALU_output;
+    Latch *DM_address = ALU_output;
     Latch *DM_WD = WD_buffer_out_1;
     Latch *DM_output = &latches[40];
     Latch *DM_c = &latches[41];
-    devices.push_back(new MemoryData(*DM_adress, *DM_WD, *DM_output, *DM_c));
+    devices.push_back(new MemoryData(*DM_address, *DM_WD, *DM_output, *DM_c));
+
+    //IO component
+    Latch *IO_RD1 = RF_RD1;
+    Latch *IO_RD2 = RF_RD2;
+    Latch *IO_output = &latches[42];
+    Latch *IO_c = &latches[43];
+    devices.push_back(new ALU(*IO_RD1, *IO_RD2, *IO_output, *IO_c));
+
+    //output of adder is buffered multiple time to sync up with other outputs
+    Latch *IO_buffer_in_1 = ADDER_WD_WD;
+    Latch *IO_buffer_out_1 = &latches[44];
+    devices.push_back(new Register(*IO_buffer_in_1, *IO_buffer_out_1));
+    Latch *IO_buffer_in_2 = IO_buffer_out_1;
+    Latch *IO_buffer_out_2 = &latches[49];
+    devices.push_back(new Register(*IO_buffer_in_2, *IO_buffer_out_2));
+
+    //mux 5 between IO,ALU,DM results to writeback
+    Latch *MUX_5_IO = IO_buffer_out_2;
+    Latch *MUX_5_ALU = ALU_output_buffer_out_1;
+    Latch *MUX_5_DM = DM_output;
+    Latch *MUX_5_useless = &latches[46];
+    Latch *MUX_5_c = &latches[47];
+    Latch *MUX_5_output = MUX_3_WD;
+    devices.push_back(new Multiplexer(*MUX_5_IO, *MUX_5_ALU, *MUX_5_DM, *MUX_5_useless, *MUX_5_c, *MUX_5_output));
+
+
 }
