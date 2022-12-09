@@ -5,8 +5,8 @@
 #include "Port.h"
 #include "Device.h"
 #include "Memory.h"
-#include "instruction.cpp"
-#include "Readfile.cpp"
+#include "Instruction.cpp"
+#include "ReadFile.cpp"
 
 class MemoryInst : public Device{
     public:
