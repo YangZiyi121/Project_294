@@ -8,9 +8,9 @@
 class Shifter: public Device
 {
 public:
-    const static int cycles = 1;
-    const static int area = 200;
-    const static double power = 0.5;
+    const int cycles = 1;
+    const int area = 200;
+    const double power = 0.5;
     //Constructer
     Shifter(Latch &data, Latch &position_to_shift, Latch &control_input, Latch &output)
     {

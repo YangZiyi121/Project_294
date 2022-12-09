@@ -36,22 +36,22 @@ public:
     {
         switch (control.connection->after)
         {
-            case 0x00:
+            case 0b00:
                 result[0] = std::numeric_limits<int64_t>::max(); //infinite impedance
                 result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
                 break;
-            case 0x01:
+            case 0b01:
                 result[0] = rf[in[0].connection->after];
                 result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
                 break;
-            case 0x10:
+            case 0b10:
                 if (!(in[0].connection->after != in[1].connection->after))
                 std::cout << "Register File access failure. The RR (0x10) control signal is accompanied with two input that refer to the same register." << std::endl;
                 assert (in[0].connection->after != in[1].connection->after);
                 result[0] = rf[in[0].connection->after];
                 result[1] = rf[in[1].connection->after];
                 break;
-            case 0x11:
+            case 0b11:
                 rf[in[1].connection->after] = in[0].connection->after;
                 result[0] = std::numeric_limits<int64_t>::max(); //infinite impedance
                 result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance

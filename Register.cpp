@@ -9,7 +9,7 @@
 class Register: public Device
 {
 public:
-    const static double cycles = 0.5;
+    const double cycles = 0.5;
     static const int area = 200;
     static const double power = 0.05;
 

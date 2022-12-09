@@ -10,9 +10,9 @@
 class Multiplexer: public Device
 {
 public:
-    const static double cycles = 0.5;
-    const static int area = 500;
-    const static double power = 0.25;
+    const double cycles = 0.5;
+    const int area = 500;
+    const double power = 0.25;
     //Constructer
     Multiplexer(Latch &data1, Latch &data2, Latch &data3, Latch &data4, Latch &control_input, Latch &output)
     {
