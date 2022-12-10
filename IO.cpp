@@ -33,6 +33,10 @@ class IO: public Device{
                 }
 
             }
+            else
+            {
+                result = 0;
+            }
 
 
         }
