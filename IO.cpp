@@ -16,17 +16,20 @@ class IO: public Device{
         }
 
         void do_function(){
-            if(control.connection->after == 0){
+            //std::cout << "control in IO" << control.connection->after << std::endl;
+            if(control.connection->after == 1){
+                //std::cout << "in input" << std::endl;
                 switch (rs.connection -> after){
-                    case 1: std::cout << "Type in integer for input: ";  scanf("%d", &result_int); result = result_int; break;
-                    case 2: std::cout << "Type in char for input: "; scanf("%c", &result_char); result = result_char; break;
+                    case 0: std::cout << "Type in integer for input: ";  scanf("%d", &result_int); result = result_int; break;
+                    case 1: std::cout << "Type in char for input: "; scanf("%c", &result_char); result = result_char; break;
                 }
             }
-            else{
+            else if (control.connection->after == 2){
                 result = 0; //for default setting of outputing
+                //std::cout << "in output" << std::endl;
                 switch (rd.connection -> after){
-                    case 1: std::cout << int(rs.connection->after); break;
-                    case 2: std::cout << char(rs.connection->after); break;
+                    case 0: std::cout << int(rs.connection->after); break;
+                    case 1: std::cout << char(rs.connection->after); break;
                 }
 
             }
@@ -58,7 +61,7 @@ class IO: public Device{
 //     //Output character test
 //     rs.before = 'h';
 //     rd.before = 1; //for char
-//     control.before = 1; //for output
+//     control.before = 2; //for output
 //     //send clks to latches
 //     rs.receive_clock(); rd.receive_clock(); control.receive_clock(); output.receive_clock();
 //     //propagate data to device
@@ -69,7 +72,7 @@ class IO: public Device{
 //     //Output integer test
 //     rs.before = 5000;
 //     rd.before = 0;
-//     control.before = 1;
+//     control.before = 2;
 //     //send clks to latches
 //     rs.receive_clock(); rd.receive_clock(); control.receive_clock(); output.receive_clock();
 //     //propagate data to device
@@ -79,7 +82,7 @@ class IO: public Device{
 
 //     //Input character test
 //     rs.before = 1;
-//     control.before = 0;
+//     control.before = 1;
 //     //send clks to latches
 //     rs.receive_clock(); rd.receive_clock(); control.receive_clock(); output.receive_clock();
 //     //propagate data to device
@@ -91,7 +94,7 @@ class IO: public Device{
 
 //     //Input integer test
 //     rs.before = 0;
-//     control.before = 0;
+//     control.before = 1;
 //     //send clks to latches
 //     rs.receive_clock(); rd.receive_clock(); control.receive_clock(); output.receive_clock();
 //     //propagate data to device
