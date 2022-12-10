@@ -11,7 +11,7 @@
 int const NUM_LATCHES = 6;
 int const NUM_DEVICES = 2;
 Latch latches[NUM_LATCHES];
-std::vector<Device*> devices;
+std::vector<Device> devices;
 Device tmp_device;
 
 int build_arch();
@@ -113,11 +113,11 @@ int build_arch()
 
     //Create Device
     
-    devices.push_back(new RegisterFile(*RF_input1, *RF_input2, *RF_output1, *RF_output2, *RF_c));
-    devices.push_back(new Adder(*adder_input1, *adder_input2, *adder_output));
+    // devices.push_back(new RegisterFile(*RF_input1, *RF_input2, *RF_output1, *RF_output2, *RF_c));
+    // devices.push_back(new Adder(*adder_input1, *adder_input2, *adder_output));
 
-    // tmp_device = RegisterFile(*RF_input1, *RF_input2, *RF_output1, *RF_output2, *RF_c);
-    // devices.push_back(tmp_device);
-    // tmp_device = Adder(*adder_input1, *adder_input2, *adder_output);
-    // devices.push_back(tmp_device);
+    tmp_device = RegisterFile(*RF_input1, *RF_input2, *RF_output1, *RF_output2, *RF_c);
+    devices.push_back(tmp_device);
+    tmp_device = Adder(*adder_input1, *adder_input2, *adder_output);
+    devices.push_back(tmp_device);
 }
