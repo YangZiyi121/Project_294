@@ -43,7 +43,7 @@ int main()
     }
     
     //send clock to latches
-    for (int j = 0; j < 3; j++)
+    for (int j = 0; j < 8; j++)
     {
         if(j == 0) // write to R1
         {
@@ -57,12 +57,37 @@ int main()
             latches[27].before = 2; //input2 rf
             latches[30].before = 0b11; //RF control
         }
-        if(j == 2) // write to R1
+        if(j == 2) // put stuff in Rs and Rt
         {
-            latches[22].before = 1; //input1 rf
-            latches[27].before = 2; //input2 rf
+            latches[2].before = 1; //Rs
+            latches[3].before = 2; //Rt
+            latches[30].before = 0b00; //RF control
+        }
+        if(j == 3) // wait 1
+        {
+            latches[2].before = 0; //Rs
+            latches[3].before = 0; //Rt
+            latches[30].before = 0b00; //RF control
+        }
+        if(j == 4) // wait 2
+        {
+
+        }
+        if(j == 5) // mux1
+        {
+            latches[15].before = 0; //mux1 Rt
+        }
+        if(j == 6) // mux2 mux3
+        {
+            latches[21].before = 0; //mux2 Rs
+            latches[26].before = 0; //mux1 Rt
+        }
+        if(j == 7) // RF
+        {
             latches[30].before = 0b10; //RF control
         }
+        std::cout << "time: " << j << " Rs " << latches[22].before << std::endl;
+        std::cout << "time: " << j << " Rt " << latches[27].before << std::endl << std::endl;
 
         for (int i = 0; i < NUM_LATCHES; i++) 
         {
@@ -179,7 +204,7 @@ int build_arch()
     Latch *RF_RD1 = &latches[28];
     Latch *RF_RD2 = &latches[29];
     Latch *RF_c = &latches[30];
-    devices.push_back(new RegisterFile(*RF_mux2, *RF_mux3, *RF_RD1, *RF_RD2, *RF_c));
+    devices.push_back(new RegisterFile(*RF_mux3, *RF_mux2, *RF_RD1, *RF_RD2, *RF_c));
 
     //output of RF is buffered multiple time to sync up with other outputs
     Latch *RF_RD1_buffer_in_1 = RF_RD1;
