@@ -43,7 +43,7 @@ int main(){
     //initialized for first cycle
     latches[28].before =  1; //RD1 -> Rs  
     latches[29].before =  1 ;//RD2 -> Rd  2 for ouptut
-    latches[43].before =  1; //control  (1 for input, 2 for output)
+    latches[43].before =  2; //control  (1 for input, 2 for output)
 
 
     for (int i = 0; i < NUM_LATCHES; i++) 
