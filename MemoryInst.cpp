@@ -4,10 +4,11 @@
 #include "Latch.h"
 #include "Port.h"
 #include "Device.h"
+#include "memory.h"
 #include "instruction.cpp"
 #include "ReadFile.cpp"
 
-extern unsigned storage[SIZE];
+extern unsigned storage [SIZE];
 
 class MemoryInst : public Device{
     public:
@@ -55,9 +56,7 @@ class MemoryInst : public Device{
 //     MemoryInst device (pc, op, rd, rs, rt, l);
 
 //     //Initilization
-//     unsigned * ptrStorage; //pointer to memory
-//     ptrStorage = storage;
-//     pc.before= reinterpret_cast<long long>(ptrStorage);
+//     pc.before= int64_t(storage[0]);
 
 //     //send clks to latches
 //     pc.receive_clock(); op.receive_clock(); rd.receive_clock(); rs.receive_clock(); l.receive_clock();
