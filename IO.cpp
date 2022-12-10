@@ -28,8 +28,8 @@ class IO: public Device{
                 result = 0; //for default setting of outputing
                 //std::cout << "in output" << std::endl;
                 switch (rd.connection -> after){
-                    case 0: std::cout << int(rs.connection->after); break;
-                    case 1: std::cout << char(rs.connection->after); break;
+                    case 0: std::cout << int(rs.connection->after) << std::endl;; break;
+                    case 1: std::cout << char(rs.connection->after) << std::endl;; break;
                 }
 
             }

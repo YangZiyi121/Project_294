@@ -43,21 +43,21 @@ int main()
     }
     
     //send clock to latches
-    for (int j = 0; j < 14; j++)
+    for (int j = 0; j < 8; j++)
     {
         if(j == 0) // write to R1
         {
-            latches[27].before = 122; //input1 rf
+            latches[27].before = 0; //input1 rf
             latches[22].before = 1; //input2 rf
             latches[30].before = 0b11; //RF control
         }
         if(j == 1) // write to R2
         {
-            latches[27].before = 622; //input1 rf
+            latches[27].before = 0; //input1 rf
             latches[22].before = 2; //input2 rf
             latches[30].before = 0b11; //RF control
         }
-        if(j == 2) // put stuff in Rs and Rt
+        if(j == 2) // put stuff after IM
         {
             latches[2].before = 1; //Rs
             latches[3].before = 0; //Rt
@@ -70,11 +70,13 @@ int main()
         {
             latches[2].before = 0; //Rs
             latches[3].before = 0; //Rt
+            latches[4].before = 0; //L
+            latches[5].before = 0; //Rd
             latches[30].before = 0b00; //RF control
         }
         if(j == 4) // mux1
         {
-            latches[15].before = 0; //pick Rd
+            latches[15].before = 1; //pick Rd
         }
         if(j == 5) // mux2 mux3
         {
@@ -85,23 +87,21 @@ int main()
         {
             latches[30].before = 0b10; //RF control
         }
-        if(j == 7) // mux4 
+        if(j == 7) // io
         {
             latches[30].before = 0b00; //RF control
-            latches[34].before = 0b00; //pick Rt
-
+            latches[43].before = 0b01; //control io
         }
-        if(j == 8) // ALU 
+        if(j == 8) // wait 1
         {
-            latches[37].before = 1; //add
+            latches[43].before = 0; //control io
         }
-        if(j == 9) // wait 
+        if(j == 9) // wait 2
         {
 
         }
         if(j == 10) // mux5
         {
-            
             //std::cout << "time: " << j << " ALU 1: " << latches[45].before << std::endl;
             latches[47].before = 0b01; //pick alu result
         }  
@@ -150,7 +150,7 @@ int main()
     
 
     //result should now be output.before 
-    std::cout <<std::dec << latches[28].before <<std::endl;
+    std::cout <<std::dec << latches[42].before <<std::endl;
     //std::cout << latches[29].before <<std::endl;
     //std::cout << std::bitset<10>(latches[2].before) <<std::endl;
     
