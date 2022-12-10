@@ -20,25 +20,25 @@ class MemoryData : public Device{
         }
 
         void do_function(){
-            if(r_w.connection->after == 0){  //read
-                std::cout << "Offset address is" << address.connection->after << std::endl;
-                std::cout << "storage" << &storage << std::endl;
-                if (address.connection->after > (2 << 11)) {
-                    std::cout << "The offset is too large" << std::endl;
-                    exit(1);
-                }
-                std::memcpy(&result, &(storage[address.connection->after]), sizeof(int64_t));
-                //result = static_cast <long long> (storage[address.connection->after]);
+            // if(r_w.connection->after == 0){  //read
+            //     std::cout << "Offset address is" << address.connection->after << std::endl;
+            //     std::cout << "storage" << &storage << std::endl;
+            //     if (address.connection->after > (2 << 11)) {
+            //         std::cout << "The offset is too large" << std::endl;
+            //         exit(1);
+            //     }
+            //     std::memcpy(&result, &(storage[address.connection->after]), sizeof(int64_t));
+            //     //result = static_cast <long long> (storage[address.connection->after]);
 
-            }else{      //write
-                if (address.connection->after > (2 << 11)) {
-                    std::cout << "The offset is too large" << std::endl;
-                    exit(1);
-                }
-                result = std::numeric_limits<int64_t>::max(); //infinite impedance
-                std::memcpy(&(storage[address.connection->after]), &write_value.connection->after, sizeof(int64_t));
-                std::cout << "Write: The value "<< std::hex << write_value.connection->after << " is inserted on 0x"<< std::hex << address.connection->after <<std::endl;
-            }
+            // }else{      //write
+            //     if (address.connection->after > (2 << 11)) {
+            //         std::cout << "The offset is too large" << std::endl;
+            //         exit(1);
+            //     }
+            //     result = std::numeric_limits<int64_t>::max(); //infinite impedance
+            //     std::memcpy(&(storage[address.connection->after]), &write_value.connection->after, sizeof(int64_t));
+            //     std::cout << "Write: The value "<< std::hex << write_value.connection->after << " is inserted on 0x"<< std::hex << address.connection->after <<std::endl;
+            // }
         }
 
 
