@@ -5,6 +5,7 @@
 #include "Memory.h"
 #include <limits>
 
+
 //assume only use the last 16 bits for address
 class MemoryData : public Device{
     public:
@@ -42,7 +43,7 @@ class MemoryData : public Device{
         Port write_value; //input of write
         Port r_w; //read or write (0 for read, 1 for write)
         Latch *read_value; //output of read
-        int64_t result;
+        long long result;
         unsigned *p; //pointer for memory
 
 };
@@ -55,7 +56,7 @@ class MemoryData : public Device{
 //     MemoryData memory(address, write_value, read_value, r_w);
     
 //     /*Write testing*/
-//     address.before  = 0x0001;  //16-bit
+//     address.before  = 0x0000;  //16-bit
 //     r_w.before = 0x1; //write
 //     write_value.before = 0x5000;
 //     //send clock to latches
@@ -69,7 +70,7 @@ class MemoryData : public Device{
 
 //     /* The address has been stored already*/
 //     //initialization
-//     address.before  = 0x0001;  //64-bit
+//     address.before  = 0x0000;  //64-bit
 //     r_w.before = 0x0; //read
 //     //send clock to latches
 //     address.receive_clock(); r_w.receive_clock(); 
