@@ -98,7 +98,7 @@ int main()
         }
         if(j == 9) // wait 2
         {
-
+                //hi
         }
         if(j == 10) // mux5
         {

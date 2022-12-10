@@ -67,30 +67,30 @@ class PC_new : public Device
     long long result;
 };
 
-int main()
-{
-    Latch alu, rd, l, pc, control, output;
+// int main()
+// {
+//     Latch alu, rd, l, pc, control, output;
 
-    //Initialize latches
-    alu.before = 0; //use this format if you want binary representation
-    rd.before = 200;
-    l.before = 13;
-    pc.before = 89;
-    control.before = 0b101;
+//     //Initialize latches
+//     alu.before = 0; //use this format if you want binary representation
+//     rd.before = 200;
+//     l.before = 13;
+//     pc.before = 89;
+//     control.before = 0b101;
 
-    //Create Device
-    PC_new device (alu, rd, l, pc, control, output);
+//     //Create Device
+//     PC_new device (alu, rd, l, pc, control, output);
     
-    //send clock to latches
-    alu.receive_clock();rd.receive_clock();l.receive_clock();pc.receive_clock();control.receive_clock(); output.receive_clock();
-    //std::cout << input1.after <<std::endl;
+//     //send clock to latches
+//     alu.receive_clock();rd.receive_clock();l.receive_clock();pc.receive_clock();control.receive_clock(); output.receive_clock();
+//     //std::cout << input1.after <<std::endl;
 
-    //propogate data through device
-    device.do_function();
-    device.receive_clock();
+//     //propogate data through device
+//     device.do_function();
+//     device.receive_clock();
 
-    //result should now be output.before 
-    std::cout << output.before <<std::endl;
-    //std::cout << std::bitset<10>(output.before) <<std::endl;
+//     //result should now be output.before 
+//     std::cout << output.before <<std::endl;
+//     //std::cout << std::bitset<10>(output.before) <<std::endl;
     
-}
+// }
