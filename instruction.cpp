@@ -8,7 +8,7 @@ static unsigned literal;
 
 /*This const function takes an unsigned instruction, decode it and give the decoded results*/
 const void instruction_decoder(unsigned instr){
-    std::cout << std::hex << instr << std::endl;
+    //std::cout << std::hex << instr << std::endl;
     opcode = instr >> 27;
     reg_d  = instr >> 22 & 0x1f;
     reg_s  = instr >> 17 & 0x1f;

@@ -35,16 +35,16 @@ public:
     {
         switch (Multiplexer::control.connection->after)
         {
-        case 0x00:
+        case 0b00:
             result = Multiplexer::in0.connection->after;
             break;
-        case 0x01:
+        case 0b01:
             result = Multiplexer::in1.connection->after;
             break;
-        case 0x10:
+        case 0b10:
             result = Multiplexer::in2.connection->after;
             break;
-        case 0x11:
+        case 0b11:
             result = Multiplexer::in3.connection->after;
             break;
         default:

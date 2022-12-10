@@ -43,17 +43,17 @@ int main()
     }
     
     //send clock to latches
-    for (int j = 0; j < 7; j++)
+    for (int j = 0; j < 13; j++)
     {
         if(j == 0) // write to R1
         {
-            latches[27].before = 0x71; //input1 rf
+            latches[27].before = 172; //input1 rf
             latches[22].before = 1; //input2 rf
             latches[30].before = 0b11; //RF control
         }
         if(j == 1) // write to R2
         {
-            latches[27].before = 0xfa; //input1 rf
+            latches[27].before = 622; //input1 rf
             latches[22].before = 2; //input2 rf
             latches[30].before = 0b11; //RF control
         }
@@ -61,6 +61,7 @@ int main()
         {
             latches[2].before = 1; //Rs
             latches[3].before = 2; //Rt
+            latches[5].before = 3; //Rd
             latches[30].before = 0b00; //RF control
         }
         if(j == 3) // wait 1
@@ -82,6 +83,34 @@ int main()
         {
             latches[30].before = 0b10; //RF control
         }
+        if(j == 7) // mux4 
+        {
+            latches[30].before = 0b00; //RF control
+            latches[34].before = 0b00; //pick RD2
+        }
+        if(j == 8) // ALU 
+        {
+            latches[37].before = 1; //add
+        }
+        if(j == 9) // wait 
+        {
+
+        }
+        if(j == 10) // mux5
+        {
+            
+            std::cout << "time: " << j << " ALU 1: " << latches[45].before << std::endl;
+            latches[47].before = 0b01; //pick alu result
+        }  
+        if(j == 11) // mux5
+        {  
+
+            std::cout << "time: " << j << " WB 1: " << latches[23].before << std::endl;
+            latches[21].before = 0b01; //mux2 WB
+            latches[26].before = 0b01; //mux3 Rd
+        }
+
+        //std::cout << "time: " << j << std::endl;
         std::cout << "time: " << j << " RF 1: " << latches[27].before << std::endl;
         std::cout << "time: " << j << " RF 2: " << latches[22].before << std::endl << std::endl;
 
@@ -109,8 +138,8 @@ int main()
     
 
     //result should now be output.before 
-    std::cout << (int)latches[28].before <<std::endl;
-    std::cout << (int)latches[29].before <<std::endl;
+    //std::cout <<std::dec << latches[36].before <<std::endl;
+    //std::cout << latches[29].before <<std::endl;
     //std::cout << std::bitset<10>(latches[2].before) <<std::endl;
     
 }
@@ -151,13 +180,13 @@ int build_arch()
     Latch *IM_L_buffer_out_2 = &latches[11];
     devices.push_back(new Register(*IM_L_buffer_in_2, *IM_L_buffer_out_2));
     Latch *IM_L_buffer_in_3 = IM_L_buffer_out_2;
-    Latch *IM_L_buffer_out_3 = &latches[31];
+    Latch *IM_L_buffer_out_3 = &latches[50];
     devices.push_back(new Register(*IM_L_buffer_in_3, *IM_L_buffer_out_3));
     Latch *IM_L_buffer_in_4 = IM_L_buffer_out_3;
-    Latch *IM_L_buffer_out_4 = &latches[32];
+    Latch *IM_L_buffer_out_4 = &latches[51];
     devices.push_back(new Register(*IM_L_buffer_in_4, *IM_L_buffer_out_4));
     Latch *IM_L_buffer_in_5 = IM_L_buffer_out_4;
-    Latch *IM_L_buffer_out_5 = &latches[33];
+    Latch *IM_L_buffer_out_5 = &latches[52];
     devices.push_back(new Register(*IM_L_buffer_in_5, *IM_L_buffer_out_5));
 
     Latch *IM_Rd_buffer_in_1 = IM_Rd;
@@ -166,6 +195,27 @@ int build_arch()
     Latch *IM_Rd_buffer_in_2 = IM_Rd_buffer_out_1;
     Latch *IM_Rd_buffer_out_2 = &latches[13];
     devices.push_back(new Register(*IM_Rd_buffer_in_2, *IM_Rd_buffer_out_2));
+    Latch *IM_Rd_buffer_in_3 = IM_Rd_buffer_out_2;
+    Latch *IM_Rd_buffer_out_3 = &latches[53];
+    devices.push_back(new Register(*IM_Rd_buffer_in_3, *IM_Rd_buffer_out_3));
+    Latch *IM_Rd_buffer_in_4 = IM_Rd_buffer_out_3;
+    Latch *IM_Rd_buffer_out_4 = &latches[54];
+    devices.push_back(new Register(*IM_Rd_buffer_in_4, *IM_Rd_buffer_out_4));
+    Latch *IM_Rd_buffer_in_5 = IM_Rd_buffer_out_4;
+    Latch *IM_Rd_buffer_out_5 = &latches[55];
+    devices.push_back(new Register(*IM_Rd_buffer_in_5, *IM_Rd_buffer_out_5));
+    Latch *IM_Rd_buffer_in_6 = IM_Rd_buffer_out_5;
+    Latch *IM_Rd_buffer_out_6 = &latches[56];
+    devices.push_back(new Register(*IM_Rd_buffer_in_6, *IM_Rd_buffer_out_6));
+    Latch *IM_Rd_buffer_in_7 = IM_Rd_buffer_out_6;
+    Latch *IM_Rd_buffer_out_7 = &latches[57];
+    devices.push_back(new Register(*IM_Rd_buffer_in_7, *IM_Rd_buffer_out_7));
+    Latch *IM_Rd_buffer_in_8 = IM_Rd_buffer_out_7;
+    Latch *IM_Rd_buffer_out_8 = &latches[58];
+    devices.push_back(new Register(*IM_Rd_buffer_in_8, *IM_Rd_buffer_out_8));
+    Latch *IM_Rd_buffer_in_9 = IM_Rd_buffer_out_8;
+    Latch *IM_Rd_buffer_out_9 = &latches[59];
+    devices.push_back(new Register(*IM_Rd_buffer_in_9, *IM_Rd_buffer_out_9));
 
     //mux 1 between Rt and Rd
     Latch *MUX_1_Rt = IM_Rt_buffer_out_2;
@@ -178,7 +228,7 @@ int build_arch()
 
     //mux 2 between mux1 and Rd
     Latch *MUX_2_mux1 = MUX_1_output;
-    Latch *MUX_2_Rd = IM_Rd_buffer_out_2; //this will be changed later after Rd is super buffered
+    Latch *MUX_2_Rd = IM_Rd_buffer_out_9; //this will be changed later after Rd is super buffered
     Latch *MUX_2_useless1 = &latches[19];
     Latch *MUX_2_useless2 = &latches[20];
     Latch *MUX_2_c = &latches[21];
@@ -187,7 +237,7 @@ int build_arch()
 
     //mux 3 between Rs and write data
     Latch *MUX_3_Rs = IM_Rs_buffer_out_3;
-    Latch *MUX_3_WD = &latches[23]; //this comes from the very last mux and will change later
+    Latch *MUX_3_WD = &latches[23]; //this comes from the very last mux
     Latch *MUX_3_useless1 = &latches[24];
     Latch *MUX_3_useless2 = &latches[25];
     Latch *MUX_3_c = &latches[26];
