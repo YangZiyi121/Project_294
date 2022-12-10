@@ -12,6 +12,7 @@
 #include "ALU.cpp"
 #include "MemoryInst.cpp"
 #include "MemoryData.cpp"
+#include "IO.cpp"
 
 int const NUM_LATCHES = 100;
 //int const NUM_DEVICES = 24; // use devices.size() instead of this
@@ -26,7 +27,6 @@ Device tmp_device;
 
 
 int build_arch();
-int test_IM_to_RF();
 
 int main()
 {
@@ -43,11 +43,11 @@ int main()
     }
     
     //send clock to latches
-    for (int j = 0; j < 13; j++)
+    for (int j = 0; j < 14; j++)
     {
         if(j == 0) // write to R1
         {
-            latches[27].before = 172; //input1 rf
+            latches[27].before = 122; //input1 rf
             latches[22].before = 1; //input2 rf
             latches[30].before = 0b11; //RF control
         }
@@ -60,9 +60,11 @@ int main()
         if(j == 2) // put stuff in Rs and Rt
         {
             latches[2].before = 1; //Rs
-            latches[3].before = 2; //Rt
-            latches[5].before = 3; //Rd
+            latches[3].before = 0; //Rt
+            latches[4].before = 66; //L
+            latches[5].before = 2; //Rd
             latches[30].before = 0b00; //RF control
+
         }
         if(j == 3) // wait 1
         {
@@ -72,7 +74,7 @@ int main()
         }
         if(j == 4) // mux1
         {
-            latches[15].before = 0; //mux1 Rt
+            latches[15].before = 0; //pick Rd
         }
         if(j == 5) // mux2 mux3
         {
@@ -86,7 +88,8 @@ int main()
         if(j == 7) // mux4 
         {
             latches[30].before = 0b00; //RF control
-            latches[34].before = 0b00; //pick RD2
+            latches[34].before = 0b00; //pick Rt
+
         }
         if(j == 8) // ALU 
         {
@@ -99,20 +102,29 @@ int main()
         if(j == 10) // mux5
         {
             
-            std::cout << "time: " << j << " ALU 1: " << latches[45].before << std::endl;
+            //std::cout << "time: " << j << " ALU 1: " << latches[45].before << std::endl;
             latches[47].before = 0b01; //pick alu result
         }  
         if(j == 11) // mux5
         {  
 
-            std::cout << "time: " << j << " WB 1: " << latches[23].before << std::endl;
+            //std::cout << "time: " << j << " WB 1: " << latches[23].before << std::endl;
             latches[21].before = 0b01; //mux2 WB
             latches[26].before = 0b01; //mux3 Rd
         }
+        if(j == 12) // write
+        {  
+            latches[30].before = 0b11; //RF control
+        }
+        if(j == 13) // read
+        {  
+            latches[27].before = 3; //input1 rf
+            latches[30].before = 0b01; //RF control
+        }
 
         //std::cout << "time: " << j << std::endl;
-        std::cout << "time: " << j << " RF 1: " << latches[27].before << std::endl;
-        std::cout << "time: " << j << " RF 2: " << latches[22].before << std::endl << std::endl;
+        std::cout << "time: " << j << " mux4 L: " << latches[52].before << std::endl;
+        //std::cout << "time: " << j << " RF 2: " << latches[22].before << std::endl << std::endl;
 
         for (int i = 0; i < NUM_LATCHES; i++) 
         {
@@ -138,7 +150,7 @@ int main()
     
 
     //result should now be output.before 
-    //std::cout <<std::dec << latches[36].before <<std::endl;
+    std::cout <<std::dec << latches[28].before <<std::endl;
     //std::cout << latches[29].before <<std::endl;
     //std::cout << std::bitset<10>(latches[2].before) <<std::endl;
     
@@ -298,11 +310,11 @@ int build_arch()
     devices.push_back(new MemoryData(*DM_address, *DM_WD, *DM_output, *DM_c));
 
     //IO component
-    Latch *IO_RD1 = RF_RD1;
-    Latch *IO_RD2 = RF_RD2;
+    Latch *IO_RD1 = RF_RD1; //28
+    Latch *IO_RD2 = RF_RD2; //29
     Latch *IO_output = &latches[42];
     Latch *IO_c = &latches[43];
-    devices.push_back(new ALU(*IO_RD1, *IO_RD2, *IO_output, *IO_c));
+    devices.push_back(new IO(*IO_RD1, *IO_RD2, *IO_c, *IO_output));
 
     //output of adder is buffered multiple time to sync up with other outputs
     Latch *IO_buffer_in_1 = ADDER_WD_WD;
