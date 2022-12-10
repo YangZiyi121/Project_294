@@ -43,7 +43,7 @@ int main()
     }
     
     //send clock to latches
-    for (int j = 0; j < 4; j++)
+    for (int j = 0; j < 3; j++)
     {
         if(j == 0) // write to R1
         {
