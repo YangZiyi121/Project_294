@@ -19,8 +19,8 @@ class MemoryData : public Device{
 
         void do_function(){
             if(r_w.connection->after == 0){  //read
-                p = storage + address.connection->after;
-                std::memcpy(&result, p, sizeof(int64_t));
+                // p = storage + address.connection->after;
+                // std::memcpy(&result, p, sizeof(int64_t));
             }else{      //write
                 //Memory::storage.insert(std::pair<int64_t, int64_t>(address.connection->after, write_value.connection->after));
                 result = std::numeric_limits<int64_t>::max(); //infinite impedance

@@ -45,8 +45,10 @@ public:
                 result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
                 break;
             case 0b10:
-                if (!(in[0].connection->after != in[1].connection->after))
-                std::cout << "Register File access failure. The RR (0x10) control signal is accompanied with two input that refer to the same register." << std::endl;
+                //std::cout << "Rd: " << in[0].connection->after << std::endl;
+                //std::cout << "Rs: " << in[1].connection->after << std::endl;
+                if ((in[0].connection->after == in[1].connection->after))
+                    std::cout << "Register File access failure. The RR (0x10) control signal is accompanied with two input that refer to the same register." << std::endl;
                 assert (in[0].connection->after != in[1].connection->after);
                 result[0] = rf[in[0].connection->after];
                 result[1] = rf[in[1].connection->after];
