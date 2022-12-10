@@ -18,15 +18,15 @@ class IO: public Device{
         void do_function(){
             if(control.connection->after == 0){
                 switch (rs.connection -> after){
-                    case 0: std::cout << "Type in integer for input: ";  scanf("%d", &result_int); result = result_int; break;
-                    case 1: std::cout << "Type in char for input: "; scanf("%c", &result_char); result = result_char; break;
+                    case 1: std::cout << "Type in integer for input: ";  scanf("%d", &result_int); result = result_int; break;
+                    case 2: std::cout << "Type in char for input: "; scanf("%c", &result_char); result = result_char; break;
                 }
             }
             else{
                 result = 0; //for default setting of outputing
                 switch (rd.connection -> after){
-                    case 0: std::cout << int(rs.connection->after); break;
-                    case 1: std::cout << char(rs.connection->after); break;
+                    case 1: std::cout << int(rs.connection->after); break;
+                    case 2: std::cout << char(rs.connection->after); break;
                 }
 
             }
