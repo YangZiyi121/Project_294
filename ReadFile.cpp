@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "Memory.h"
-
+#include <cstring>
 
 /**This method loads all instructions to the memory**/
 // 1: hello.obj
