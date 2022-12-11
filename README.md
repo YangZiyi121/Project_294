@@ -51,3 +51,5 @@ The control path consists of the Decoder, the Controller, and the Split control.
                     , 0b00001100000000000}```. More about decoding each instruction could be found in [Control signals](./Control_signals.pdf).
                     
 The control binary word is as follows `[PC_1b, MUX1_1b, MUX_1b, MUX3_1b, RF_2b, MUX4_1b, ALU_4b, IO_2b, DM_2b, MUX5_2b]` where `XX_yb` is seen as the component `XX` and `y` is the number of control bits it receives.
+
+For all the components, the control signals corresponding values are given in the source code files.
