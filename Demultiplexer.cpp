@@ -6,9 +6,9 @@
 class Demultiplexer : public Device
 {
     public:
-    static const int cycles = 1;
-    static const int area = 500;
-    static const double power = 0.25;
+    // const int cycles = 1;
+    // const int area = 500;
+    // const double power = 0.25;
 
     Demultiplexer(Latch& input1, Latch& controlN, Latch& output1 , Latch& output2, Latch& output3, Latch& output4)
     {
@@ -22,7 +22,7 @@ class Demultiplexer : public Device
 
     void receive_clock() 
     { 
-        out[(control.connection->after+0)%4]->before = result;
+        out[(control.connection->after+0)%4]->before = result; //control.connection->after is driven by the control signal and will be selecting the relevant output
         out[(control.connection->after+1)%4]->before = 0;
         out[(control.connection->after+2)%4]->before = 0;
         out[(control.connection->after+3)%4]->before = 0;

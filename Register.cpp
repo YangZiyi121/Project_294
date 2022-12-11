@@ -9,9 +9,9 @@
 class Register: public Device
 {
 public:
-    const double cycles = 0.5;
-    static const int area = 200;
-    static const double power = 0.05;
+    // const double cycles = 0.5;
+    // const int area = 200;
+    // const double power = 0.05;
 
     //Constructer
     Register(Latch &input, Latch &output)
@@ -22,7 +22,7 @@ public:
     } 
 
     void receive_clock() { 
-        Register::out->before = Register::result;
+        Register::out->before = Register::result; //just propagate the input after one cycle
         
     }
 

@@ -4,20 +4,7 @@
 #include "Port.h"
 #include <assert.h>
 
-//TODO: Define those codes based on the architectural needs
-
-// #define ADDcode
-// #define MULTcode
-// #define DIVcode
-// #define NOTCcode
-// #define ANDcode
-// #define ORcode
-// #define XORcode
-// #define SRLcode
-// #define SLLcode
-
-//FOR TESTING PURPOSES
-
+//Those are the control codes for every operation
 #define ADDcode 1
 #define SUBcode 2
 #define MULTcode 3
@@ -35,59 +22,37 @@
 class ALU : public Device {
 public:
 
-	//TODO: Make meaningful characteristics
-
-
 	// static const int cycles = 1;
 	// static const int area = 400;
 	// static const double power = 0.5;
 
-
-
-
-
+	//Constructor
 	ALU(Latch& input1, Latch& input2, Latch& output, Latch &control_in)
 	{
-		//connect(0, l1);
-		//connect(1, l2);
 		ALU::in[0].connection = &input1;
 		ALU::in[1].connection = &input2;
 		ALU::out = &output;
 		ALU::control.connection = &control_in;
 		std::cout << "ALU is being created" << std::endl;
-
-		//cycles = cycles + 1;
 	} // Initialize the input ports and the latch as necessary
 	void receive_clock() {
-		// if(--delay > 0){ BOAZIZ WROTE THIS AND COST US A WHOLE DAY
-		// 	;
-		// }
-		// else
-			ALU::out->before = ALU::result; //cout << "   " << ALU::out->before << endl; 
+			ALU::out->before = ALU::result;
 	}
 	void do_function()
 	{
-
-		
-
-		switch (ALU::control.connection->after)
+		switch (ALU::control.connection->after) //The control signal will drive the needed operation on the ALU
         {
             case ADDcode:
 				ALU::result = ALU::in[0].connection->after + ALU::in[1].connection->after;
-				// std::cout << "alu inside input1: "<<ALU::in[0].connection->after << std::endl;
-            	// std::cout << "alu inside input2: "<<ALU::in[1].connection->after << std::endl;
-				// std::cout << "alu inside result: "<<ALU::result << std::endl;
                 break;
             case SUBcode:
 				ALU::result = ALU::in[0].connection->after - ALU::in[1].connection->after;
                 break;
             case MULTcode:
                 ALU::result = ALU::in[0].connection->after * ALU::in[1].connection->after;
-				delay = 3;
                 break;
             case DIVcode:
                 ALU::result = ALU::in[0].connection->after / ALU::in[1].connection->after;
-				delay = 8;
                 break;
             case NOTcode:
                 ALU::result = ~ ALU::in[0].connection->after;
@@ -117,10 +82,7 @@ public:
 				//assert(false); //Dangerous if this code is edited. Never forget to put the breaks
 				ALU::result = 0;
 				break;
-			//TODO: Substruction?
         }
-		// if(result >0)
-		//  std::cout << "result of alu: "<<result << std::endl;
 	}
 
 private:
@@ -128,8 +90,6 @@ private:
 	Latch* out;
 	long long result;
 	Port control; 
-	char delay = 1;
-
 };
 
 // /*Testing*/

@@ -10,10 +10,10 @@
 class Multiplexer: public Device
 {
 public:
-    const double cycles = 0.5;
-    const int area = 500;
-    const double power = 0.25;
-    //Constructer
+    // const double cycles = 0.5;
+    // const int area = 500;
+    // const double power = 0.25;
+    //Constructor
     Multiplexer(Latch &data1, Latch &data2, Latch &data3, Latch &data4, Latch &control_input, Latch &output)
     {
         Multiplexer::in0.connection = &data1;
@@ -30,10 +30,9 @@ public:
         Multiplexer::out->before = result;
     }
 
-    //Inherit
     void do_function()
     {
-        switch (Multiplexer::control.connection->after)
+        switch (Multiplexer::control.connection->after) // The control signal is the selector of the mux
         {
         case 0b00:
             result = Multiplexer::in0.connection->after;
