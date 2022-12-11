@@ -6,25 +6,23 @@
 
 class Divider : public Device {
 public:
-	static const int cycles = 8;
-	static const int area = 5000;
-	static const double power = 1;
+	// static const int cycles = 8;
+	// static const int area = 5000;
+	// static const double power = 1;
 	Divider(Latch& input1, Latch& input2, Latch& output)
 	{
-		//connect(0, l1);
-		//connect(1, l2);
 		Divider::in[0].connection = &input1;
 		Divider::in[1].connection = &input2;
 		Divider::out = &output;
-
 		std::cout << "Divider is being created" << std::endl;
-
 		//cycles = cycles + 1;
 	} // Initialize the input ports and the latch as necessary
-	void receive_clock() { 
+
+	void receive_clock() 
+	{ 
 		Divider::out->before = Divider::result; 
-		//std::cout << "   " << Divider::out->before << std::endl; 
 	}
+
 	void do_function()
 	{
 		if (Divider::in[1].connection->after != 0)
@@ -45,7 +43,7 @@ private:
 	long long result;
 };
 
-// /*Testing*/
+/*Testing*/
 // int main()
 // {
 // 	//Initialize Ports
