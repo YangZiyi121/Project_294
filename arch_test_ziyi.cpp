@@ -17,7 +17,7 @@
 #include "Decoder_test.cpp"
 //#include "ReadFile.cpp"
 
-int const NUM_LATCHES = 100;
+int const NUM_LATCHES = 200;
 //int const NUM_DEVICES = 24; // use devices.size() instead of this
 Latch latches[NUM_LATCHES]; // 80-100 for input of control array
 std::vector<Device*> devices;
@@ -150,7 +150,7 @@ int main()
         {
             pc++;
             latches[0].before = pc;
-            cout << pc << endl << endl;
+            // cout << pc << endl << endl;
         }
         else
         {
@@ -180,14 +180,14 @@ int main()
         //std::cout << "time: " << j << " RF 2: " << latches[22].before << std::endl << std::endl;
 
 
-        if(latches[36].before >0)
-        {
-            std::cout << "alu result: "<<latches[36].before << std::endl;
-        }
-        if(latches[45].before >0)
-        {
-            std::cout << "mux5 result: "<<latches[45].before << std::endl;
-        }
+        // if(latches[76].before >0 || latches[76].after >0)
+        // {
+        //     std::cout << "alu input1: "<<latches[35].before << std::endl;
+        //     std::cout << "alu input2: "<<latches[31].before << std::endl;
+        //     std::cout << "alu result: "<<latches[36].before << std::endl;
+        //     std::cout << "alu control: "<<latches[76].before << std::endl;
+        //     std::cout << "alu buffer result: "<<latches[45].before << std::endl;
+        // }
         for (int i = 0; i < NUM_LATCHES; i++) 
         {
             latches[i].receive_clock();
@@ -209,7 +209,7 @@ int main()
         // std::cout << "step: ";  scanf("%d", &dummy);
     }
 
-    // std::cout << "past clock devices" <<std::endl;
+     std::cout << "" <<std::endl;
     
 
     //result should now be output.before 
@@ -424,7 +424,7 @@ int build_arch()
 
     //output of pc mux is buffered for branching
     Latch *PC_buffer_in_1 = MUX_PC_output;
-    Latch *PC_buffer_out_1 = &latches[153];
+    Latch *PC_buffer_out_1 = &latches[161];
     devices.push_back(new Register(*PC_buffer_in_1, *PC_buffer_out_1));
     Latch *PC_buffer_in_2 = PC_buffer_out_1;
     Latch *PC_buffer_out_2 = &latches[154];

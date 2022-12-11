@@ -64,7 +64,7 @@ public:
                 rf[in[1].connection->after] = in[0].connection->after;
                 result[0] = 0; //infinite impedance
                 result[1] = 0; //infinite impedance
-                 std::cout << "Write "<< in[0].connection->after << "to rf "<< in[1].connection->after << std::endl;
+                //  std::cout << "Write "<< in[0].connection->after << "to rf "<< in[1].connection->after << std::endl;
                 break;
         }
         //std::cout << "RF10: "<<rf[10]<<std::endl;

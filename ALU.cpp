@@ -59,10 +59,10 @@ public:
 		//cycles = cycles + 1;
 	} // Initialize the input ports and the latch as necessary
 	void receive_clock() {
-		if(--delay > 0){
-			;
-		}
-		else
+		// if(--delay > 0){ BOAZIZ WROTE THIS AND COST US A WHOLE DAY
+		// 	;
+		// }
+		// else
 			ALU::out->before = ALU::result; //cout << "   " << ALU::out->before << endl; 
 	}
 	void do_function()
@@ -74,6 +74,9 @@ public:
         {
             case ADDcode:
 				ALU::result = ALU::in[0].connection->after + ALU::in[1].connection->after;
+				// std::cout << "alu inside input1: "<<ALU::in[0].connection->after << std::endl;
+            	// std::cout << "alu inside input2: "<<ALU::in[1].connection->after << std::endl;
+				// std::cout << "alu inside result: "<<ALU::result << std::endl;
                 break;
             case SUBcode:
 				ALU::result = ALU::in[0].connection->after - ALU::in[1].connection->after;
@@ -116,8 +119,8 @@ public:
 				break;
 			//TODO: Substruction?
         }
-		if(result >0)
-		 std::cout << "result of alu: "<<result << std::endl;
+		// if(result >0)
+		//  std::cout << "result of alu: "<<result << std::endl;
 	}
 
 private:

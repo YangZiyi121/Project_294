@@ -33,7 +33,6 @@ public:
         {
             Decoder::out[i]->before = Decoder::result[i];
         }
-
     }
     void do_function()
     {
