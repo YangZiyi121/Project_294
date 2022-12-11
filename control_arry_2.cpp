@@ -8,6 +8,10 @@
 #include <string>
 #include <cmath>
 using namespace std;
+const int input_start = 80;
+const int input_end = 100;
+const int output_start = 80;
+const int output_end = 100;
 
 
 
@@ -16,22 +20,22 @@ public:
 	static const int cycles = 1;
 	static const int area = 1;
 	//static const double power = 0.001;
-	ControlArray(Latch input[], Latch output[])
+	ControlArray(Latch latches[])
 	{
         //Latch temp
 
         
-		for (int i = 0; i < 5; i++)// salman change size to arraysize
+		for (int i = input_start; i < input_end; i++) // array to set inputs, they are 80-100
 		{
 		
-			ControlArray::in[i].connection = &(input[i]);
+			ControlArray::in[i-input_start].connection = &(latches[i]);
 			
-            cout << ControlArray::in[i].connection->before << endl;
+            //cout << ControlArray::in[i-45].connection->before << endl;
 		}
 
-		for (int i = 0; i < 10; i++)// salman change size to arraysize
+		for (int i = output_start; i < output_end; i++)// salman change size to arraysize
         {
-		ControlArray::out[i] = &(output[i]);
+		ControlArray::out[i-output_start] = &(latches[i]);
         }
 		
 		std::cout << "ControlArray is being created" << std::endl;
@@ -103,128 +107,113 @@ public:
 	}
 
 private:
-	Port in[20];
-    const int arraysize = 20;
-	Latch* out[10];
+	Port in[input_end-input_start];
+    //const int arraysize = 20;
+	Latch* out[output_end-output_start];
 	long long result;
     
 };
 
-int main()
-{
-    Latch input[5], input2[5], control, output[10];
-    int balance[5] = { 0b0000001111101000, 4, 3, 17, 50 };
-    int talance[5] = { 0b0011000001101011, 12, 13, 117, 150 };
+// int main()
+// {
+//     Latch latches[50], input2[5], control, output[10];
+//     int balance[5] = { 0b0000001111101000, 4, 3, 17, 50 };
+//     int talance[5] = { 0b0011000001101011, 12, 13, 117, 150 };
 
 
-    for (int i = 0; i < 5; i++)
-    {
-        input[i].before = balance[i];
-        //cout << input[i].before << endl;
-    }
+//     for (int i = 0; i < 5; i++)
+//     {
+//         latches[i+45].before = balance[i];
+//         //cout << input[i].before << endl;
+//     }
 
-    ControlArray sdfsdfsdf(input, output);
+//     ControlArray sdfsdfsdf(latches);
 
-    for (int i = 0; i < 5; i++)
-    {
-        input[i].receive_clock();
-       // cout << input[1].after << endl;
-    }
-    for (int i = 0; i < 10; i++)
-    {
-        output[i].receive_clock();
-       // cout << input[1].after << endl;
-    }
+//     for (int i = 0; i < 50; i++)
+//     {
+//         latches[i].receive_clock();
+//        // cout << input[1].after << endl;
+//     }
 
-    sdfsdfsdf.do_function();
-    sdfsdfsdf.receive_clock();
+//     sdfsdfsdf.do_function();
+//     sdfsdfsdf.receive_clock();
 
-    cout << "PCMUX: " << output[0].before << endl; 
-    cout << "MUX1: " << output[1].before << endl; //latch 15
-    cout << "MUX2: " << output[2].before << endl; //latch 21
-    cout << "MUX3: " << output[3].before << endl;
-    cout << "RF: " << output[4].before << endl;
-    cout << "MUX4: " << output[5].before << endl;
-    cout << "ALU: " << output[6].before << endl;
-    cout << "IO: " << output[7].before << endl;
-    cout << "DM: " << output[8].before << endl;
-    cout << "MUX5: " << output[9].before << endl;
+//     cout << "PCMUX: " << latches[30+0].before << endl; 
+//     cout << "MUX1: " << latches[30+1].before << endl; //latch 15
+//     cout << "MUX2: " << latches[30+2].before << endl; //latch 21
+//     cout << "MUX3: " << latches[30+3].before << endl;
+//     cout << "RF: " << latches[30+4].before << endl;
+//     cout << "MUX4: " << latches[30+5].before << endl;
+//     cout << "ALU: " << latches[30+6].before << endl;
+//     cout << "IO: " << latches[30+7].before << endl;
+//     cout << "DM: " << latches[30+8].before << endl;
+//     cout << "MUX5: " << latches[30+9].before << endl;
     
 
-    for (int i = 0; i < 5; i++)
-    {
-        input[i].before = talance[i];
-        //cout << input[i].before << endl;
-    }
+//     for (int i = 0; i < 5; i++)
+//     {
+//         latches[i+45].before = talance[i];
+//         //cout << input[i].before << endl;
+//     }
 
-    //ControlArray all(input, output);
+//     for (int i = 0; i < 50; i++)
+//     {
+//         latches[i].receive_clock();
+//        // cout << input[1].after << endl;
+//     }
 
-    for (int i = 0; i < 5; i++)
-    {
-        input[i].receive_clock();
-        // cout << input[1].after << endl;
-    }
-    for (int i = 0; i < 10; i++)
-    {
-        output[i].receive_clock();
-       // cout << input[1].after << endl;
-    }
+//     sdfsdfsdf.do_function();
+//     sdfsdfsdf.receive_clock();
 
-    sdfsdfsdf.do_function();
-    sdfsdfsdf.receive_clock();
+//     cout << "PCMUX: " << latches[30+0].before << endl; 
+//     cout << "MUX1: " << latches[30+1].before << endl; //latch 15
+//     cout << "MUX2: " << latches[30+2].before << endl; //latch 21
+//     cout << "MUX3: " << latches[30+3].before << endl;
+//     cout << "RF: " << latches[30+4].before << endl;
+//     cout << "MUX4: " << latches[30+5].before << endl;
+//     cout << "ALU: " << latches[30+6].before << endl;
+//     cout << "IO: " << latches[30+7].before << endl;
+//     cout << "DM: " << latches[30+8].before << endl;
+//     cout << "MUX5: " << latches[30+9].before << endl;
+//  }
 
-    cout << "PCMUX: " << output[0].before << endl;
-    cout << "MUX1: " << output[1].before << endl;
-    cout << "MUX2: " << output[2].before << endl;
-    cout << "MUX3: " << output[3].before << endl;
-    cout << "RF: " << output[4].before << endl;
-    cout << "MUX4: " << output[5].before << endl;
-    cout << "ALU: " << output[6].before << endl;
-    cout << "IO: " << output[7].before << endl;
-    cout << "DM: " << output[8].before << endl;
-    cout << "MUX5: " << output[9].before << endl;
+//  int main()
+// {
+//    //Latch input1, input2, control, output;
 
+//    //Initialize latches
+//    input1.before = 0b0000111101; //use this format if you want binary representation
+//    input2.before = 0b0110001001;
+//    control.before = 3;
 
- 	return 0;
- }
+//    //Create Device
+//    //Logic device(input1, input2, control, output);
 
-int main()
-{
-   //Latch input1, input2, control, output;
+//    //send clock to latches
+//    input1.receive_clock();input2.receive_clock();control.receive_clock();output.receive_clock();
+//    //std::cout << input1.after <<std::endl;
 
-   //Initialize latches
-   input1.before = 0b0000111101; //use this format if you want binary representation
-   input2.before = 0b0110001001;
-   control.before = 3;
+//    //propogate data through device
+//    device.do_function();
+//    device.receive_clock();
 
-   //Create Device
-   //Logic device(input1, input2, control, output);
-
-   //send clock to latches
-   input1.receive_clock();input2.receive_clock();control.receive_clock();output.receive_clock();
-   //std::cout << input1.after <<std::endl;
-
-   //propogate data through device
-   device.do_function();
-   device.receive_clock();
-
-   //result should now be output.before 
-   std::cout << output.before << std::endl;
-   std::cout << std::bitset<10>(output.before) << std::endl;
+//    //result should now be output.before 
+//    std::cout << output.before << std::endl;
+//    std::cout << std::bitset<10>(output.before) << std::endl;
 
 
-    Latch CA_input[20];
-    Latch CA_output[10]; //10 outputs
+//     Latch CA_input[20];
+//     Latch CA_output[10]; //10 outputs
 
-    //Initialization
-    for (int i = 0; i < 20, i++){
-        CA_input->before = i;
-    }
+//     //Initialization
+//     for (int i = 0; i < 20, i++){
+//         CA_input->before = i;
+//     }
 
-    //Create Device
-    ControlArray(Latch CA_input[], Latch CA_output[]);
+//     //Create Device
+//     ControlArray(Latch CA_input[], Latch CA_output[]);
 
     
 
 
-}
+// }

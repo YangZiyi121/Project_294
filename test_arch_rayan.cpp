@@ -13,7 +13,7 @@
 #include "MemoryInst.cpp"
 #include "MemoryData.cpp"
 #include "IO.cpp"
-
+#include "control_arry_2.cpp"
 int const NUM_LATCHES = 100;
 //int const NUM_DEVICES = 24; // use devices.size() instead of this
 Latch latches[NUM_LATCHES]; // 80-100 for input of control array
@@ -333,21 +333,9 @@ int build_arch()
     Latch *MUX_5_c = &latches[47];
     Latch *MUX_5_output = MUX_3_WD;
     devices.push_back(new Multiplexer(*MUX_5_IO, *MUX_5_ALU, *MUX_5_DM, *MUX_5_useless, *MUX_5_c, *MUX_5_output));
-
-
-    //Control array
-    std::vector<Latch*> CA_input[20];
-    std::vector<Latch*> CA_output[10]; //10 outputs
-    for (int i = 80; i < 100; i++){
-        CA_input.push_back(&latches[i]);
-    }
-
-    for (int i = 70; i < 80; i++){
-        CA_output.push_back(&latches[i]);
-    }
-
     
-    devices.push_back(new ControlArray(Latch CA_input[], Latch CA_output[]));
+    // control array takes whole latches array and takes slices of it based on input output
+    devices.push_back(new ControlArray(latches));
 
 
 
