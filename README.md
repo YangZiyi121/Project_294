@@ -3,7 +3,7 @@ Tinker : CPU simulator
 
 This project implements a C++ simulator based for a CPU called "Tinker". The simulated architecture is as illustrated in the figure below.
 
-<img src="tinker.png" alt="architecture" />
+<img src="Figures/tinker.png" alt="architecture" />
 
 The architecture is inheredetly similar to the RISC-V architecture. The main similarility is based in the central block that is composed an Instruction Memory (IM) that provides the instructions driven by a Program Counter (PC), a Register File (RF) made of 32 64bits-registers, an Arithmetic Logic Unit (ALU) that performs all the arithmetical and the logical operations, and a Data Memory that holds the data in runtime.
 
@@ -13,7 +13,7 @@ The components named in numbers 1 to 4 are muxes. They are assigned these number
 
 As illustrated in the figure above, the component numbered in 1 is a mux that choses between the two inputs `Rt` and `Rd`. The diamonds on the path that connects `Rt` to the mux are registers used to buffer the signal comming from `Rt` for 2 cycles while waiting for the control signal to arrive (the controls will be discussed later).
 
-<img src="chunk2.png" alt="control block illustration" width="400px" />
+<img src="Figures/chunk2.png" alt="control block illustration" width="400px" />
 
 The control part in the figure above is used to orchastrate the work of the diffrent components of the CPU using a Decoder that receives the instruction from the IM, transforming it into a sequence of control signals and forwarding them to the Controller that will emit them one by one every cycle. The control signal that comes out of the Controller is splitted to drive every component seperately.
 
@@ -23,7 +23,7 @@ The control part in the figure above is used to orchastrate the work of the diff
 
 ## Data Path
 
-<img src="DP.png" alt="data path illustration" />
+<img src="Figures/DP.png" alt="data path illustration" />
 
 The data path of the CPU is composed of an Instruction Memory (IM), a Register File (RF), an Arithmetic Logic Unit (ALU), and a Data Memory (DM).
 
@@ -37,7 +37,7 @@ Finally, whatever is comming from the IO, ALU, or DM, they will be multiplexed b
 
 ## Branching Path
 
-<img src="Branching.png" alt="branching illustration" />
+<img src="Figures/Branching.png" alt="branching illustration" />
 
 The branching path is illustrated in the figure above. Basically, the PC in case of no branching adds up by 4 as the memory is byte addressable and 32 bits are read at once. In case of branching/jumps, the different combinations are handled by the component New PC that receives signals from the IM as immediate through the signal `L` (e.g. instruction `brr L`), the RF as value stored in a register through the signal `RD2` (e.g. instruction `br rd`), or the ALU after some computation (e.g. instruction `brgt rd, rs, rt`).
 
