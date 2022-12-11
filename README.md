@@ -27,6 +27,10 @@ The data path of the CPU is composed of an Instruction Memory (IM), a Register F
 
 The IM has 5 outputs. The first output is the `OP` signal that forwards the OPERATION CODE to the control section. The outputs `Rs` and `Rt` are the operand of several operations. The `Rt` is multiplexed with another output `Rd` (Destination) as the RF is only dual-ported and `Rs` is the required signal when operations are performed with an immediate value sent on another output `L`. Notably, the `Rd` is again multiplexed in the mux number 2 as it would be required when `Rs` and `Rt` are sent to computation and the value of `Rd` is needed for storage.
 
-The RF has two outputs `RD1` and `RD2`. Those will be either used with the IO components, or with ALU. In case of use with the IO components, one will be used to select the IO component and the other will be used to read from or write to it. In case of use with the ALU, both will be used as operands of the operations sent by the Controller.
+The RF has two outputs `RD1` and `RD2`. Those will be either used with the IO components, or with ALU. In case of use with the IO components, one will be used to select the IO component and the other will be used to read from or write to it. In case of use with the ALU, both will be used as operands of the operations sent by the Controller. Notably, the `RD2` is multiplexed with the immediate comming in signal `L` using the mux numbered 4.
+
+The DM receives an address from the ALU. In case the Controller sends a read control signal, then the DM outputs the value stored at the sent address. Otherwise, if the Controller sends a write control signal, then the DM writes the value comming from the component "add" below it that sums the `RD2` and `L` (different combination of those is handled by the control signals) and outputs nothing. 
+
+Finally, whatever is comming from the IO, ALU, or DM, they will be multiplexed by the mux numbered 5 and depending on the control signal one of them is chosen and sent back to the RF to be stored in `Rd` that has been buffering all along the execution.
 
 ## Control Path
