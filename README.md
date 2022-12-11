@@ -19,6 +19,8 @@ The control part in the figure above is used to orchastrate the work of the diff
 
 ## Artifact evaluation
 
+[PLACE HOLDER]
+
 ## Data Path
 
 <img src="DP.png" alt="data path illustration" />
@@ -40,3 +42,16 @@ Finally, whatever is comming from the IO, ALU, or DM, they will be multiplexed b
 The branching path is illustrated in the figure above. Basically, the PC in case of no branching adds up by 4 as the memory is byte addressable and 32 bits are read at once. In case of branching/jumps, the different combinations are handled by the component New PC that receives signals from the IM as immediate through the signal `L` (e.g. instruction `brr L`), the RF as value stored in a register through the signal `RD2` (e.g. instruction `br rd`), or the ALU after some computation (e.g. instruction `brgt rd, rs, rt`).
 
 ## Control Path
+
+The control path consists of the Decoder, the Controller, and the Split control. The Decoder receives the operation code from the IM that will be translated into sequence of control signals. For instance, it receives `0x0` that is specific to the instruction `add rd, rs, rt` and translates it in to ```{0b00000000000000000, 0b00000000000000000
+                    , 0b00000100000000000
+                    , 0b00000010000000000 
+                    , 0b00000000001000000
+                    , 0b00000000000000000
+                    , 0b00000000000000001
+                    , 0b00110000000000000
+                    , 0b00001100000000000}```. More about decoding each instruction could be found in [Control signals](./Control_signals.pdf).
+                    
+The control binary word is as follows `[PC_1b, MUX1_1b, MUX_1b, MUX3_1b, RF_2b, MUX4_1b, ALU_4b, IO_2b, DM_2b, MUX5_2b]` where `XX_yb` is seen as the component `XX` and `y` is the number of control bits it receives.
+
+For all the components, the control signals corresponding values are given in the source code files.
