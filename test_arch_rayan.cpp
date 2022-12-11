@@ -4,6 +4,7 @@
 #include "Port.h"
 #include "Logic.cpp"
 #include "Adder.cpp"
+#include "Adder4.cpp"
 #include "RegisterFile.cpp"
 #include <bitset>
 #include <vector>
@@ -14,7 +15,8 @@
 #include "MemoryData.cpp"
 #include "IO.cpp"
 #include "control_arry_2.cpp"
-int const NUM_LATCHES = 100;
+#include "PC_new.cpp"
+int const NUM_LATCHES = 200;
 //int const NUM_DEVICES = 24; // use devices.size() instead of this
 Latch latches[NUM_LATCHES]; // 80-100 for input of control array
 std::vector<Device*> devices;
@@ -200,6 +202,12 @@ int build_arch()
     Latch *IM_L_buffer_in_5 = IM_L_buffer_out_4;
     Latch *IM_L_buffer_out_5 = &latches[52];
     devices.push_back(new Register(*IM_L_buffer_in_5, *IM_L_buffer_out_5));
+    Latch *IM_L_buffer_in_6 = IM_L_buffer_out_5;
+    Latch *IM_L_buffer_out_6 = &latches[150];
+    devices.push_back(new Register(*IM_L_buffer_in_6, *IM_L_buffer_out_6));
+    Latch *IM_L_buffer_in_7 = IM_L_buffer_out_6;
+    Latch *IM_L_buffer_out_7 = &latches[151];
+    devices.push_back(new Register(*IM_L_buffer_in_7, *IM_L_buffer_out_7));
 
     Latch *IM_Rd_buffer_in_1 = IM_Rd;
     Latch *IM_Rd_buffer_out_1 = &latches[12];
@@ -269,6 +277,13 @@ int build_arch()
     Latch *RF_RD1_buffer_out_1 = &latches[31];
     devices.push_back(new Register(*RF_RD1_buffer_in_1, *RF_RD1_buffer_out_1));
 
+    Latch *RF_RD2_buffer_in_1 = RF_RD2;
+    Latch *RF_RD2_buffer_out_1 = &latches[152];
+    devices.push_back(new Register(*RF_RD2_buffer_in_1, *RF_RD2_buffer_out_1));
+    Latch *RF_RD2_buffer_in_2 = RF_RD2_buffer_out_1;
+    Latch *RF_RD2_buffer_out_2 = &latches[153];
+    devices.push_back(new Register(*RF_RD2_buffer_in_2, *RF_RD2_buffer_out_2));
+
     //mux 4 between RD2 and L
     Latch *MUX_4_RD2 = RF_RD2;
     Latch *MUX_4_L = IM_L_buffer_out_5;
@@ -336,6 +351,52 @@ int build_arch()
     // control array takes whole latches array and takes slices of it based on input output
     devices.push_back(new ControlArray(latches));
 
+    //PC MUX
+    Latch *MUX_PC_inc = &latches[60];
+    Latch *MUX_PC_new = &latches[61];
+    Latch *MUX_PC_same = &latches[62];
+    Latch *MUX_PC_useless = &latches[63];
+    Latch *MUX_PC_c = &latches[100];
+    Latch *MUX_PC_output = IM_PC;
+    devices.push_back(new Multiplexer(*MUX_PC_inc, *MUX_PC_new, *MUX_PC_same, *MUX_PC_useless, *MUX_PC_c, *MUX_PC_output));
 
+    //output of pc mux is buffered for branching
+    Latch *PC_buffer_in_1 = MUX_PC_output;
+    Latch *PC_buffer_out_1 = &latches[153];
+    devices.push_back(new Register(*PC_buffer_in_1, *PC_buffer_out_1));
+    Latch *PC_buffer_in_2 = PC_buffer_out_1;
+    Latch *PC_buffer_out_2 = &latches[154];
+    devices.push_back(new Register(*PC_buffer_in_2, *PC_buffer_out_2));
+    Latch *PC_buffer_in_3 = PC_buffer_out_2;
+    Latch *PC_buffer_out_3 = &latches[155];
+    devices.push_back(new Register(*PC_buffer_in_3, *PC_buffer_out_3));
+    Latch *PC_buffer_in_4 = PC_buffer_out_3;
+    Latch *PC_buffer_out_4 = &latches[156];
+    devices.push_back(new Register(*PC_buffer_in_4, *PC_buffer_out_4));
+    Latch *PC_buffer_in_5 = PC_buffer_out_4;
+    Latch *PC_buffer_out_5 = &latches[157];
+    devices.push_back(new Register(*PC_buffer_in_5, *PC_buffer_out_5));
+    Latch *PC_buffer_in_6 = PC_buffer_out_5;
+    Latch *PC_buffer_out_6 = &latches[158];
+    devices.push_back(new Register(*PC_buffer_in_6, *PC_buffer_out_6));
+    Latch *PC_buffer_in_7 = PC_buffer_out_6;
+    Latch *PC_buffer_out_7 = &latches[159];
+    devices.push_back(new Register(*PC_buffer_in_7, *PC_buffer_out_7));
+    Latch *PC_buffer_in_8 = PC_buffer_out_7;
+    Latch *PC_buffer_out_8 = &latches[160];
+    devices.push_back(new Register(*PC_buffer_in_8, *PC_buffer_out_8));
 
+    //adder4 that for next address
+    Latch *ADDER_PC = MUX_PC_output;
+    Latch *ADDER_PC_inc = MUX_PC_inc;
+    devices.push_back(new Adder4(*ADDER_WD_RD2, *ADDER_PC_inc));
+
+    //PC_new for branch instructions
+    Latch *PC_NEW_ALU = ALU_output;
+    Latch *PC_NEW_Rd = RF_RD2_buffer_out_2;
+    Latch *PC_NEW_L = IM_L_buffer_out_7;
+    Latch *PC_NEW_PC = PC_buffer_out_8;
+    Latch *PC_c = &latches[161];
+    Latch *PC_NEW_output = MUX_PC_new;
+    devices.push_back(new PC_new(*PC_NEW_ALU, *PC_NEW_Rd, *PC_NEW_L, *PC_NEW_PC, *PC_c, *PC_NEW_output));
 }

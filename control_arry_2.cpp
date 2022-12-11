@@ -10,8 +10,8 @@
 using namespace std;
 const int input_start = 80;
 const int input_end = 100;
-const int output_start = 80;
-const int output_end = 100;
+const int output_start = 70;
+const int output_end = 80;
 
 
 
