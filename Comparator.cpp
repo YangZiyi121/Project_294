@@ -8,9 +8,9 @@
 class Comparator: public Device
 {
 public:
-    static const int cycles = 1;
-    static const int area = 400;
-    static const double power = 0.5;
+    // static const int cycles = 1;
+    // static const int area = 400;
+    // static const double power = 0.5;
 
     //Constructer
     Comparator(Latch &data1, Latch &data2, Latch &output)
@@ -53,7 +53,7 @@ private:
 //5- call receive_clock of device
 //6- result should now be in before of output latch
 
-// /*Testing*/
+// /*Testing the camparator*/
 // int main()
 // {
 //     Latch input1, input2, output;
