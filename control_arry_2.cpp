@@ -139,9 +139,9 @@ int main()
     sdfsdfsdf.do_function();
     sdfsdfsdf.receive_clock();
 
-    cout << "PCMUX: " << output[0].before << endl;
-    cout << "MUX1: " << output[1].before << endl;
-    cout << "MUX2: " << output[2].before << endl;
+    cout << "PCMUX: " << output[0].before << endl; 
+    cout << "MUX1: " << output[1].before << endl; //latch 15
+    cout << "MUX2: " << output[2].before << endl; //latch 21
     cout << "MUX3: " << output[3].before << endl;
     cout << "RF: " << output[4].before << endl;
     cout << "MUX4: " << output[5].before << endl;
@@ -188,28 +188,43 @@ int main()
  	return 0;
  }
 
-//int main()
-//{
-//    Latch input1, input2, control, output;
-//
-//    //Initialize latches
-//    input1.before = 0b0000111101; //use this format if you want binary representation
-//    input2.before = 0b0110001001;
-//    control.before = 3;
-//
-//    //Create Device
-//    Logic device(input1, input2, control, output);
-//
-//    //send clock to latches
-//    input1.receive_clock();input2.receive_clock();control.receive_clock();output.receive_clock();
-//    //std::cout << input1.after <<std::endl;
-//
-//    //propogate data through device
-//    device.do_function();
-//    device.receive_clock();
-//
-//    //result should now be output.before 
-//    std::cout << output.before << std::endl;
-//    std::cout << std::bitset<10>(output.before) << std::endl;
-//
-//}
+int main()
+{
+   //Latch input1, input2, control, output;
+
+   //Initialize latches
+   input1.before = 0b0000111101; //use this format if you want binary representation
+   input2.before = 0b0110001001;
+   control.before = 3;
+
+   //Create Device
+   //Logic device(input1, input2, control, output);
+
+   //send clock to latches
+   input1.receive_clock();input2.receive_clock();control.receive_clock();output.receive_clock();
+   //std::cout << input1.after <<std::endl;
+
+   //propogate data through device
+   device.do_function();
+   device.receive_clock();
+
+   //result should now be output.before 
+   std::cout << output.before << std::endl;
+   std::cout << std::bitset<10>(output.before) << std::endl;
+
+
+    Latch CA_input[20];
+    Latch CA_output[10]; //10 outputs
+
+    //Initialization
+    for (int i = 0; i < 20, i++){
+        CA_input->before = i;
+    }
+
+    //Create Device
+    ControlArray(Latch CA_input[], Latch CA_output[]);
+
+    
+
+
+}

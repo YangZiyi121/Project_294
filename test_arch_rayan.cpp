@@ -16,7 +16,7 @@
 
 int const NUM_LATCHES = 100;
 //int const NUM_DEVICES = 24; // use devices.size() instead of this
-Latch latches[NUM_LATCHES];
+Latch latches[NUM_LATCHES]; // 80-100 for input of control array
 std::vector<Device*> devices;
 Device tmp_device;
 
@@ -157,6 +157,7 @@ int main()
 }
 
 int build_arch()
+
 {
     //IM component
     Latch *IM_PC = &latches[0];
@@ -332,6 +333,22 @@ int build_arch()
     Latch *MUX_5_c = &latches[47];
     Latch *MUX_5_output = MUX_3_WD;
     devices.push_back(new Multiplexer(*MUX_5_IO, *MUX_5_ALU, *MUX_5_DM, *MUX_5_useless, *MUX_5_c, *MUX_5_output));
+
+
+    //Control array
+    std::vector<Latch*> CA_input[20];
+    std::vector<Latch*> CA_output[10]; //10 outputs
+    for (int i = 80; i < 100; i++){
+        CA_input.push_back(&latches[i]);
+    }
+
+    for (int i = 70; i < 80; i++){
+        CA_output.push_back(&latches[i]);
+    }
+
+    
+    devices.push_back(new ControlArray(Latch CA_input[], Latch CA_output[]));
+
 
 
 }
