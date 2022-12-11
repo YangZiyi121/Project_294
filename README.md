@@ -25,12 +25,11 @@ In order to run the simulator, the following commands have to be run on a Linux/
 git clone --branch final-beautified https://github.com/YangZiyi121/Project_294.git
 g++ Main.cpp Device.cpp Latch.cpp Port.cpp -o tinker -w
 ./tinker
-
 ```
 
 At this point, the following should appear
 
-<img src="compilation.png" alt="compilation" width="400px" />
+<img src="compilation.png" alt="compilation" width="600px" />
 
 ## Data Path
 
