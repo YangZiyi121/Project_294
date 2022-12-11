@@ -4,6 +4,7 @@
 #include "Port.h"
 #include "Logic.cpp"
 #include "Adder.cpp"
+#include "Adder4.cpp"
 #include "RegisterFile.cpp"
 #include <bitset>
 #include <vector>
