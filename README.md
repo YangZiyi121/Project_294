@@ -19,6 +19,8 @@ The control part in the figure above is used to orchastrate the work of the diff
 
 ## Artifact evaluation
 
+[PLACE HOLDER]
+
 ## Data Path
 
 <img src="DP.png" alt="data path illustration" />
