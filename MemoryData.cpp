@@ -62,36 +62,36 @@ class MemoryData : public Device{
 };
 
 
-int main(){
+// int main(){
 
     
-    Latch address, write_value, read_value, r_w;
-    MemoryData memory(address, write_value, read_value, r_w);
+//     Latch address, write_value, read_value, r_w;
+//     MemoryData memory(address, write_value, read_value, r_w);
     
-    /*Write testing*/
-    address.before  = 0x0000;  //16-bit
-    r_w.before = 2; //write
-    write_value.before = 0x5000;
-    //send clock to latches
-    address.receive_clock(); r_w.receive_clock(); write_value.receive_clock(); 
-    //propogate data through device
-    memory.do_function();
-    memory.receive_clock();
+//     /*Write testing*/
+//     address.before  = 0x0000;  //16-bit
+//     r_w.before = 2; //write
+//     write_value.before = 0x5000;
+//     //send clock to latches
+//     address.receive_clock(); r_w.receive_clock(); write_value.receive_clock(); 
+//     //propogate data through device
+//     memory.do_function();
+//     memory.receive_clock();
 
 
-    /*Read testing*/
+//     /*Read testing*/
 
-    /* The address has been stored already*/
-    //initialization
-    address.before  = 2 << 12;  //64-bit
-    r_w.before = 1; //read
-    //send clock to latches
-    address.receive_clock(); r_w.receive_clock(); 
-    //propagate data through device
-    memory.do_function();
-    memory.receive_clock();
-    //result
-    std::cout << "Read: The value "<< std::hex << read_value.before << " is on 0x"<< std::hex << address.after <<std::endl;
+//     /* The address has been stored already*/
+//     //initialization
+//     address.before  = 2 << 12;  //64-bit
+//     r_w.before = 1; //read
+//     //send clock to latches
+//     address.receive_clock(); r_w.receive_clock(); 
+//     //propagate data through device
+//     memory.do_function();
+//     memory.receive_clock();
+//     //result
+//     std::cout << "Read: The value "<< std::hex << read_value.before << " is on 0x"<< std::hex << address.after <<std::endl;
 
 
-} 
+// } 
