@@ -21,7 +21,7 @@ The control part in the figure above is used to orchastrate the work of the diff
 
 ## Data Path
 
-<img src="DP.png" alt="data path illustration" width="400px" />
+<img src="DP.png" alt="data path illustration" />
 
 The data path of the CPU is composed of an Instruction Memory (IM), a Register File (RF), an Arithmetic Logic Unit (ALU), and a Data Memory (DM).
 
