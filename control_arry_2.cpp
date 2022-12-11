@@ -78,7 +78,7 @@ public:
 
         queue< int> q;
 
-        for (int i = 0; i < 5; i++) {//salman change size to arraysize
+        for (int i = 0; i < output_end-output_start; i++) {//salman change size to arraysize
             if (ik == 2)
                 q.push(ControlArray::in[i].connection->after);
             else
