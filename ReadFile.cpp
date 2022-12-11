@@ -12,7 +12,9 @@
 extern unsigned storage[SIZE];
 
 const void readfile(int file_num){
-    char file_name [30];
+    char file_name [30];  //holding the file name
+
+    /*This part loaded different files for different testbenches*/
     switch (file_num)
     {
         case 1: std::cout << "case 1" << std::endl; strcpy(file_name, "tests/hello.obj"); break;
@@ -27,9 +29,9 @@ const void readfile(int file_num){
     std::cout << "Loading file: " << file_name << std::endl;
     fp = fopen(file_name, "rb");  // r for read, b for binary
 
-    unsigned buffer;
 
     /*Load all instructions to the memory*/
+    unsigned buffer;
     for (int i = 0; i < 25; i++) {
         fread((char *) &buffer, sizeof(unsigned), 1, fp);
         //printf("%x\n", buffer);
@@ -38,6 +40,7 @@ const void readfile(int file_num){
 
 }
 
+/*Testing*/
 // int main (){
 //     readfile (argc);
 //     Latch pc, op, rd, rs, rt, l;

@@ -5,23 +5,24 @@
 
 class Adder : public Device {
 public:
-	static const int cycles = 1;
-	static const int area = 400;
-	static const double power = 0.5;
+	// static const int cycles = 1;
+	// static const int area = 400;
+	// static const double power = 0.5;
+
+	//constructor
 	Adder(Latch& input1, Latch& input2, Latch& output)
 	{
-		//connect(0, l1);
-		//connect(1, l2);
 		Adder::in[0].connection = &input1;
 		Adder::in[1].connection = &input2;
 		Adder::out = &output;
-
 		std::cout << "Adder is being created" << std::endl;
-
-		//cycles = cycles + 1;
-	} // Initialize the input ports and the latch as necessary
-	void receive_clock() { Adder::out->before = Adder::result; //cout << "   " << Adder::out->before << endl; 
+	} 
+	
+	void receive_clock() 
+	{ 
+		Adder::out->before = Adder::result; 
 	}
+
 	void do_function()
 	{
 

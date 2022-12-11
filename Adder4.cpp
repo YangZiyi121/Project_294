@@ -6,10 +6,11 @@
 
 class Adder4 : public Device {
 public:
-	static const int cycles = 1;
-	static const int area = 100;
-	static const double power = 0.1;
+	// static const int cycles = 1;
+	// static const int area = 100;
+	// static const double power = 0.1;
 
+	//Constructor
 	Adder4(Latch &input1, Latch &output)
 	{
 		Adder4::in.connection = &input1;
@@ -17,7 +18,6 @@ public:
 
 		std::cout << "Adder4 is being created" << std::endl;
 
-		//cycles = cycles + 1;
 	} // Initialize the input ports and the latch as necessary
 
 	void receive_clock() 
