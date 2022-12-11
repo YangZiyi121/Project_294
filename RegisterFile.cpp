@@ -10,9 +10,9 @@
 class RegisterFile: public Device
 {
 public:
-    static const int cycles = 1;
-    static const int area = 2000;
-    static const double power = 4;
+    // const int cycles = 1;
+    // const int area = 2000;
+    // const double power = 4;
 
     //Constructer
     RegisterFile(Latch &data1, Latch &data2, Latch &output1, Latch &output2, Latch &control_in)
@@ -23,7 +23,7 @@ public:
         out[1] = &output2;
         control.connection = &control_in;
         std::cout << "Register File is being created" << std::endl;
-        for (int i = 0; i < 32; i++)
+        for (int i = 0; i < 32; i++) // Initialize all the registers
         {
             rf[i] = 0;
         }
@@ -31,9 +31,8 @@ public:
     } 
 
     void receive_clock() { 
-        out[0]->before = result[0];
-        out[1]->before = result[1];
-
+        out[0]->before = result[0]; //Update output 1 i.e. RD1
+        out[1]->before = result[1]; //Update output 2 i.e. RD2
     }
 
     //Inherit
@@ -41,33 +40,24 @@ public:
     {
         switch (control.connection->after)
         {
-            case 0b00:
-                result[0] = 0; //infinite impedance
-                result[1] = 0; //infinite impedance
+            case 0b00: //NOP
+                result[0] = 0;
+                result[1] = 0;
                 break;
-            case 0b01:
+            case 0b01: //One read
                 result[0] = rf[in[0].connection->after];
-                result[1] = 0 ; //infinite impedance
+                result[1] = 0 ;
                 break;
-            case 0b10:
-                //std::cout << "Rd: " << in[0].connection->after << std::endl;
-                //std::cout << "Rs: " << in[1].connection->after << std::endl;
-                // if ((in[0].connection->after == in[1].connection->after))
-                    // std::cout << "Register File access failure. The RR (0x10) control signal is accompanied with two input that refer to the same register." << std::endl;
-                // assert (in[0].connection->after != in[1].connection->after);
+            case 0b10: //Two reads
                 result[0] = rf[in[0].connection->after];
                 result[1] = rf[in[1].connection->after];
-                // std::cout << "read 1 "<< in[0].connection->after << std::endl;
-                // std::cout << "read 2 "<< in[1].connection->after << std::endl;
                 break;
-            case 0b11:
+            case 0b11: //One write
                 rf[in[1].connection->after] = in[0].connection->after;
-                result[0] = 0; //infinite impedance
-                result[1] = 0; //infinite impedance
-                //  std::cout << "Write "<< in[0].connection->after << "to rf "<< in[1].connection->after << std::endl;
+                result[0] = 0;
+                result[1] = 0;
                 break;
         }
-        //std::cout << "RF10: "<<rf[10]<<std::endl;
     }
 
 
@@ -77,8 +67,7 @@ private:
     Latch* out[2];
     Port control; 
     long long result[2];
-    int64_t rf[32]; //The register file container. The register is basically an array of latches (of course, here an abuse of notion for the sake of a simple simulation).
-    //TODO: extremely meticulous level: a register is a group of parallelly signaled (by the same clock) latches. A register file is a group of serialized registers.
+    int64_t rf[32]; //The register file container.
 };
 
 // /*Testing*/

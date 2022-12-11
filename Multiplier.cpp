@@ -10,25 +10,25 @@ using namespace std;
 class Multiplier: public Device
 {
 public:
-    static const int cycles = 3;
-    static const int area = 2000;
-    static const double power = 1.5;
+    // const int cycles = 3;
+    // const int area = 2000;
+    // const double power = 1.5;
 
     //Constructer
-    Multiplier(Latch data1, Latch data2)
+    Multiplier(Latch &data1, Latch &data2)
     {
-        in[0].connection = data1;
-        in[1].connection = data2;
+        in[0].connection = &data1;
+        in[1].connection = &data2;
         cout << "Multiplier is being created" << endl;
     } 
 
-    receive_clock() { out.before = result;}
+    void receive_clock() { out.before = result;}
 
     //Inherit
     void do_function()
     {
 
-        result = in[0].connection.after * in[1].connection.after;
+        result = in[0].connection->after * in[1].connection->after;
 
     }
 

@@ -3,12 +3,14 @@
 #include "Device.h"
 #include "Port.h"
 
+
+/*Two's compliment function.*/
 class Twos_complement : public Device
 {
     public:
-    static const int cycles = 1;
-    static const int area = 200;
-    static const double power = 0.25;
+    // const int cycles = 1;
+    // const int area = 200;
+    // const double power = 0.25;
 
     Twos_complement(Latch &input1, Latch& output)
     {
@@ -22,8 +24,8 @@ class Twos_complement : public Device
     {
         long long a = in[0].connection->after;
 
-        result = ~a;
-        result++;
+        result = ~a; //Flip the bits
+        result++; //Add 1
     }
      
     private:
