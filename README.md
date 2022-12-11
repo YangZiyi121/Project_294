@@ -68,6 +68,9 @@ For all the components, the control signals corresponding values are given in th
 
 ## TODO List
 1- only addi and out are fully tested, other instructions are not tested
+
 2- make branching architecture: right now branching and program counter is not impelemented at all
+
 3- latency for multiply and division are postponed, they are set to latency 1 for now
+
 4- only hello world works, test other files at your own peril.
