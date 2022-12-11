@@ -44,7 +44,7 @@ public:
 	} // Initialize the input ports and the latch as necessary
 	void receive_clock() {
         string s = std::bitset<17>(result).to_string();
-        cout << s << endl;
+        //cout << s << endl;
 		ControlArray::out[0]->before = convert_bintdec( stoi(s.substr(0, 1)));//PC MUX 1 bit latch70
         ControlArray::out[1]->before = convert_bintdec( stoi(s.substr(1, 1)));//MUX1 1 bit  latch 71
         ControlArray::out[2]->before = convert_bintdec( stoi(s.substr(2, 1)));//MUX2 1 bit latch 72
@@ -89,7 +89,7 @@ public:
         //print_queue(q);
         int removedele = q.front();
         q.pop();
-        cout << "removed element-" << removedele << endl;
+        //cout << "removed element-" << removedele << endl;
         //print_queue(q);
         q.push(t);
         //print_queue(q);

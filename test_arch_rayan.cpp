@@ -58,78 +58,81 @@ int main()
             latches[22].before = 2; //input2 rf
             latches[74].before = 0b11; //RF control
         }
-        if(j == 2) // put stuff after IM
-        {
-            latches[2].before = 1; //Rs
-            latches[3].before = 0; //Rt
-            latches[4].before = 66; //L
-            latches[5].before = 2; //Rd
-            latches[74].before = 0b00; //RF control
+        // if(j == 2) // put stuff after IM
+        // {
+        //     latches[2].before = 1; //Rs
+        //     latches[3].before = 0; //Rt
+        //     latches[4].before = 66; //L
+        //     latches[5].before = 2; //Rd
+        //     latches[74].before = 0b00; //RF control
+        // }
+        // if(j == 3) // wait 1
+        // {
+        //     latches[2].before = 0; //Rs
+        //     latches[3].before = 0; //Rt
+        //     latches[4].before = 0; //L
+        //     latches[5].before = 0; //Rd
+        //     latches[74].before = 0b00; //RF control
+        // }
+        // if(j == 4) // mux1
+        // {
+        //     latches[15].before = 1; //pick Rd
+        // }
+        // if(j == 5) // mux2 mux3
+        // {
+        //     latches[21].before = 0; //mux2 Rs
+        //     latches[26].before = 0; //mux3 Rt
+        // }
+        // if(j == 6) // RF
+        // {
+        //     latches[74].before = 0b10; //RF control
+        // }
+        // if(j == 7) // io
+        // {
+        //     latches[74].before = 0b00; //RF control
+        //     latches[77].before = 0b01; //control io
+        // }
+        // if(j == 8) // wait 1
+        // {
+        //     latches[77].before = 0; //control io
+        // }
+        // if(j == 9) // wait 2
+        // {
+        //         //hi
+        // }
+        // if(j == 10) // mux5
+        // {
+        //     //std::cout << "time: " << j << " ALU 1: " << latches[45].before << std::endl;
+        //     latches[47].before = 0b01; //pick alu result
+        // }  
+        // if(j == 11) // mux5
+        // {  
 
-        }
-        if(j == 3) // wait 1
-        {
-            latches[2].before = 0; //Rs
-            latches[3].before = 0; //Rt
-            latches[4].before = 0; //L
-            latches[5].before = 0; //Rd
-            latches[74].before = 0b00; //RF control
-        }
-        if(j == 4) // mux1
-        {
-            latches[15].before = 1; //pick Rd
-        }
-        if(j == 5) // mux2 mux3
-        {
-            latches[21].before = 0; //mux2 Rs
-            latches[26].before = 0; //mux3 Rt
-        }
-        if(j == 6) // RF
-        {
-            latches[74].before = 0b10; //RF control
-        }
-        if(j == 7) // io
-        {
-            latches[74].before = 0b00; //RF control
-            latches[77].before = 0b01; //control io
-        }
-        if(j == 8) // wait 1
-        {
-            latches[77].before = 0; //control io
-        }
-        if(j == 9) // wait 2
-        {
-                //hi
-        }
-        if(j == 10) // mux5
-        {
-            //std::cout << "time: " << j << " ALU 1: " << latches[45].before << std::endl;
-            latches[47].before = 0b01; //pick alu result
-        }  
-        if(j == 11) // mux5
-        {  
-
-            //std::cout << "time: " << j << " WB 1: " << latches[23].before << std::endl;
-            latches[21].before = 0b01; //mux2 WB
-            latches[26].before = 0b01; //mux3 Rd
-        }
-        if(j == 12) // write
-        {  
-            latches[74].before = 0b11; //RF control
-        }
-        if(j == 13) // read
-        {  
-            latches[27].before = 3; //input1 rf
-            latches[74].before = 0b01; //RF control
-        }
+        //     //std::cout << "time: " << j << " WB 1: " << latches[23].before << std::endl;
+        //     latches[21].before = 0b01; //mux2 WB
+        //     latches[26].before = 0b01; //mux3 Rd
+        // }
+        // if(j == 12) // write
+        // {  
+        //     latches[74].before = 0b11; //RF control
+        // }
+        // if(j == 13) // read
+        // {  
+        //     latches[27].before = 3; //input1 rf
+        //     latches[74].before = 0b01; //RF control
+        // }
 
         //std::cout << "time: " << j << std::endl;
-        std::cout << "time: " << j << " mux4 L: " << latches[52].before << std::endl;
+        std::cout << "time: " << j << std::endl;
+        std::cout << " PC: " << latches[0].before << std::endl;
+        std::cout << " inc: " << latches[60].before << std::endl;
+        std::cout << " new: " << latches[61].before << std::endl;
+        std::cout << " same: " << latches[62].before << std::endl;
+        std::cout << " control: " << latches[170].before << std::endl;
         //std::cout << "time: " << j << " RF 2: " << latches[22].before << std::endl << std::endl;
 
         for (int i = 0; i < NUM_LATCHES; i++) 
         {
-            
             latches[i].receive_clock();
         }
 
@@ -242,7 +245,7 @@ int build_arch()
     Latch *MUX_1_Rd = IM_Rd_buffer_out_2;
     Latch *MUX_1_useless1 = &latches[16];
     Latch *MUX_1_useless2 = &latches[17];
-    Latch *MUX_1_c = &latches[70];  //MUX_1 control 1 bit
+    Latch *MUX_1_c = &latches[71];  //MUX_1 control 1 bit
     Latch *MUX_1_output = &latches[18];
     devices.push_back(new Multiplexer(*MUX_1_Rt, *MUX_1_Rd, *MUX_1_useless1, *MUX_1_useless2, *MUX_1_c, *MUX_1_output));
 
@@ -251,7 +254,7 @@ int build_arch()
     Latch *MUX_2_Rd = IM_Rd_buffer_out_9; //this will be changed later after Rd is super buffered
     Latch *MUX_2_useless1 = &latches[19];
     Latch *MUX_2_useless2 = &latches[20];
-    Latch *MUX_2_c = &latches[71];  //MUX_2 control 1 bit
+    Latch *MUX_2_c = &latches[72];  //MUX_2 control 1 bit
     Latch *MUX_2_output = &latches[22];
     devices.push_back(new Multiplexer(*MUX_2_mux1, *MUX_2_Rd, *MUX_2_useless1, *MUX_2_useless2, *MUX_2_c, *MUX_2_output));
 
@@ -314,7 +317,7 @@ int build_arch()
 
     //output of adder is buffered multiple time to sync up with other outputs
     Latch *WD_buffer_in_1 = ADDER_WD_WD;
-    Latch *WD_buffer_out_1 = &latches[77]; //IO 2 bits
+    Latch *WD_buffer_out_1 = &latches[69]; //IO 2 bits
     devices.push_back(new Register(*WD_buffer_in_1, *WD_buffer_out_1));
 
     //DM component
@@ -328,7 +331,7 @@ int build_arch()
     Latch *IO_RD1 = RF_RD1; //28
     Latch *IO_RD2 = RF_RD2; //29
     Latch *IO_output = &latches[42];
-    Latch *IO_c = &latches[43];
+    Latch *IO_c = &latches[77];
     devices.push_back(new IO(*IO_RD1, *IO_RD2, *IO_c, *IO_output));
 
     //output of adder is buffered multiple time to sync up with other outputs
@@ -356,7 +359,7 @@ int build_arch()
     Latch *MUX_PC_new = &latches[61];
     Latch *MUX_PC_same = &latches[62];
     Latch *MUX_PC_useless = &latches[63];
-    Latch *MUX_PC_c = &latches[100];
+    Latch *MUX_PC_c = &latches[170];
     Latch *MUX_PC_output = IM_PC;
     devices.push_back(new Multiplexer(*MUX_PC_inc, *MUX_PC_new, *MUX_PC_same, *MUX_PC_useless, *MUX_PC_c, *MUX_PC_output));
 
@@ -389,7 +392,7 @@ int build_arch()
     //adder4 that for next address
     Latch *ADDER_PC = MUX_PC_output;
     Latch *ADDER_PC_inc = MUX_PC_inc;
-    devices.push_back(new Adder4(*ADDER_WD_RD2, *ADDER_PC_inc));
+    devices.push_back(new Adder4(*ADDER_PC, *ADDER_PC_inc));
 
     //PC_new for branch instructions
     Latch *PC_NEW_ALU = ALU_output;
