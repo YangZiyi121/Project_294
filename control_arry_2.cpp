@@ -96,7 +96,6 @@ public:
         
         int removedele = q.front();
         q.pop();
-        cout << "removed element-" << removedele << endl;
         
         q.push(t);
         
@@ -105,13 +104,11 @@ public:
         {
             md[y] = q.front();//storing the queue in array.
             q.pop();
-            cout << md[y] << endl;
             y = y + 1;
 
         }
         // output
         ControlArray::result = removedele;
-
 	}
 
 private:
