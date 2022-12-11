@@ -4,21 +4,25 @@
 #include "Port.h"
 #include <string> 
 
+
+
 using namespace std;
 
 class Decoder : public Device {
 public:
-    Decoder(Latch& input, int size, Latch output[])
+    Decoder(Latch& input, Latch latches[])
     {
        
 
         Decoder::in.connection = &input;
 
-        for (int i = 0; i < size; i++)
-        {
-
-            Decoder::out[i] = &output[i];
-        }
+        for (int i = 80; i < 100; i++) // array to set inputs, they are 80-100
+		{
+		
+			Decoder::out[i-80] = &(latches[i]);
+			
+            //cout << ControlArray::in[i-45].connection->before << endl;
+		}
 
         std::cout << "Decoder is being created" << std::endl;
 
@@ -71,7 +75,7 @@ public:
         Decoder::result[17] = stoull("00000000000000000", 0, 2);
         Decoder::result[18] = stoull("00000000000000000", 0, 2);
         Decoder::result[19] = stoull("00000000000000000", 0, 2);
-
+        std::cout<< "switch op: "<<Decoder::in.connection->after<< std::endl;
         switch (Decoder::in.connection->after)
         {
         case 0x0://add rd, rs, rt // to have number or opcode in integer number....
@@ -157,7 +161,32 @@ public:
 
             break;
         default:
-            cout << "INVALID INPUT";
+            //std::cout<< "in default"<< std::endl;
+            Decoder::result[0] = stoull("00000000000000000", 0, 2);//cy 1
+            Decoder::result[1] = stoull("00000000000000000", 0, 2);//cy 2
+            Decoder::result[2] = stoull("00000000000000000", 0, 2);//cy 3
+            Decoder::result[3] = stoull("00000000000000000", 0, 2);//cy 4
+
+            Decoder::result[4] = stoull("00000000000000000", 0, 2);//cy 5
+            Decoder::result[5] = stoull("00000000000000000", 0, 2);//cy 6
+
+            Decoder::result[6] = stoull("00000000000000000", 0, 2);//cy 7
+            Decoder::result[7] = stoull("00000000000000000", 0, 2);//cy 8
+
+            Decoder::result[8] = stoull("00000000000000000", 0, 2);//cy 9
+
+
+            Decoder::result[9] = stoull("00000000000000000", 0, 2);//cy 10
+            Decoder::result[10] = stoull("00000000000000000", 0, 2);
+            Decoder::result[11] = stoull("00000000000000000", 0, 2);
+            Decoder::result[12] = stoull("00000000000000000", 0, 2);
+            Decoder::result[13] = stoull("00000000000000000", 0, 2);
+            Decoder::result[14] = stoull("00000000000000000", 0, 2);
+            Decoder::result[15] = stoull("00000000000000000", 0, 2);
+            Decoder::result[16] = stoull("00000000000000000", 0, 2);
+            Decoder::result[17] = stoull("00000000000000000", 0, 2);
+            Decoder::result[18] = stoull("00000000000000000", 0, 2);
+            Decoder::result[19] = stoull("00000000000000000", 0, 2);
             break;
         }
     }
@@ -168,18 +197,18 @@ private:
     Latch* out[20];
     long long result[20];
 };
-int main()
-{
-    Latch input1, input2, control, output[20];
-    input1.before = 0;
-    Decoder ssss(input1, 20, output);
+// int main()
+// {
+//     Latch input1, input2, control, output[20];
+//     input1.before = 0;
+//     Decoder ssss(input1, 20, output);
 
-    //input1.receive_clock();
-    cout << input1.after << endl;
-    for (int i = 0; i < 20; i++)
-    {
-        output[i].receive_clock();
-    }
-    ssss.do_function();
-    ssss.receive_clock();
-}
+//     //input1.receive_clock();
+//     cout << input1.after << endl;
+//     for (int i = 0; i < 20; i++)
+//     {
+//         output[i].receive_clock();
+//     }
+//     ssss.do_function();
+//     ssss.receive_clock();
+// }

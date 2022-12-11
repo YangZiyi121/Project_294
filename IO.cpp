@@ -26,8 +26,8 @@ class IO: public Device{
             }
             else if (control.connection->after == 2){
                 result = 0; //for default setting of outputing
-                //std::cout << "in output of IO" << std::endl;
-                //std::cout << "before switch" << rd.connection -> after << std::endl;
+                std::cout << "in output of IO" << std::endl;
+                std::cout << "before switch" << rd.connection -> after << std::endl;
                 switch (rd.connection -> after){
                     case 0: std::cout << int(rs.connection->after) << std::endl;; break;
                     case 1: std::cout << char(rs.connection->after) << std::endl;; break;
@@ -105,7 +105,7 @@ class IO: public Device{
 //     //propagate data to device
 //     device.do_function();
 //     device.receive_clock();
-//     std::cout  << "Out integer "<< output.before << std::endl;
+    // std::cout  << "Out integer "<< output.before << std::endl;
 
 
 // }

@@ -14,6 +14,9 @@
 #include "MemoryData.cpp"
 #include "IO.cpp"
 #include "control_arry_2.cpp"
+#include "Decoder_test.cpp"
+//#include "ReadFile.cpp"
+
 int const NUM_LATCHES = 100;
 //int const NUM_DEVICES = 24; // use devices.size() instead of this
 Latch latches[NUM_LATCHES]; // 80-100 for input of control array
@@ -32,6 +35,16 @@ int main()
 {
     //long long signal_default = 0b0_0_0_0_00_0_0000_00_00_00;
     long long signal_default = 0b00000000000000000;
+
+
+    /*load instructions to storage*/
+    readfile(1); //load the hello.obj
+
+
+
+
+
+
     
     // std::cout << "past devices" <<std::endl;
     build_arch();
@@ -74,83 +87,91 @@ int main()
     // for (int i = 0; i < 10; i++){
     //     latches[80 + i].before = balance[i];
     // }
-
+    long long pc = -1;
     //send clock to latches
     //after 15 cycles out is executed
-    for (int j = 0; j < 25; j++)
+    for (int j = 0; j < 99999999; j++)
     {
-        if(j == 0) // write to R1
-        {
-            latches[27].before = 200; //input1 rf
-            latches[22].before = 1; //input2 rf
-            latches[74].before = 0b11; //RF control
-        }
-        if(j == 1) // write to R2
-        {
-            latches[27].before = 0; //input1 rf
-            latches[22].before = 2; //input2 rf
-            latches[74].before = 0b11; //RF control
-        }
-        if(j == 2) //after IM
-        {
-            latches[2].before = 1; //rs
-            latches[4].before = 199; //l
-            latches[5].before = 10; //write to r10 the result
-            latches[74].before = 0b00; //stop rf from writing
+        // if(j == 0) // write to R1
+        // {
+        //     latches[27].before = 200; //input1 rf
+        //     latches[22].before = 1; //input2 rf
+        //     latches[74].before = 0b11; //RF control
+        // }
+        // if(j == 1) // write to R2
+        // {
+        //     latches[27].before = 0; //input1 rf
+        //     latches[22].before = 2; //input2 rf
+        //     latches[74].before = 0b11; //RF control
+        // }
+        // if(j == 2) //after IM
+        // {
+        //     latches[2].before = 1; //rs
+        //     latches[4].before = 199; //l
+        //     latches[5].before = 10; //write to r10 the result
+        //     latches[74].before = 0b00; //stop rf from writing
                 
-        }
-        if(j == 3) //wait
+        // }
+        // if(j == 3) //wait
+        // {
+        //     for (int i = 0; i < 10; i++)
+        //     {
+        //         latches[80 + i].before = balance[i];
+        //     }  
+        //     latches[2].before = 0; //rs
+        //     latches[4].before = 0; //l
+        //     latches[5].before = 0; //write to r10 the result
+        //     latches[74].before = 0b00; //stop rf from writing
+        // }
+        // if(j == 4) // put stuff after IM
+        // {      
+        //     for (int i = 0; i < 10; i++)
+        //     {
+        //         latches[80 + i].before = 0;
+        //     }   
+        // }
+
+        // if(j == 14){
+        //     latches[2].before = 10; //rs
+        //     latches[5].before = 2; //rd
+        // }
+
+        // if(j == 15){
+        //     latches[2].before = 0; //rs
+        //     latches[5].before = 0; //rd
+        //     for (int i = 0; i < 4; i++)
+        //     {
+        //         latches[80 + i].before = balance_out[i];
+        //     }  
+        // }
+
+        // if(j == 16){
+        //     for (int i = 0; i < 4; i++)
+        //     {
+        //         latches[80 + i].before = 0;
+        //     }  
+        // }
+        if(j % 20 == 0)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                latches[80 + i].before = balance[i];
-            }  
-            latches[2].before = 0; //rs
-            latches[4].before = 0; //l
-            latches[5].before = 0; //write to r10 the result
-            latches[74].before = 0b00; //stop rf from writing
+            pc++;
+            latches[0].before = pc;
         }
-        if(j == 4) // put stuff after IM
-        {      
-            for (int i = 0; i < 10; i++)
-            {
-                latches[80 + i].before = 0;
-            }   
+        else
+        {
+            latches[1].before = 0xff;
         }
-
-        if(j == 14){
-            latches[2].before = 10; //rs
-            latches[5].before = 2; //rd
-        }
-
-        if(j == 15){
-            latches[2].before = 0; //rs
-            latches[5].before = 0; //rd
-            for (int i = 0; i < 4; i++)
-            {
-                latches[80 + i].before = balance_out[i];
-            }  
-        }
-
-        if(j == 16){
-            for (int i = 0; i < 4; i++)
-            {
-                latches[80 + i].before = 0;
-            }  
-        }
-
 
         cout << "time: " << j << endl;
-        // cout << "PCMUX: " << latches[70+0].before << endl; 
-        // cout << "MUX1: " << latches[70+1].before << endl; //latch 15
-        // cout << "MUX2: " << latches[70+2].before << endl; //latch 21
-        // cout << "MUX3: " << latches[70+3].before << endl;
-        // cout << "RF: " << latches[70+4].before << endl;
-        // cout << "MUX4: " << latches[70+5].before << endl;
-        // cout << "ALU: " << latches[70+6].before << endl;
-        // cout << "IO: " << latches[70+7].before << endl;
-        // cout << "DM: " << latches[70+8].before << endl;
-        // cout << "MUX5: " << latches[70+9].before << endl;
+        cout << "PCMUX: " << latches[70+0].before << endl; 
+        cout << "MUX1: " << latches[70+1].before << endl; //latch 15
+        cout << "MUX2: " << latches[70+2].before << endl; //latch 21
+        cout << "MUX3: " << latches[70+3].before << endl;
+        cout << "RF: " << latches[70+4].before << endl;
+        cout << "MUX4: " << latches[70+5].before << endl;
+        cout << "ALU: " << latches[70+6].before << endl;
+        cout << "IO: " << latches[70+7].before << endl;
+        cout << "DM: " << latches[70+8].before << endl;
+        cout << "MUX5: " << latches[70+9].before << endl;
         // cout << "output of mux3: " << latches[27].before << endl ;
         // cout << "output of rd buffers: " << latches[12].before << " " << latches[13].before <<" " << latches[53].before <<" " << latches[54].before <<" " << latches[55].before <<" " << latches[56].before <<" " << latches[57].before <<" " << latches[58].before <<" " << latches[59].before << endl ;
         // cout << "output of mux2: " << latches[22].before << endl ;
@@ -181,19 +202,22 @@ int main()
             devices.at(i)->receive_clock();
             // std::cout << "past receive_clock" <<std::endl;
         }
+        int dummy;
+        std::cout << "step: ";  scanf("%d", &dummy);
     }
 
     // std::cout << "past clock devices" <<std::endl;
     
 
     //result should now be output.before 
-    std::cout <<std::dec << latches[42].before <<std::endl;
+    // std::cout <<std::dec << latches[42].before <<std::endl;
     //std::cout << latches[29].before <<std::endl;
     //std::cout << std::bitset<10>(latches[2].before) <<std::endl;
     
 }
 
 int build_arch()
+
 {
     //IM component
     Latch *IM_PC = &latches[0];
@@ -237,6 +261,12 @@ int build_arch()
     Latch *IM_L_buffer_in_5 = IM_L_buffer_out_4;
     Latch *IM_L_buffer_out_5 = &latches[52];
     devices.push_back(new Register(*IM_L_buffer_in_5, *IM_L_buffer_out_5));
+    Latch *IM_L_buffer_in_6 = IM_L_buffer_out_5;
+    Latch *IM_L_buffer_out_6 = &latches[150];
+    devices.push_back(new Register(*IM_L_buffer_in_6, *IM_L_buffer_out_6));
+    Latch *IM_L_buffer_in_7 = IM_L_buffer_out_6;
+    Latch *IM_L_buffer_out_7 = &latches[151];
+    devices.push_back(new Register(*IM_L_buffer_in_7, *IM_L_buffer_out_7));
 
     Latch *IM_Rd_buffer_in_1 = IM_Rd;
     Latch *IM_Rd_buffer_out_1 = &latches[12];
@@ -306,6 +336,13 @@ int build_arch()
     Latch *RF_RD1_buffer_out_1 = &latches[31];
     devices.push_back(new Register(*RF_RD1_buffer_in_1, *RF_RD1_buffer_out_1));
 
+    Latch *RF_RD2_buffer_in_1 = RF_RD2;
+    Latch *RF_RD2_buffer_out_1 = &latches[152];
+    devices.push_back(new Register(*RF_RD2_buffer_in_1, *RF_RD2_buffer_out_1));
+    Latch *RF_RD2_buffer_in_2 = RF_RD2_buffer_out_1;
+    Latch *RF_RD2_buffer_out_2 = &latches[153];
+    devices.push_back(new Register(*RF_RD2_buffer_in_2, *RF_RD2_buffer_out_2));
+
     //mux 4 between RD2 and L
     Latch *MUX_4_RD2 = RF_RD2;
     Latch *MUX_4_L = IM_L_buffer_out_5;
@@ -373,6 +410,56 @@ int build_arch()
     // control array takes whole latches array and takes slices of it based on input output
     devices.push_back(new ControlArray(latches));
 
+    //PC MUX
+    Latch *MUX_PC_inc = &latches[60];
+    Latch *MUX_PC_new = &latches[61];
+    Latch *MUX_PC_same = &latches[62];
+    Latch *MUX_PC_useless = &latches[63];
+    Latch *MUX_PC_c = &latches[170];
+    Latch *MUX_PC_output = IM_PC;
+    devices.push_back(new Multiplexer(*MUX_PC_inc, *MUX_PC_new, *MUX_PC_same, *MUX_PC_useless, *MUX_PC_c, *MUX_PC_output));
+
+    //output of pc mux is buffered for branching
+    Latch *PC_buffer_in_1 = MUX_PC_output;
+    Latch *PC_buffer_out_1 = &latches[153];
+    devices.push_back(new Register(*PC_buffer_in_1, *PC_buffer_out_1));
+    Latch *PC_buffer_in_2 = PC_buffer_out_1;
+    Latch *PC_buffer_out_2 = &latches[154];
+    devices.push_back(new Register(*PC_buffer_in_2, *PC_buffer_out_2));
+    Latch *PC_buffer_in_3 = PC_buffer_out_2;
+    Latch *PC_buffer_out_3 = &latches[155];
+    devices.push_back(new Register(*PC_buffer_in_3, *PC_buffer_out_3));
+    Latch *PC_buffer_in_4 = PC_buffer_out_3;
+    Latch *PC_buffer_out_4 = &latches[156];
+    devices.push_back(new Register(*PC_buffer_in_4, *PC_buffer_out_4));
+    Latch *PC_buffer_in_5 = PC_buffer_out_4;
+    Latch *PC_buffer_out_5 = &latches[157];
+    devices.push_back(new Register(*PC_buffer_in_5, *PC_buffer_out_5));
+    Latch *PC_buffer_in_6 = PC_buffer_out_5;
+    Latch *PC_buffer_out_6 = &latches[158];
+    devices.push_back(new Register(*PC_buffer_in_6, *PC_buffer_out_6));
+    Latch *PC_buffer_in_7 = PC_buffer_out_6;
+    Latch *PC_buffer_out_7 = &latches[159];
+    devices.push_back(new Register(*PC_buffer_in_7, *PC_buffer_out_7));
+    Latch *PC_buffer_in_8 = PC_buffer_out_7;
+    Latch *PC_buffer_out_8 = &latches[160];
+    devices.push_back(new Register(*PC_buffer_in_8, *PC_buffer_out_8));
 
 
+    Latch *DEC_OP = IM_OP;
+    devices.push_back(new Decoder(*DEC_OP, latches));
+
+//     //adder4 that for next address
+//     Latch *ADDER_PC = MUX_PC_output;
+//     Latch *ADDER_PC_inc = MUX_PC_inc;
+//     devices.push_back(new Adder4(*ADDER_PC, *ADDER_PC_inc));
+
+//     //PC_new for branch instructions
+//     Latch *PC_NEW_ALU = ALU_output;
+//     Latch *PC_NEW_Rd = RF_RD2_buffer_out_2;
+//     Latch *PC_NEW_L = IM_L_buffer_out_7;
+//     Latch *PC_NEW_PC = PC_buffer_out_8;
+//     Latch *PC_c = &latches[161];
+//     Latch *PC_NEW_output = MUX_PC_new;
+//     devices.push_back(new PC_new(*PC_NEW_ALU, *PC_NEW_Rd, *PC_NEW_L, *PC_NEW_PC, *PC_c, *PC_NEW_output));
 }

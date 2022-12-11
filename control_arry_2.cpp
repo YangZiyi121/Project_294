@@ -55,6 +55,7 @@ public:
         ControlArray::out[7]->before = convert_bintdec( stoi(s.substr(11, 2)));//IO 2 bit latch 77
         ControlArray::out[8]->before = convert_bintdec( stoi(s.substr(13, 2)));//DM 2 bit latch 78
         ControlArray::out[9]->before = convert_bintdec( stoi(s.substr(15, 2)));//MUX5 2 bit latch 79
+
 	}
     long long convert_bintdec(long long n) {
         int dec = 0, i = 0, rem;
@@ -72,6 +73,10 @@ public:
 	void do_function()
 	{
 
+        // for (int i = 0; i < 20; i++)
+        // {
+        //     cout << "input queue "<<i<<" is:" << in[i].connection->after << endl;
+        // }
         static int ik = 2;
         static int md[20] = { 0 };
         int t = 0;
@@ -104,6 +109,11 @@ public:
         }
         ControlArray::result = removedele;
 
+        // for (int i = 0; i < 20; i++)
+        // {
+        //     cout << "queue "<<i<<" is:" << md[i] << endl;
+        // }
+        
 	}
 
 private:

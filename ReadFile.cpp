@@ -37,3 +37,28 @@ const void readfile(int file_num){
     }
 
 }
+
+// int main (){
+//     readfile (argc);
+//     Latch pc, op, rd, rs, rt, l;
+//     MemoryInst device (pc, op, rd, rs, rt, l);
+
+//     //Initilization
+//     pc.before= int64_t(storage[0]);
+
+//     //send clks to latches
+//     pc.receive_clock(); op.receive_clock(); rd.receive_clock(); rs.receive_clock(); l.receive_clock();
+
+//     //propagate data to device
+//     device.do_function();
+//     device.receive_clock();
+
+//     //result should now be output.before 
+//     std::cout << "This is the result of latches" <<std::endl;
+//     printf("%x\n", op.before);
+//     printf("%x\n", rd.before);
+//     printf("%x\n", rs.before);
+//     printf("%x\n", rt.before);
+//     printf("%x\n", l.before);
+
+// }

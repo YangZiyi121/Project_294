@@ -23,13 +23,14 @@ class MemoryInst : public Device{
         }
 
         void do_function(){
-            instruction = static_cast<unsigned int>(pc.connection->before);
+            instruction = static_cast<unsigned int>(storage[pc.connection->after]);
             instruction_decoder(instruction);
             opResult = opcode;
             rdResult = reg_d;
             rsResult = reg_s;
             rtResult = reg_t_code;
             lResult = literal;
+            //std::cout << "op code: "<< opResult << std::endl;
         }
         void receive_clock(){
             op->before = opResult;
@@ -56,7 +57,7 @@ class MemoryInst : public Device{
 //     MemoryInst device (pc, op, rd, rs, rt, l);
 
 //     //Initilization
-//     pc.before= int64_t(storage[0]);
+//     pc.before= int64_t(storage[24]);
 
 //     //send clks to latches
 //     pc.receive_clock(); op.receive_clock(); rd.receive_clock(); rs.receive_clock(); l.receive_clock();
@@ -71,6 +72,6 @@ class MemoryInst : public Device{
 //     printf("%x\n", rd.before);
 //     printf("%x\n", rs.before);
 //     printf("%x\n", rt.before);
-//     printf("%x\n", l.before);
+//     printf("%d\n", l.before);
 
 // }
