@@ -23,14 +23,23 @@ class MemoryInst : public Device{
         }
 
         void do_function(){
+            if(0xffffffffffffffff ==pc.connection->after)
+            {
+                instruction = 0;
+            }
             instruction = static_cast<unsigned int>(storage[pc.connection->after]);
+
             instruction_decoder(instruction);
             opResult = opcode;
+            if(0xffffffffffffffff ==pc.connection->after)
+            {
+                opResult = 0xff;
+            }
             rdResult = reg_d;
             rsResult = reg_s;
             rtResult = reg_t_code;
             lResult = literal;
-            //std::cout << "op code: "<< opResult << std::endl;
+            // std::cout << "op code: "<< opResult << std::endl;
         }
         void receive_clock(){
             op->before = opResult;

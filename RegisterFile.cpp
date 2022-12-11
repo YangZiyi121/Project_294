@@ -23,6 +23,11 @@ public:
         out[1] = &output2;
         control.connection = &control_in;
         std::cout << "Register File is being created" << std::endl;
+        for (int i = 0; i < 32; i++)
+        {
+            rf[i] = 0;
+        }
+        
     } 
 
     void receive_clock() { 
@@ -37,12 +42,12 @@ public:
         switch (control.connection->after)
         {
             case 0b00:
-                result[0] = std::numeric_limits<int64_t>::max(); //infinite impedance
-                result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
+                result[0] = 0; //infinite impedance
+                result[1] = 0; //infinite impedance
                 break;
             case 0b01:
                 result[0] = rf[in[0].connection->after];
-                result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
+                result[1] = 0 ; //infinite impedance
                 break;
             case 0b10:
                 //std::cout << "Rd: " << in[0].connection->after << std::endl;
@@ -52,12 +57,14 @@ public:
                 // assert (in[0].connection->after != in[1].connection->after);
                 result[0] = rf[in[0].connection->after];
                 result[1] = rf[in[1].connection->after];
+                // std::cout << "read 1 "<< in[0].connection->after << std::endl;
+                // std::cout << "read 2 "<< in[1].connection->after << std::endl;
                 break;
             case 0b11:
                 rf[in[1].connection->after] = in[0].connection->after;
-                result[0] = std::numeric_limits<int64_t>::max(); //infinite impedance
-                result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
-                 //std::cout << "Write "<< in[0].connection->after << "to rf "<< in[1].connection->after << std::endl;
+                result[0] = 0; //infinite impedance
+                result[1] = 0; //infinite impedance
+                // std::cout << "Write "<< in[0].connection->after << "to rf "<< in[1].connection->after << std::endl;
                 break;
         }
         //std::cout << "RF10: "<<rf[10]<<std::endl;

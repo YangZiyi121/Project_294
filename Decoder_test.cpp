@@ -52,7 +52,7 @@ public:
         */
         Decoder::result[0] = stoull("00000000000000000", 0, 2);//cy 1
         Decoder::result[1] = stoull("00000000000000000", 0, 2);//cy 2
-        Decoder::result[2] = stoull("00001000000000000", 0, 2);//cy 3
+        Decoder::result[2] = stoull("00000000000000000", 0, 2);//cy 3
         Decoder::result[3] = stoull("00000000000000000", 0, 2);//cy 4
 
         Decoder::result[4] = stoull("00000000001000000", 0, 2);//cy 5
@@ -75,7 +75,7 @@ public:
         Decoder::result[17] = stoull("00000000000000000", 0, 2);
         Decoder::result[18] = stoull("00000000000000000", 0, 2);
         Decoder::result[19] = stoull("00000000000000000", 0, 2);
-        std::cout<< "switch op: "<<Decoder::in.connection->after<< std::endl;
+        // std::cout<< "switch op: "<<Decoder::in.connection->after<< std::endl;
         switch (Decoder::in.connection->after)
         {
         case 0x0://add rd, rs, rt // to have number or opcode in integer number....
@@ -87,6 +87,31 @@ public:
 
 
         case 0x1:                     //"00001000000000000"
+            Decoder::result[0] = stoull("00000000000000000", 0, 2);//cy 1
+        Decoder::result[1] = stoull("00000000000000000", 0, 2);//cy 2
+        Decoder::result[2] = stoull("00000000000000000", 0, 2);//cy 3
+        Decoder::result[3] = stoull("00000000000000000", 0, 2);//cy 4
+
+        Decoder::result[4] = stoull("00000000001000000", 0, 2);//cy 5
+        Decoder::result[5] = stoull("00000000000000000", 0, 2);//cy 6
+
+        Decoder::result[6] = stoull("00000000000000001", 0, 2);//cy 7
+        Decoder::result[7] = stoull("00110000000000000", 0, 2);//cy 8
+
+        Decoder::result[8] = stoull("00001100000000000", 0, 2);//cy 9
+
+
+        Decoder::result[9] =  stoull("00000000000000000", 0, 2);//cy 10
+        Decoder::result[10] = stoull("00000000000000000", 0, 2);
+        Decoder::result[11] = stoull("00000000000000000", 0, 2);
+        Decoder::result[12] = stoull("00000000000000000", 0, 2);
+        Decoder::result[13] = stoull("00000000000000000", 0, 2);
+        Decoder::result[14] = stoull("00000000000000000", 0, 2);
+        Decoder::result[15] = stoull("00000000000000000", 0, 2);
+        Decoder::result[16] = stoull("00000000000000000", 0, 2);
+        Decoder::result[17] = stoull("00000000000000000", 0, 2);
+        Decoder::result[18] = stoull("00000000000000000", 0, 2);
+        Decoder::result[19] = stoull("00000000000000000", 0, 2);
             Decoder::result[3] = stoull("00000010000000000", 0, 2);
             Decoder::result[4] = stoull("00000000001000000", 0, 2);//cy 5
             break;

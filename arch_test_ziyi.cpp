@@ -41,11 +41,6 @@ int main()
     readfile(1); //load the hello.obj
 
 
-
-
-
-
-    
     // std::cout << "past devices" <<std::endl;
     build_arch();
 
@@ -56,11 +51,11 @@ int main()
     {
         latches[i].before = 0;
     } 
-
+    latches[1].before = 0xff;
     /*addi testing (1 cycle to 13 cycle)*/
 
     // int balance[10] = {0b0_0_0_0_00_0_0000_00_00_00, 0b0_0_0_0_00_0_0000_00_00_00
-    //                 , 0b0_0_0_0_01_0_0000_00_00_00
+    //                 , 0b0_0_0_0_00_0_0000_00_00_00
     //                 , 0b0_0_0_0_00_1_0000_00_00_00 
     //                 , 0b0_0_0_0_00_0_0001_00_00_00
     //                 , 0b0_0_0_0_00_0_0000_00_00_00
@@ -68,7 +63,7 @@ int main()
     //                 , 0b0_0_1_1_00_0_0000_00_00_00
     //                 , 0b0_0_0_0_11_0_0000_00_00_00};
     int balance[10] = { 0b00000000000000000, 0b00000000000000000
-                    , 0b00000100000000000
+                    , 0b00000000000000000
                     , 0b00000010000000000 
                     , 0b00000000001000000
                     , 0b00000000000000000
@@ -90,7 +85,7 @@ int main()
     long long pc = -1;
     //send clock to latches
     //after 15 cycles out is executed
-    for (int j = 0; j < 99999999; j++)
+    for (int j = 0; j < 500; j++)
     {
         // if(j == 0) // write to R1
         // {
@@ -158,20 +153,20 @@ int main()
         }
         else
         {
-            latches[1].before = 0xff;
+            latches[0].before = 0xffffffffffffffff;
         }
 
-        cout << "time: " << j << endl;
-        cout << "PCMUX: " << latches[70+0].before << endl; 
-        cout << "MUX1: " << latches[70+1].before << endl; //latch 15
-        cout << "MUX2: " << latches[70+2].before << endl; //latch 21
-        cout << "MUX3: " << latches[70+3].before << endl;
-        cout << "RF: " << latches[70+4].before << endl;
-        cout << "MUX4: " << latches[70+5].before << endl;
-        cout << "ALU: " << latches[70+6].before << endl;
-        cout << "IO: " << latches[70+7].before << endl;
-        cout << "DM: " << latches[70+8].before << endl;
-        cout << "MUX5: " << latches[70+9].before << endl;
+        // cout << "time: " << j << endl;
+        // cout << "PCMUX: " << latches[70+0].before << endl; 
+        // cout << "MUX1: " << latches[70+1].before << endl; //latch 15
+        // cout << "MUX2: " << latches[70+2].before << endl; //latch 21
+        // cout << "MUX3: " << latches[70+3].before << endl;
+        // cout << "RF: " << latches[70+4].before << endl;
+        // cout << "MUX4: " << latches[70+5].before << endl;
+        // cout << "ALU: " << latches[70+6].before << endl;
+        // cout << "IO: " << latches[70+7].before << endl;
+        // cout << "DM: " << latches[70+8].before << endl;
+        // cout << "MUX5: " << latches[70+9].before << endl;
         // cout << "output of mux3: " << latches[27].before << endl ;
         // cout << "output of rd buffers: " << latches[12].before << " " << latches[13].before <<" " << latches[53].before <<" " << latches[54].before <<" " << latches[55].before <<" " << latches[56].before <<" " << latches[57].before <<" " << latches[58].before <<" " << latches[59].before << endl ;
         // cout << "output of mux2: " << latches[22].before << endl ;
@@ -203,7 +198,7 @@ int main()
             // std::cout << "past receive_clock" <<std::endl;
         }
         int dummy;
-        std::cout << "step: ";  scanf("%d", &dummy);
+        // std::cout << "step: ";  scanf("%d", &dummy);
     }
 
     // std::cout << "past clock devices" <<std::endl;

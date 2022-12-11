@@ -15,12 +15,14 @@ const void instruction_decoder(unsigned instr){
     reg_t_code  = instr >> 12 & 0x1f;
     literal = instr & 0xfff;
 
-
-    // std::cout << "Got op code " << opcode << std::endl;
-    // std::cout << "Got reg_d code " << reg_d << std::endl;
-    // std::cout << "Got reg_s code " << reg_s << std::endl;
-    // std::cout << "Got reg_t code " << reg_t_code << std::endl;
-    // std::cout << "Got literal code " << literal << std::endl;
+    // if(instr != 0)
+    // {
+    // // std::cout << "Got op code " << opcode << std::endl;
+    // // std::cout << "Got reg_d code " << reg_d << std::endl;
+    // // std::cout << "Got reg_s code " << reg_s << std::endl;
+    // // std::cout << "Got reg_t code " << reg_t_code << std::endl;
+    // // std::cout << "Got literal code " << literal << std::endl;
+    // }
 };
 
 // int main()
