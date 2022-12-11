@@ -53,7 +53,7 @@ int main()
     //                 , 0b0_0_0_0_00_0_0000_00_00_01
     //                 , 0b0_0_1_1_00_0_0000_00_00_00
     //                 , 0b0_0_0_0_11_0_0000_00_00_00};
-    int balance[10] = {0b00000000000000000, 0b00000000000000000
+    int balance[10] = { 0b00000000000000000, 0b00000000000000000
                     , 0b00000100000000000
                     , 0b00000010000000000 
                     , 0b00000000001000000
@@ -87,26 +87,49 @@ int main()
             latches[4].before = 199; //l
             latches[5].before = 10; //write to r10 the result
             latches[74].before = 0b00; //stop rf from writing
+                
         }
         if(j == 3) //wait
-        {
-            // latches[75].before = 0; //mux4 to 0
-        }
-        if(j == 4) // put stuff after IM
         {
             for (int i = 0; i < 10; i++)
             {
                 latches[80 + i].before = balance[i];
-            }          
+            }  
+            latches[2].before = 0; //rs
+            latches[4].before = 0; //l
+            latches[5].before = 0; //write to r10 the result
+            latches[74].before = 0b00; //stop rf from writing
         }
+        if(j == 4) // put stuff after IM
+        {      
+            for (int i = 0; i < 10; i++)
+            {
+                latches[80 + i].before = 0;
+            }   
+        }
+        cout << "time: " << j << endl;
+        cout << "PCMUX: " << latches[70+0].before << endl; 
+        cout << "MUX1: " << latches[70+1].before << endl; //latch 15
+        cout << "MUX2: " << latches[70+2].before << endl; //latch 21
+        cout << "MUX3: " << latches[70+3].before << endl;
+        cout << "RF: " << latches[70+4].before << endl;
+        cout << "MUX4: " << latches[70+5].before << endl;
+        cout << "ALU: " << latches[70+6].before << endl;
+        cout << "IO: " << latches[70+7].before << endl;
+        cout << "DM: " << latches[70+8].before << endl;
+        cout << "MUX5: " << latches[70+9].before << endl;
+        cout << "output of mux3: " << latches[27].before << endl ;
+        cout << "output of rd buffers: " << latches[12].before << " " << latches[13].before <<" " << latches[53].before <<" " << latches[54].before <<" " << latches[55].before <<" " << latches[56].before <<" " << latches[57].before <<" " << latches[58].before <<" " << latches[59].before << endl ;
+        cout << "output of mux2: " << latches[22].before << endl ;
+        cout << "output of alu: " << latches[36].before << endl << endl;
+
 
         //std::cout << "time: " << j << std::endl;
-        std::cout << "time: " << j << " mux4 L: " << latches[52].before << std::endl;
+        //std::cout << "time: " << j << " mux4 L: " << latches[52].before << std::endl;
         //std::cout << "time: " << j << " RF 2: " << latches[22].before << std::endl << std::endl;
 
         for (int i = 0; i < NUM_LATCHES; i++) 
         {
-            
             latches[i].receive_clock();
         }
 
@@ -213,7 +236,7 @@ int build_arch()
     Latch *MUX_1_Rd = IM_Rd_buffer_out_2;
     Latch *MUX_1_useless1 = &latches[16];
     Latch *MUX_1_useless2 = &latches[17];
-    Latch *MUX_1_c = &latches[70];  //MUX_1 control 1 bit
+    Latch *MUX_1_c = &latches[71];  //MUX_1 control 1 bit
     Latch *MUX_1_output = &latches[18];
     devices.push_back(new Multiplexer(*MUX_1_Rt, *MUX_1_Rd, *MUX_1_useless1, *MUX_1_useless2, *MUX_1_c, *MUX_1_output));
 
@@ -222,7 +245,7 @@ int build_arch()
     Latch *MUX_2_Rd = IM_Rd_buffer_out_9; //this will be changed later after Rd is super buffered
     Latch *MUX_2_useless1 = &latches[19];
     Latch *MUX_2_useless2 = &latches[20];
-    Latch *MUX_2_c = &latches[71];  //MUX_2 control 1 bit
+    Latch *MUX_2_c = &latches[72];  //MUX_2 control 1 bit
     Latch *MUX_2_output = &latches[22];
     devices.push_back(new Multiplexer(*MUX_2_mux1, *MUX_2_Rd, *MUX_2_useless1, *MUX_2_useless2, *MUX_2_c, *MUX_2_output));
 
