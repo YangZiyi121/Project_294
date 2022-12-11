@@ -5,11 +5,10 @@
 #include "Memory.h"
 #include <limits>
 
-extern unsigned storage[SIZE];
+extern unsigned storage[SIZE]; 
 
-//read 1 and write 2
-
-//assume only use the last 16 bits for address
+//Control signal: read 1 and write 2
+//Assume only use the last 16 bits for address
 class MemoryData : public Device{
     public:
         //Constructer
@@ -23,9 +22,7 @@ class MemoryData : public Device{
 
         void do_function(){
             if(r_w.connection->after == 1){  //read
-                std::cout << "Offset address is" << address.connection->after << std::endl;
-                std::cout << "storage" << &storage << std::endl;
-                if (address.connection->after > (2 << 11)) {
+                if (address.connection->after > (2 << 11)) { //reading from some addresses outside storage
                     std::cout << "The offset is too large" << std::endl;
                     exit(1);
                 }
@@ -33,22 +30,21 @@ class MemoryData : public Device{
                 //result = static_cast <long long> (storage[address.connection->after]);
 
             }else if (r_w.connection->after == 2){      //write
-                if (address.connection->after > (2 << 11)) {
+                if (address.connection->after > (2 << 11)) {    //writing to some addresses outside storage
                     std::cout << "The offset is too large" << std::endl;
                     exit(1);
                 }
-                result = 0; //infinite impedance
+                result = 0; //infinite impedance for place holder 
                 std::memcpy(&(storage[address.connection->after]), &write_value.connection->after, sizeof(int64_t));
                 std::cout << "Write: The value "<< std::hex << write_value.connection->after << " is inserted on 0x"<< std::hex << address.connection->after <<std::endl;
             }
-            else{
+            else{   //default case
                 result = 0;
             }
         }
 
 
         //receive clock
-
         void receive_clock(){
             read_value->before = result;
         }
@@ -62,9 +58,9 @@ class MemoryData : public Device{
 };
 
 
-// int main(){
 
-    
+/* Testing */
+// int main(){
 //     Latch address, write_value, read_value, r_w;
 //     MemoryData memory(address, write_value, read_value, r_w);
     

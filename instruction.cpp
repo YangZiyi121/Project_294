@@ -15,6 +15,7 @@ const void instruction_decoder(unsigned instr){
     reg_t_code  = instr >> 12 & 0x1f;
     literal = instr & 0xfff;
 
+    // For Debugging the instruction
     // if(instr != 0)
     // {
     // std::cout << "Got op code " << opcode << std::endl;
@@ -25,6 +26,7 @@ const void instruction_decoder(unsigned instr){
     // }
 };
 
+/*Testing*/
 // int main()
 // {
 //     unsigned buffer;

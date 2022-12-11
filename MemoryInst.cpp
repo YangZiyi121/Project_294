@@ -23,23 +23,24 @@ class MemoryInst : public Device{
         }
 
         void do_function(){
-            if(0xffffffffffffffff ==pc.connection->after)
+            if(0xffffffffffffffff ==pc.connection->after) // if IM receives this it means do not send instruction
             {
                 instruction = 0;
             }
-            instruction = static_cast<unsigned int>(storage[pc.connection->after]);
 
+            instruction = static_cast<unsigned int>(storage[pc.connection->after]); // decodes instruction
             instruction_decoder(instruction);
+
             opResult = opcode;
-            if(0xffffffffffffffff ==pc.connection->after)
-            {
-                opResult = 0xff;
-            }
             rdResult = reg_d;
             rsResult = reg_s;
             rtResult = reg_t_code;
             lResult = literal;
-            // std::cout << "op code: "<< opResult << std::endl;
+            
+            if(0xffffffffffffffff ==pc.connection->after) // if IM receives this it means do not send instruction
+            {
+                opResult = 0xff;
+            }
         }
         void receive_clock(){
             op->before = opResult;
@@ -59,6 +60,7 @@ class MemoryInst : public Device{
        unsigned instruction;
 };
 
+/*Testing*/
 // int main(){
 //     readfile(1); //load the hello.obj
 //     /*Testing*/

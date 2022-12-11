@@ -15,17 +15,11 @@
 #include "IO.cpp"
 #include "control_arry_2.cpp"
 #include "Decoder_test.cpp"
-//#include "ReadFile.cpp"
 
-int const NUM_LATCHES = 200;
-//int const NUM_DEVICES = 24; // use devices.size() instead of this
+int const NUM_LATCHES = 200; // not a real 
 Latch latches[NUM_LATCHES]; // 80-100 for input of control array
 std::vector<Device*> devices;
 Device tmp_device;
-
-
-//TESTING
-//NEVER LET THIS UNCOMMENTED UNLESS TESTING AND YOU KNOW WHAT YOU ARE DOING!!!!!
 
 
 
@@ -33,194 +27,59 @@ int build_arch();
 
 int main()
 {
-    //long long signal_default = 0b0_0_0_0_00_0_0000_00_00_00;
-    long long signal_default = 0b00000000000000000;
 
 
     /*load instructions to storage*/
     readfile(1); //load the hello.obj
 
 
-    // std::cout << "past devices" <<std::endl;
+    // builds the architecture
     build_arch();
 
-    std::cout << devices.size() <<std::endl;
-
-    //make sure all latches are clean
+    //makes sure all latches are clean
     for (int i = 0; i < NUM_LATCHES; i++) 
     {
         latches[i].before = 0;
     } 
-    latches[1].before = 0xff;
-    /*addi testing (1 cycle to 13 cycle)*/
 
-    // int balance[10] = {0b0_0_0_0_00_0_0000_00_00_00, 0b0_0_0_0_00_0_0000_00_00_00
-    //                 , 0b0_0_0_0_00_0_0000_00_00_00
-    //                 , 0b0_0_0_0_00_1_0000_00_00_00 
-    //                 , 0b0_0_0_0_00_0_0001_00_00_00
-    //                 , 0b0_0_0_0_00_0_0000_00_00_00
-    //                 , 0b0_0_0_0_00_0_0000_00_00_01
-    //                 , 0b0_0_1_1_00_0_0000_00_00_00
-    //                 , 0b0_0_0_0_11_0_0000_00_00_00};
-    int balance[10] = { 0b00000000000000000, 0b00000000000000000
-                    , 0b00000000000000000
-                    , 0b00000010000000000 
-                    , 0b00000000001000000
-                    , 0b00000000000000000
-                    , 0b00000000000000001
-                    , 0b00110000000000000
-                    , 0b00001100000000000};
+    latches[1].before = 0xff; //set op code so as to not send 0 instruct
 
-    /*Out testing  (14 cycles to 19 cycles)*/
-    int balance_out[4] = { 0b01000000000000000
-                    ,0b00000000000000000
-                    , 0b00001000000000000
-                    , 0b00000000000100000 };
+    long long pc = -1; //pc starts from -1 as we have no implemented counter yet
 
-
-
-    // for (int i = 0; i < 10; i++){
-    //     latches[80 + i].before = balance[i];
-    // }
-    long long pc = -1;
-    //send clock to latches
-    //after 15 cycles out is executed
     for (int j = 0; j < 500; j++)
     {
-        // if(j == 0) // write to R1
-        // {
-        //     latches[27].before = 200; //input1 rf
-        //     latches[22].before = 1; //input2 rf
-        //     latches[74].before = 0b11; //RF control
-        // }
-        // if(j == 1) // write to R2
-        // {
-        //     latches[27].before = 0; //input1 rf
-        //     latches[22].before = 2; //input2 rf
-        //     latches[74].before = 0b11; //RF control
-        // }
-        // if(j == 2) //after IM
-        // {
-        //     latches[2].before = 1; //rs
-        //     latches[4].before = 199; //l
-        //     latches[5].before = 10; //write to r10 the result
-        //     latches[74].before = 0b00; //stop rf from writing
-                
-        // }
-        // if(j == 3) //wait
-        // {
-        //     for (int i = 0; i < 10; i++)
-        //     {
-        //         latches[80 + i].before = balance[i];
-        //     }  
-        //     latches[2].before = 0; //rs
-        //     latches[4].before = 0; //l
-        //     latches[5].before = 0; //write to r10 the result
-        //     latches[74].before = 0b00; //stop rf from writing
-        // }
-        // if(j == 4) // put stuff after IM
-        // {      
-        //     for (int i = 0; i < 10; i++)
-        //     {
-        //         latches[80 + i].before = 0;
-        //     }   
-        // }
-
-        // if(j == 14){
-        //     latches[2].before = 10; //rs
-        //     latches[5].before = 2; //rd
-        // }
-
-        // if(j == 15){
-        //     latches[2].before = 0; //rs
-        //     latches[5].before = 0; //rd
-        //     for (int i = 0; i < 4; i++)
-        //     {
-        //         latches[80 + i].before = balance_out[i];
-        //     }  
-        // }
-
-        // if(j == 16){
-        //     for (int i = 0; i < 4; i++)
-        //     {
-        //         latches[80 + i].before = 0;
-        //     }  
-        // }
-        if(j % 20 == 0)
+        //this simulates the pc counter for now
+        if(j % 15 == 0)
         {
             pc++;
             latches[0].before = pc;
-            // cout << pc << endl << endl;
         }
         else
         {
-            latches[0].before = 0xffffffffffffffff;
+            latches[0].before = 0xffffffffffffffff; //i.e send invalid address to IM to simulate not sending
         }
 
-        // cout << "time: " << j << endl;
-        // cout << "PCMUX: " << latches[70+0].before << endl; 
-        // cout << "MUX1: " << latches[70+1].before << endl; //latch 15
-        // cout << "MUX2: " << latches[70+2].before << endl; //latch 21
-        // cout << "MUX3: " << latches[70+3].before << endl;
-        // cout << "RF: " << latches[70+4].before << endl;
-        // cout << "MUX4: " << latches[70+5].before << endl;
-        // cout << "ALU: " << latches[70+6].before << endl;
-        // cout << "IO: " << latches[70+7].before << endl;
-        // cout << "DM: " << latches[70+8].before << endl;
-        // cout << "MUX5: " << latches[70+9].before << endl;
-        // cout << "output of mux3: " << latches[27].before << endl ;
-        // cout << "output of rd buffers: " << latches[12].before << " " << latches[13].before <<" " << latches[53].before <<" " << latches[54].before <<" " << latches[55].before <<" " << latches[56].before <<" " << latches[57].before <<" " << latches[58].before <<" " << latches[59].before << endl ;
-        // cout << "output of mux2: " << latches[22].before << endl ;
-        // cout << "output of alu: " << latches[36].before << endl << endl;
-        //cout << "rd : latch 29 " << latches[29].before << endl << endl;
-
-
-        //std::cout << "time: " << j << std::endl;
-        //std::cout << "time: " << j << " mux4 L: " << latches[52].before << std::endl;
-        //std::cout << "time: " << j << " RF 2: " << latches[22].before << std::endl << std::endl;
-
-
-        // if(latches[76].before >0 || latches[76].after >0)
-        // {
-        //     std::cout << "alu input1: "<<latches[35].before << std::endl;
-        //     std::cout << "alu input2: "<<latches[31].before << std::endl;
-        //     std::cout << "alu result: "<<latches[36].before << std::endl;
-        //     std::cout << "alu control: "<<latches[76].before << std::endl;
-        //     std::cout << "alu buffer result: "<<latches[45].before << std::endl;
-        // }
+        //call send a clock signal to all latches
         for (int i = 0; i < NUM_LATCHES; i++) 
         {
             latches[i].receive_clock();
         }
 
-        //std::cout << latches[0].after <<std::endl;
-
-        // std::cout << "past clock latches" <<std::endl;
-
-        //propogate data through device
+        //propogate data through devices
         for (int i = 0; i < devices.size(); i++) 
         {
             devices.at(i)->do_function();
-            // std::cout << "past do_function" <<std::endl;
             devices.at(i)->receive_clock();
-            // std::cout << "past receive_clock" <<std::endl;
         }
-        int dummy;
-        // std::cout << "step: ";  scanf("%d", &dummy);
     }
-
-     std::cout << "" <<std::endl;
-    
-
-    //result should now be output.before 
-    // std::cout <<std::dec << latches[42].before <<std::endl;
-    //std::cout << latches[29].before <<std::endl;
-    //std::cout << std::bitset<10>(latches[2].before) <<std::endl;
-    
+     std::cout << "" <<std::endl; //if this is not here then any output not with endl will be lost
 }
 
+//builds the architecture
+// we first define the latches for each device
+// then we define the device
+// then we buffer outputs of a device if needed
 int build_arch()
-
 {
     //IM component
     Latch *IM_PC = &latches[0];
@@ -299,7 +158,7 @@ int build_arch()
     Latch *IM_Rd_buffer_out_9 = &latches[59];
     devices.push_back(new Register(*IM_Rd_buffer_in_9, *IM_Rd_buffer_out_9));
 
-    //mux 1 between Rt and Rd
+    //mux 1 between Rt and Rd to choose RF read 2
     Latch *MUX_1_Rt = IM_Rt_buffer_out_2;
     Latch *MUX_1_Rd = IM_Rd_buffer_out_2;
     Latch *MUX_1_useless1 = &latches[16];
@@ -308,16 +167,16 @@ int build_arch()
     Latch *MUX_1_output = &latches[18];
     devices.push_back(new Multiplexer(*MUX_1_Rt, *MUX_1_Rd, *MUX_1_useless1, *MUX_1_useless2, *MUX_1_c, *MUX_1_output));
 
-    //mux 2 between mux1 and Rd
+    //mux 2 between mux1 and Rd to read or write
     Latch *MUX_2_mux1 = MUX_1_output;
-    Latch *MUX_2_Rd = IM_Rd_buffer_out_9; //this will be changed later after Rd is super buffered
+    Latch *MUX_2_Rd = IM_Rd_buffer_out_9; 
     Latch *MUX_2_useless1 = &latches[19];
     Latch *MUX_2_useless2 = &latches[20];
     Latch *MUX_2_c = &latches[72];  //MUX_2 control 1 bit
     Latch *MUX_2_output = &latches[22];
     devices.push_back(new Multiplexer(*MUX_2_mux1, *MUX_2_Rd, *MUX_2_useless1, *MUX_2_useless2, *MUX_2_c, *MUX_2_output));
 
-    //mux 3 between Rs and write data
+    //mux 3 between Rs and write data to read write
     Latch *MUX_3_Rs = IM_Rs_buffer_out_3;
     Latch *MUX_3_WD = &latches[23]; //this comes from the very last mux
     Latch *MUX_3_useless1 = &latches[24];
@@ -368,7 +227,7 @@ int build_arch()
     Latch *ALU_output_buffer_out_1 = &latches[45];
     devices.push_back(new Register(*ALU_output_buffer_in_1, *ALU_output_buffer_out_1));
 
-    //adder that computes write data
+    //adder that computes write data to DM
     Latch *ADDER_WD_RD2 = RF_RD2;
     Latch *ADDER_WD_L = IM_L_buffer_out_5;
     Latch *ADDER_WD_WD = &latches[39];
@@ -413,40 +272,40 @@ int build_arch()
     // control array takes whole latches array and takes slices of it based on input output
     devices.push_back(new ControlArray(latches));
 
-    //PC MUX
-    Latch *MUX_PC_inc = &latches[60];
-    Latch *MUX_PC_new = &latches[61];
-    Latch *MUX_PC_same = &latches[62];
-    Latch *MUX_PC_useless = &latches[63];
-    Latch *MUX_PC_c = &latches[170];
-    Latch *MUX_PC_output = IM_PC;
-    devices.push_back(new Multiplexer(*MUX_PC_inc, *MUX_PC_new, *MUX_PC_same, *MUX_PC_useless, *MUX_PC_c, *MUX_PC_output));
+    // //PC MUX
+    // Latch *MUX_PC_inc = &latches[60];
+    // Latch *MUX_PC_new = &latches[61];
+    // Latch *MUX_PC_same = &latches[62];
+    // Latch *MUX_PC_useless = &latches[63];
+    // Latch *MUX_PC_c = &latches[170];
+    // Latch *MUX_PC_output = IM_PC;
+    // devices.push_back(new Multiplexer(*MUX_PC_inc, *MUX_PC_new, *MUX_PC_same, *MUX_PC_useless, *MUX_PC_c, *MUX_PC_output));
 
-    //output of pc mux is buffered for branching
-    Latch *PC_buffer_in_1 = MUX_PC_output;
-    Latch *PC_buffer_out_1 = &latches[161];
-    devices.push_back(new Register(*PC_buffer_in_1, *PC_buffer_out_1));
-    Latch *PC_buffer_in_2 = PC_buffer_out_1;
-    Latch *PC_buffer_out_2 = &latches[154];
-    devices.push_back(new Register(*PC_buffer_in_2, *PC_buffer_out_2));
-    Latch *PC_buffer_in_3 = PC_buffer_out_2;
-    Latch *PC_buffer_out_3 = &latches[155];
-    devices.push_back(new Register(*PC_buffer_in_3, *PC_buffer_out_3));
-    Latch *PC_buffer_in_4 = PC_buffer_out_3;
-    Latch *PC_buffer_out_4 = &latches[156];
-    devices.push_back(new Register(*PC_buffer_in_4, *PC_buffer_out_4));
-    Latch *PC_buffer_in_5 = PC_buffer_out_4;
-    Latch *PC_buffer_out_5 = &latches[157];
-    devices.push_back(new Register(*PC_buffer_in_5, *PC_buffer_out_5));
-    Latch *PC_buffer_in_6 = PC_buffer_out_5;
-    Latch *PC_buffer_out_6 = &latches[158];
-    devices.push_back(new Register(*PC_buffer_in_6, *PC_buffer_out_6));
-    Latch *PC_buffer_in_7 = PC_buffer_out_6;
-    Latch *PC_buffer_out_7 = &latches[159];
-    devices.push_back(new Register(*PC_buffer_in_7, *PC_buffer_out_7));
-    Latch *PC_buffer_in_8 = PC_buffer_out_7;
-    Latch *PC_buffer_out_8 = &latches[160];
-    devices.push_back(new Register(*PC_buffer_in_8, *PC_buffer_out_8));
+    // //output of pc mux is buffered for branching
+    // Latch *PC_buffer_in_1 = MUX_PC_output;
+    // Latch *PC_buffer_out_1 = &latches[161];
+    // devices.push_back(new Register(*PC_buffer_in_1, *PC_buffer_out_1));
+    // Latch *PC_buffer_in_2 = PC_buffer_out_1;
+    // Latch *PC_buffer_out_2 = &latches[154];
+    // devices.push_back(new Register(*PC_buffer_in_2, *PC_buffer_out_2));
+    // Latch *PC_buffer_in_3 = PC_buffer_out_2;
+    // Latch *PC_buffer_out_3 = &latches[155];
+    // devices.push_back(new Register(*PC_buffer_in_3, *PC_buffer_out_3));
+    // Latch *PC_buffer_in_4 = PC_buffer_out_3;
+    // Latch *PC_buffer_out_4 = &latches[156];
+    // devices.push_back(new Register(*PC_buffer_in_4, *PC_buffer_out_4));
+    // Latch *PC_buffer_in_5 = PC_buffer_out_4;
+    // Latch *PC_buffer_out_5 = &latches[157];
+    // devices.push_back(new Register(*PC_buffer_in_5, *PC_buffer_out_5));
+    // Latch *PC_buffer_in_6 = PC_buffer_out_5;
+    // Latch *PC_buffer_out_6 = &latches[158];
+    // devices.push_back(new Register(*PC_buffer_in_6, *PC_buffer_out_6));
+    // Latch *PC_buffer_in_7 = PC_buffer_out_6;
+    // Latch *PC_buffer_out_7 = &latches[159];
+    // devices.push_back(new Register(*PC_buffer_in_7, *PC_buffer_out_7));
+    // Latch *PC_buffer_in_8 = PC_buffer_out_7;
+    // Latch *PC_buffer_out_8 = &latches[160];
+    // devices.push_back(new Register(*PC_buffer_in_8, *PC_buffer_out_8));
 
 
     Latch *DEC_OP = IM_OP;
