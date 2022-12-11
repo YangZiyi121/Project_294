@@ -3,6 +3,7 @@
 #include "Device.h"
 #include "Port.h"
 
+//Control code for PC_new
 //br rd    0b001
 //brr rd   0b010
 //brr L    0b011
@@ -67,6 +68,7 @@ class PC_new : public Device
     long long result;
 };
 
+/*Testing*/
 // int main()
 // {
 //     Latch alu, rd, l, pc, control, output;

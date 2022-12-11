@@ -5,10 +5,10 @@
 #include "Memory.h"
 #include <limits>
 
-extern unsigned storage[SIZE];
+extern unsigned storage[SIZE]; 
 
 //Control signal: read 1 and write 2
-//assume only use the last 16 bits for address
+//Assume only use the last 16 bits for address
 class MemoryData : public Device{
     public:
         //Constructer
@@ -34,7 +34,7 @@ class MemoryData : public Device{
                     std::cout << "The offset is too large" << std::endl;
                     exit(1);
                 }
-                result = 0; //infinite impedance
+                result = 0; //infinite impedance for place holder 
                 std::memcpy(&(storage[address.connection->after]), &write_value.connection->after, sizeof(int64_t));
                 std::cout << "Write: The value "<< std::hex << write_value.connection->after << " is inserted on 0x"<< std::hex << address.connection->after <<std::endl;
             }
