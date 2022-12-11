@@ -34,15 +34,15 @@ public:
     void do_function()
     {
         //these are default cases, they happen with most ALU operations
-        Decoder::result[0] = stoull("00000000000000000", 0, 2);//cy 1
-        Decoder::result[1] = stoull("00000000000000000", 0, 2);//cy 2
-        Decoder::result[2] = stoull("00000000000000000", 0, 2);//cy 3
-        Decoder::result[3] = stoull("00000000000000000", 0, 2);//cy 4
-        Decoder::result[4] = stoull("00000000001000000", 0, 2);//cy 5
-        Decoder::result[5] = stoull("00000000000000000", 0, 2);//cy 6
-        Decoder::result[6] = stoull("00000000000000001", 0, 2);//cy 7
-        Decoder::result[7] = stoull("00110000000000000", 0, 2);//cy 8
-        Decoder::result[8] = stoull("00001100000000000", 0, 2);//cy 9
+        Decoder::result[0] = stoull("00000000000000000", 0, 2);//mux1 cycle
+        Decoder::result[1] = stoull("00000000000000000", 0, 2);//mux2 mux3 cycle
+        Decoder::result[2] = stoull("00000000000000000", 0, 2);//RF cycle
+        Decoder::result[3] = stoull("00000000000000000", 0, 2);//io mux4 cycle 
+        Decoder::result[4] = stoull("00000000001000000", 0, 2);//alu cycle
+        Decoder::result[5] = stoull("00000000000000000", 0, 2);//dm cycle
+        Decoder::result[6] = stoull("00000000000000001", 0, 2);//mux5 cycle
+        Decoder::result[7] = stoull("00110000000000000", 0, 2);//mux2 mux3 WB cycle
+        Decoder::result[8] = stoull("00001100000000000", 0, 2);//RF WB cycle
         Decoder::result[9] =  stoull("00000000000000000", 0, 2);//cy 10
         Decoder::result[10] = stoull("00000000000000000", 0, 2);
         Decoder::result[11] = stoull("00000000000000000", 0, 2);
@@ -63,8 +63,7 @@ public:
             
             break;
 
-        case 0x1: //addi                   
-            Decoder::result[2] = stoull("00000000000000000", 0, 2);//cy 3
+        case 0x1: //addi
             Decoder::result[3] = stoull("00000010000000000", 0, 2);//cy 4
             break;
         case 0x2:
