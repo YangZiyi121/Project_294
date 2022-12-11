@@ -194,7 +194,6 @@ int main()
 }
 
 int build_arch()
-
 {
     //IM component
     Latch *IM_PC = &latches[0];
