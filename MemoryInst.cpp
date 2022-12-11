@@ -59,6 +59,7 @@ class MemoryInst : public Device{
        unsigned instruction;
 };
 
+/*Testing*/
 // int main(){
 //     readfile(1); //load the hello.obj
 //     /*Testing*/
