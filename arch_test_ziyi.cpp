@@ -30,6 +30,8 @@ int build_arch();
 
 int main()
 {
+    //long long signal_default = 0b0_0_0_0_00_0_0000_00_00_00;
+    long long signal_default = 0b00000000000000000;
     
     // std::cout << "past devices" <<std::endl;
     build_arch();
@@ -40,13 +42,36 @@ int main()
     for (int i = 0; i < NUM_LATCHES; i++) 
     {
         latches[i].before = 0;
-    }    
+    } 
+
+    /*addi testing*/
+    // int balance[10] = {0b0_0_0_0_00_0_0000_00_00_00, 0b0_0_0_0_00_0_0000_00_00_00
+    //                 , 0b0_0_0_0_01_0_0000_00_00_00
+    //                 , 0b0_0_0_0_00_1_0000_00_00_00 
+    //                 , 0b0_0_0_0_00_0_0001_00_00_00
+    //                 , 0b0_0_0_0_00_0_0000_00_00_00
+    //                 , 0b0_0_0_0_00_0_0000_00_00_01
+    //                 , 0b0_0_1_1_00_0_0000_00_00_00
+    //                 , 0b0_0_0_0_11_0_0000_00_00_00};
+    int balance[10] = {0b00000000000000000, 0b00000000000000000
+                    , 0b00000100000000000
+                    , 0b00000010000000000 
+                    , 0b00000000001000000
+                    , 0b00000000000000000
+                    , 0b00000000000000001
+                    , 0b00110000000000000
+                    , 0b00001100000000000};
+
+    // for (int i = 0; i < 10; i++){
+    //     latches[80 + i].before = balance[i];
+    // }
+
     //send clock to latches
-    for (int j = 0; j < 8; j++)
+    for (int j = 0; j < 15; j++)
     {
         if(j == 0) // write to R1
         {
-            latches[27].before = 0; //input1 rf
+            latches[27].before = 200; //input1 rf
             latches[22].before = 1; //input2 rf
             latches[74].before = 0b11; //RF control
         }
@@ -56,69 +81,23 @@ int main()
             latches[22].before = 2; //input2 rf
             latches[74].before = 0b11; //RF control
         }
-        if(j == 2) // put stuff after IM
+        if(j == 2) //after IM
         {
-            latches[2].before = 1; //Rs
-            latches[3].before = 0; //Rt
-            latches[4].before = 66; //L
-            latches[5].before = 2; //Rd
-            latches[74].before = 0b00; //RF control
-
+            latches[2].before = 1; //rs
+            latches[4].before = 199; //l
+            latches[5].before = 10; //write to r10 the result
+            latches[74].before = 0b00; //stop rf from writing
         }
-        if(j == 3) // wait 1
+        if(j == 3) //wait
         {
-            latches[2].before = 0; //Rs
-            latches[3].before = 0; //Rt
-            latches[4].before = 0; //L
-            latches[5].before = 0; //Rd
-            latches[74].before = 0b00; //RF control
+            // latches[75].before = 0; //mux4 to 0
         }
-        if(j == 4) // mux1
+        if(j == 4) // put stuff after IM
         {
-            latches[15].before = 1; //pick Rd
-        }
-        if(j == 5) // mux2 mux3
-        {
-            latches[21].before = 0; //mux2 Rs
-            latches[26].before = 0; //mux3 Rt
-        }
-        if(j == 6) // RF
-        {
-            latches[74].before = 0b10; //RF control
-        }
-        if(j == 7) // io
-        {
-            latches[74].before = 0b00; //RF control
-            latches[77].before = 0b01; //control io
-        }
-        if(j == 8) // wait 1
-        {
-            latches[77].before = 0; //control io
-        }
-        if(j == 9) // wait 2
-        {
-                //hi
-        }
-        if(j == 10) // mux5
-        {
-            //std::cout << "time: " << j << " ALU 1: " << latches[45].before << std::endl;
-            latches[47].before = 0b01; //pick alu result
-        }  
-        if(j == 11) // mux5
-        {  
-
-            //std::cout << "time: " << j << " WB 1: " << latches[23].before << std::endl;
-            latches[21].before = 0b01; //mux2 WB
-            latches[26].before = 0b01; //mux3 Rd
-        }
-        if(j == 12) // write
-        {  
-            latches[74].before = 0b11; //RF control
-        }
-        if(j == 13) // read
-        {  
-            latches[27].before = 3; //input1 rf
-            latches[74].before = 0b01; //RF control
+            for (int i = 0; i < 10; i++)
+            {
+                latches[80 + i].before = balance[i];
+            }          
         }
 
         //std::cout << "time: " << j << std::endl;
@@ -313,7 +292,7 @@ int build_arch()
     Latch *IO_RD1 = RF_RD1; //28
     Latch *IO_RD2 = RF_RD2; //29
     Latch *IO_output = &latches[42];
-    Latch *IO_c = &latches[43];
+    Latch *IO_c = &latches[77];
     devices.push_back(new IO(*IO_RD1, *IO_RD2, *IO_c, *IO_output));
 
     //output of adder is buffered multiple time to sync up with other outputs

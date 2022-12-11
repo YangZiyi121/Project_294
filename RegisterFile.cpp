@@ -57,8 +57,10 @@ public:
                 rf[in[1].connection->after] = in[0].connection->after;
                 result[0] = std::numeric_limits<int64_t>::max(); //infinite impedance
                 result[1] = std::numeric_limits<int64_t>::max(); //infinite impedance
+                 std::cout << "Write "<< in[0].connection->after << "to rf "<< in[1].connection->after << std::endl;
                 break;
         }
+        std::cout << "RF10: "<<rf[10]<<std::endl;
     }
 
 

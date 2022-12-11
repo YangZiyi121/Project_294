@@ -10,8 +10,8 @@
 using namespace std;
 const int input_start = 80;
 const int input_end = 100;
-const int output_start = 80;
-const int output_end = 100;
+const int output_start = 70;
+const int output_end = 80;
 
 
 
@@ -43,7 +43,7 @@ public:
 		
 	} // Initialize the input ports and the latch as necessary
 	void receive_clock() {
-        string s = std::bitset<16>(result).to_string();
+        string s = std::bitset<17>(result).to_string();
         cout << s << endl;
 		ControlArray::out[0]->before = convert_bintdec( stoi(s.substr(0, 1)));//PC MUX 1 bit latch70
         ControlArray::out[1]->before = convert_bintdec( stoi(s.substr(1, 1)));//MUX1 1 bit  latch 71
@@ -52,9 +52,9 @@ public:
         ControlArray::out[4]->before = convert_bintdec( stoi(s.substr(4, 2)));//RF 2 bit latch 74
         ControlArray::out[5]->before = convert_bintdec( stoi(s.substr(6, 1)));//MUX4 1 bit latch 75
         ControlArray::out[6]->before = convert_bintdec( stoi(s.substr(7, 4)));//ALU 4 bit latch 76
-        ControlArray::out[7]->before = convert_bintdec( stoi(s.substr(11, 1)));//IO 1 bit latch 77
-        ControlArray::out[8]->before = convert_bintdec( stoi(s.substr(12, 1)));//DM 1 bit latch 78
-        ControlArray::out[9]->before = convert_bintdec( stoi(s.substr(13, 2)));//MUX5 2 bit latch 79
+        ControlArray::out[7]->before = convert_bintdec( stoi(s.substr(11, 2)));//IO 2 bit latch 77
+        ControlArray::out[8]->before = convert_bintdec( stoi(s.substr(13, 2)));//DM 2 bit latch 78
+        ControlArray::out[9]->before = convert_bintdec( stoi(s.substr(15, 2)));//MUX5 2 bit latch 79
 	}
     long long convert_bintdec(long long n) {
         int dec = 0, i = 0, rem;
@@ -98,7 +98,7 @@ public:
         {
             md[y] = q.front();
             q.pop();
-            cout << "i am here "<<md[y] << endl;
+            //cout << "i am here "<<md[y] << endl;
             y = y + 1;
 
         }
