@@ -20,6 +20,7 @@ const void readfile(int file_num){
         case 1: std::cout << "case 1" << std::endl; strcpy(file_name, "tests/hello.obj"); break;
         case 2: strcpy(file_name, "tests/logic.obj"); break;
         case 3: strcpy(file_name, "tests/fact6.obj"); break;
+        case 4: strcpy(file_name, "tests/arithmetic.obj"); break;
         default: strcpy(file_name, "tests/hello.obj");
     }
 
