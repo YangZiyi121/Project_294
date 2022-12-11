@@ -44,7 +44,8 @@ int main()
         latches[i].before = 0;
     } 
 
-    /*addi testing*/
+    /*addi testing (1 cycle to 13 cycle)*/
+
     // int balance[10] = {0b0_0_0_0_00_0_0000_00_00_00, 0b0_0_0_0_00_0_0000_00_00_00
     //                 , 0b0_0_0_0_01_0_0000_00_00_00
     //                 , 0b0_0_0_0_00_1_0000_00_00_00 
@@ -62,12 +63,21 @@ int main()
                     , 0b00110000000000000
                     , 0b00001100000000000};
 
+    /*Out testing  (14 cycles to 19 cycles)*/
+    int balance_out[4] = { 0b01000000000000000
+                    ,0b00000000000000000
+                    , 0b00001000000000000
+                    , 0b00000000000100000 };
+
+
+
     // for (int i = 0; i < 10; i++){
     //     latches[80 + i].before = balance[i];
     // }
 
     //send clock to latches
-    for (int j = 0; j < 15; j++)
+    //after 15 cycles out is executed
+    for (int j = 0; j < 25; j++)
     {
         if(j == 0) // write to R1
         {
@@ -107,26 +117,52 @@ int main()
                 latches[80 + i].before = 0;
             }   
         }
+
+        if(j == 14){
+            latches[2].before = 10; //rs
+            latches[5].before = 2; //rd
+        }
+
+        if(j == 15){
+            latches[2].before = 0; //rs
+            latches[5].before = 0; //rd
+            for (int i = 0; i < 4; i++)
+            {
+                latches[80 + i].before = balance_out[i];
+            }  
+        }
+
+        if(j == 16){
+            for (int i = 0; i < 4; i++)
+            {
+                latches[80 + i].before = 0;
+            }  
+        }
+
+
         cout << "time: " << j << endl;
-        cout << "PCMUX: " << latches[70+0].before << endl; 
-        cout << "MUX1: " << latches[70+1].before << endl; //latch 15
-        cout << "MUX2: " << latches[70+2].before << endl; //latch 21
-        cout << "MUX3: " << latches[70+3].before << endl;
-        cout << "RF: " << latches[70+4].before << endl;
-        cout << "MUX4: " << latches[70+5].before << endl;
-        cout << "ALU: " << latches[70+6].before << endl;
-        cout << "IO: " << latches[70+7].before << endl;
-        cout << "DM: " << latches[70+8].before << endl;
-        cout << "MUX5: " << latches[70+9].before << endl;
-        cout << "output of mux3: " << latches[27].before << endl ;
-        cout << "output of rd buffers: " << latches[12].before << " " << latches[13].before <<" " << latches[53].before <<" " << latches[54].before <<" " << latches[55].before <<" " << latches[56].before <<" " << latches[57].before <<" " << latches[58].before <<" " << latches[59].before << endl ;
-        cout << "output of mux2: " << latches[22].before << endl ;
-        cout << "output of alu: " << latches[36].before << endl << endl;
+        // cout << "PCMUX: " << latches[70+0].before << endl; 
+        // cout << "MUX1: " << latches[70+1].before << endl; //latch 15
+        // cout << "MUX2: " << latches[70+2].before << endl; //latch 21
+        // cout << "MUX3: " << latches[70+3].before << endl;
+        // cout << "RF: " << latches[70+4].before << endl;
+        // cout << "MUX4: " << latches[70+5].before << endl;
+        // cout << "ALU: " << latches[70+6].before << endl;
+        // cout << "IO: " << latches[70+7].before << endl;
+        // cout << "DM: " << latches[70+8].before << endl;
+        // cout << "MUX5: " << latches[70+9].before << endl;
+        // cout << "output of mux3: " << latches[27].before << endl ;
+        // cout << "output of rd buffers: " << latches[12].before << " " << latches[13].before <<" " << latches[53].before <<" " << latches[54].before <<" " << latches[55].before <<" " << latches[56].before <<" " << latches[57].before <<" " << latches[58].before <<" " << latches[59].before << endl ;
+        // cout << "output of mux2: " << latches[22].before << endl ;
+        // cout << "output of alu: " << latches[36].before << endl << endl;
+        //cout << "rd : latch 29 " << latches[29].before << endl << endl;
 
 
         //std::cout << "time: " << j << std::endl;
         //std::cout << "time: " << j << " mux4 L: " << latches[52].before << std::endl;
         //std::cout << "time: " << j << " RF 2: " << latches[22].before << std::endl << std::endl;
+
+
 
         for (int i = 0; i < NUM_LATCHES; i++) 
         {
@@ -301,7 +337,7 @@ int build_arch()
 
     //output of adder is buffered multiple time to sync up with other outputs
     Latch *WD_buffer_in_1 = ADDER_WD_WD;
-    Latch *WD_buffer_out_1 = &latches[77]; //IO 2 bits
+    Latch *WD_buffer_out_1 = &latches[69]; //IO 2 bits
     devices.push_back(new Register(*WD_buffer_in_1, *WD_buffer_out_1));
 
     //DM component
