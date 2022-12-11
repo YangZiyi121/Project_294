@@ -33,4 +33,10 @@ The DM receives an address from the ALU. In case the Controller sends a read con
 
 Finally, whatever is comming from the IO, ALU, or DM, they will be multiplexed by the mux numbered 5 and depending on the control signal one of them is chosen and sent back to the RF to be stored in `Rd` that has been buffering all along the execution.
 
+## Branching Path
+
+<img src="Branching.png" alt="branching illustration" />
+
+The branching path is illustrated in the figure above. Basically, the PC in case of no branching adds up by 4 as the memory is byte addressable and 32 bits are read at once. In case of branching/jumps, the different combinations are handled by the component New PC that receives signals from the IM as immediate through the signal `L` (e.g. instruction `brr L`), the RF as value stored in a register through the signal `RD2` (e.g. instruction `br rd`), or the ALU after some computation (e.g. instruction `brgt rd, rs, rt`).
+
 ## Control Path
