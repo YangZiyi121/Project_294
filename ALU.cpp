@@ -116,7 +116,8 @@ public:
 				break;
 			//TODO: Substruction?
         }
-		//  std::cout << "result of alu: "<<result << std::endl;
+		if(result >0)
+		 std::cout << "result of alu: "<<result << std::endl;
 	}
 
 private:

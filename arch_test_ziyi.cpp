@@ -150,6 +150,7 @@ int main()
         {
             pc++;
             latches[0].before = pc;
+            cout << pc << endl << endl;
         }
         else
         {
@@ -179,7 +180,14 @@ int main()
         //std::cout << "time: " << j << " RF 2: " << latches[22].before << std::endl << std::endl;
 
 
-
+        if(latches[36].before >0)
+        {
+            std::cout << "alu result: "<<latches[36].before << std::endl;
+        }
+        if(latches[45].before >0)
+        {
+            std::cout << "mux5 result: "<<latches[45].before << std::endl;
+        }
         for (int i = 0; i < NUM_LATCHES; i++) 
         {
             latches[i].receive_clock();

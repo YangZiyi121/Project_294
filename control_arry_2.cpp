@@ -109,10 +109,11 @@ public:
         }
         ControlArray::result = removedele;
 
-        // for (int i = 0; i < 20; i++)
-        // {
-        //     cout << "queue "<<i<<" is:" << md[i] << endl;
-        // }
+        for (int i = 0; i < 20; i++)
+        {
+            cout << md[i] << " ";
+        }
+        cout << endl;
         
 	}
 
