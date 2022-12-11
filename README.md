@@ -9,7 +9,7 @@ The architecture is inheredetly similar to the RISC-V architecture. The main sim
 
 The components named in numbers 1 to 4 are muxes. They are assigned these numbers for easiness of tracking in the simulator core. The diamonds are buffering registers used plugged in the data paths to ensure the synchronization of the different operations being executed in the components of the processor.
 
-<img src="chunk1.png" alt="diamonds and numbered components illustration" width="400px" />
+<img src="Figures/chunk1.png" alt="diamonds and numbered components illustration" width="400px" />
 
 As illustrated in the figure above, the component numbered in 1 is a mux that choses between the two inputs `Rt` and `Rd`. The diamonds on the path that connects `Rt` to the mux are registers used to buffer the signal comming from `Rt` for 2 cycles while waiting for the control signal to arrive (the controls will be discussed later).
 
