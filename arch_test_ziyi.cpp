@@ -49,7 +49,7 @@ int main()
     for (int j = 0; j < 500; j++)
     {
         //this simulates the pc counter for now
-        if(j % 20 == 0)
+        if(j % 15 == 0)
         {
             pc++;
             latches[0].before = pc;
