@@ -40,6 +40,12 @@ public:
 	}
 	void do_function()
 	{
+		if((ALU::in[0].connection->after & 0b0000000000000000000000000000000000000000000000000000100000000000) > 0) {
+            ALU::in[0].connection->after = (ALU::in[0].connection->after | 0xFFFFFFFFFFFFF000);
+        }
+        if((ALU::in[1].connection->after & 0b0000000000000000000000000000000000000000000000000000100000000000) > 0) {
+            ALU::in[1].connection->after = (ALU::in[1].connection->after | 0xFFFFFFFFFFFFF000);
+        }
 		switch (ALU::control.connection->after) //The control signal will drive the needed operation on the ALU
         {
             case ADDcode:

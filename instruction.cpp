@@ -15,6 +15,9 @@ const void instruction_decoder(unsigned instr){
     reg_t_code  = instr >> 12 & 0x1f;
     literal = instr & 0xfff;
 
+    if(opcode == 0x1 || opcode == 0x3 || opcode == 0xb || opcode == 0xd) {// magic part
+        reg_s = reg_d;
+    }
     // For Debugging the instruction
     // if(instr != 0)
     // {

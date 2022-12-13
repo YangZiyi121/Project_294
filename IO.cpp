@@ -29,7 +29,7 @@ class IO: public Device{
                 // std::cout << "io type "<<rd.connection -> after << std::endl;
                 switch (rd.connection -> after){
                     
-                    case 0: std::cout << int(rs.connection->after) << std::endl;; break;
+                    case 0: std::cout << int(rs.connection->after) << std::endl; break;
                     case 1: std::cout << char(rs.connection->after); break;
                 }
 

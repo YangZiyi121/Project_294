@@ -53,7 +53,7 @@ int main()
     latches[70].before = 0;//control signal for pc_calc is set to send
     latches[0].before = 0xffffffffffffffff;
 
-    for (int j = 0; j < 500; j++)
+    for (int j = 0;; j++)
     {
         //this simulates the pc counter for now
         // if(j % 15 == 0)
