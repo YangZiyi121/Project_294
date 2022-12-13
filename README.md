@@ -3,7 +3,7 @@ Tinker : CPU simulator
 
 This project implements a C++ simulator based for a CPU called "Tinker". The simulated architecture is as illustrated in the figure below.
 
-<img src="Figures/tinker.png" alt="architecture" />
+<img src="Figures/Tinker1.png" alt="architecture" />
 
 The architecture is inheredetly similar to the RISC-V architecture. The main similarility is based in the central block that is composed an Instruction Memory (IM) that provides the instructions driven by a Program Counter (PC), a Register File (RF) made of 32 64bits-registers, an Arithmetic Logic Unit (ALU) that performs all the arithmetical and the logical operations, and a Data Memory that holds the data in runtime.
 
@@ -22,7 +22,7 @@ The control part in the figure above is used to orchastrate the work of the diff
 In order to run the simulator, the following commands have to be run on a Linux/MacOS system.
 
 ```
-git clone --branch final-beautified https://github.com/YangZiyi121/Project_294.git
+git clone --branch PC_counter https://github.com/YangZiyi121/Project_294.git
 g++ Main.cpp Device.cpp Latch.cpp Port.cpp -o tinker -w
 ./tinker
 ```
@@ -65,9 +65,3 @@ The control path consists of the Decoder, the Controller, and the Split control.
 The control binary word is as follows `[PC_1b, MUX1_1b, MUX_1b, MUX3_1b, RF_2b, MUX4_1b, ALU_4b, IO_2b, DM_2b, MUX5_2b]` where `XX_yb` is seen as the component `XX` and `y` is the number of control bits it receives.
 
 For all the components, the control signals corresponding values are given in the source code files.
-
-## TODO List
-1- only addi and out are fully tested, other instructions are not tested
-2- make branching architecture: right now branching and program counter is not impelemented at all
-3- latency for multiply and division are postponed, they are set to latency 1 for now
-4- only hello world works, test other files at your own peril.
