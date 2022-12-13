@@ -38,6 +38,9 @@ public:
     //Inherit
     void do_function()
     {
+        if(control.connection->after == 0b11 && (in[0].connection->after & 0b0000000000000000000000000000000000000000000000000000100000000000) > 0) {
+            in[0].connection->after = (in[0].connection->after | 0xFFFFFFFFFFFFF000);
+        }
         switch (control.connection->after)
         {
             case 0b00: //NOP
