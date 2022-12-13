@@ -33,8 +33,6 @@ public:
     }
     void do_function()
     {
-
-        // std::cout << "input for decoder: "<<Decoder::in.connection->after << std::endl;
         //these are default cases, they happen with most ALU operations
         Decoder::result[0] = stoull("00000000000000000", 0, 2);//mux1 cycle
         Decoder::result[1] = stoull("00000000000000000", 0, 2);//mux2 mux3 cycle

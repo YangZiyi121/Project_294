@@ -36,7 +36,7 @@ public:
 		{	
 			// std::cout << "PC next is " <<  PC+1<< std::endl;
             PC_calc::result = PC++;
-			control->before = 0;
+			control->before = 0; // this part is magic because it resets its control signal
 			control->after = 0;
 			// cout << endl ;
 		}

@@ -51,7 +51,7 @@ int main()
     latches[1].before = 0xff; //set op code so as to not send 0 instruct
 
     latches[70].before = 0;//control signal for pc_calc is set to send
-    latches[0].before = 0xffffffffffffffff;
+    latches[0].before = 0xffffffffffffffff; //send no instruction for IM
 
     for (int j = 0;; j++)
     {
@@ -65,13 +65,9 @@ int main()
         // {
         //     latches[0].before = 0xffffffffffffffff; //i.e send invalid address to IM to simulate not sending
         // }
-        if(j ==5)
+        if(j ==1)
         {
-            latches[70].before = 1;
-        }
-        if(j ==6)
-        {
-            latches[70].before = 0;
+            latches[70].before = 1; // tell PC_calc to send first instruction
         }
         //call send a clock signal to all latches
         for (int i = 0; i < NUM_LATCHES; i++) 
@@ -325,7 +321,7 @@ int build_arch()
     Latch *DEC_OP = IM_OP;
     devices.push_back(new Decoder(*DEC_OP, latches));
 
-    //adder4 that for next address
+    //PC_calc finds the next address
     Latch *PC_CALC_branch = &latches[61]; // this comes from branch
     Latch *PC_CALC_output = IM_PC;
     Latch *PC_CALC_c = &latches[70];
