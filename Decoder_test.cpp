@@ -33,6 +33,8 @@ public:
     }
     void do_function()
     {
+
+        // std::cout << "input for decoder: "<<Decoder::in.connection->after << std::endl;
         //these are default cases, they happen with most ALU operations
         Decoder::result[0] = stoull("00000000000000000", 0, 2);//mux1 cycle
         Decoder::result[1] = stoull("00000000000000000", 0, 2);//mux2 mux3 cycle
@@ -45,7 +47,8 @@ public:
         Decoder::result[8] = stoull("00001100000000000", 0, 2);//RF WB cycle
         Decoder::result[9] =  stoull("00000000000000000", 0, 2);//cy 10
         Decoder::result[10] = stoull("00000000000000000", 0, 2);
-        Decoder::result[11] = stoull("00000000000000000", 0, 2);
+        // Decoder::result[11] = stoull("00000000000000000", 0, 2);
+        Decoder::result[11] = stoull("10000000000000000", 0, 2);
         Decoder::result[12] = stoull("00000000000000000", 0, 2);
         Decoder::result[13] = stoull("00000000000000000", 0, 2);
         Decoder::result[14] = stoull("00000000000000000", 0, 2);
@@ -191,16 +194,11 @@ public:
             Decoder::result[7] = stoull("00000000000000000", 0, 2);//cy 8
             Decoder::result[8] = stoull("00000000000000000", 0, 2);//cy 9
             Decoder::result[9] = stoull("00000000000000000", 0, 2);//cy 10
-            Decoder::result[10] = stoull("00000000000000000", 0, 2);
-            Decoder::result[11] = stoull("00000000000000000", 0, 2);
-            Decoder::result[12] = stoull("00000000000000000", 0, 2);
-            Decoder::result[13] = stoull("00000000000000000", 0, 2);
-            Decoder::result[14] = stoull("00000000000000000", 0, 2);
-            Decoder::result[15] = stoull("00000000000000000", 0, 2);
-            Decoder::result[16] = stoull("00000000000000000", 0, 2);
-            Decoder::result[17] = stoull("00000000000000000", 0, 2);
-            Decoder::result[18] = stoull("00000000000000000", 0, 2);
-            Decoder::result[19] = stoull("00000000000000000", 0, 2);
+            break;
+        case 0x1f:
+            std::cout << "" <<std::endl; //if this is not here then any output not with endl will be lost
+            std::cout << "halted!" <<std::endl; //if this is not here then any output not with endl will be lost
+            exit(0);
 
             break;
         default:

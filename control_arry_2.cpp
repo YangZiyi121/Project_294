@@ -36,6 +36,7 @@ public:
             ControlArray::out[i - output_start] = &(latches[i]);
         }
 		std::cout << "ControlArray is being created" << std::endl;
+        
 
 		
 	} 
@@ -48,6 +49,7 @@ public:
         /*Output is breaked as a control signals and pass the output to other sub sytems*/
 
         ControlArray::out[0]->before = convert_bintdec(stoi(s.substr(0, 1)));//PC MUX 1 bit latch70
+        // cout << "hello: "<<out[0]->before  << endl;
         ControlArray::out[1]->before = convert_bintdec(stoi(s.substr(1, 1)));//MUX1 1 bit  latch 71
         ControlArray::out[2]->before = convert_bintdec(stoi(s.substr(2, 1)));//MUX2 1 bit latch 72
         ControlArray::out[3]->before = convert_bintdec(stoi(s.substr(3, 1)));//MUX3 1 bit latch 73
@@ -85,14 +87,15 @@ public:
 
         queue< int> q;
 
-        for (int i = 0; i < output_end - output_start; i++) {
-            if (ik == 2) // It indicates, function is called first time.
-                q.push(ControlArray::in[i].connection->after);
-            else // In Next function call, the present input is ORed with Previous input.
+        for (int i = 0; i < input_end - input_start; i++) {
+            //if (ik == 2) // It indicates, function is called first time.
+                //q.push(ControlArray::in[i].connection->after);
+            //else // In Next function call, the present input is ORed with Previous input.
                 q.push(ControlArray::in[i].connection->after | md[i]);
-
+            // cout << in[i].connection->after << " ";
         }
-        ik = ik + 1;
+        // cout << endl ;
+        //ik = ik + 1;
         
         int removedele = q.front();
         q.pop();
@@ -104,11 +107,18 @@ public:
         {
             md[y] = q.front();//storing the queue in array.
             q.pop();
+            
             y = y + 1;
 
         }
         // output
         ControlArray::result = removedele;
+
+        // for (int i = 0; i < 20; i++)
+        // {
+        //     cout << md[i] << " ";
+        // }
+        // cout << endl ;
 	}
 
 private:

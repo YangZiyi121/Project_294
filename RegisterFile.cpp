@@ -53,6 +53,7 @@ public:
                 result[1] = rf[in[1].connection->after];
                 break;
             case 0b11: //One write
+                // std::cout << "writing "<< in[0].connection->after << " to R" << in[1].connection->after << std::endl;
                 rf[in[1].connection->after] = in[0].connection->after;
                 result[0] = 0;
                 result[1] = 0;

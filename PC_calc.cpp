@@ -4,35 +4,49 @@
 #include "Port.h"
 
 
-class Adder4 : public Device {
+class PC_calc : public Device {
 public:
 	// static const int cycles = 1;
 	// static const int area = 100;
 	// static const double power = 0.1;
 
 	//Constructor
-	Adder4(Latch &input1, Latch &output)
+	PC_calc(Latch &input1, Latch &output, Latch &c)
 	{
-		Adder4::in.connection = &input1;
-		Adder4::out = &output;
-
-		std::cout << "Adder4 is being created" << std::endl;
+		PC_calc::in.connection = &input1;
+		PC_calc::out = &output;
+        PC_calc::control = &c;
+		std::cout << "PC_calc is being created" << std::endl;
 
 	} // Initialize the input ports and the latch as necessary
 
 	void receive_clock() 
     { 
-        Adder4::out->before = Adder4::result; 
+        PC_calc::out->before = PC_calc::result; 
     }
 
 	void do_function()
 	{
-		Adder4::result = Adder4::in.connection->after + 1; // for now it is 1
+        
+		// std::cout << "PC control is " <<  control->after<< std::endl;
+        long long z = PC_calc::control->after;
+        if(z == 0)
+		    PC_calc::result = 0xffffffffffffffff; // send a bogus address to notify IM not to execute
+        else if (z == 1)
+		{	
+			// std::cout << "PC next is " <<  PC+1<< std::endl;
+            PC_calc::result = PC++;
+			control->before = 0;
+			control->after = 0;
+			// cout << endl ;
+		}
 	}
 
 private:
 	Port in;
 	Latch *out;
+    Latch *control;
+    long long PC;
 	long long result;
 };
 

@@ -41,6 +41,10 @@ class MemoryInst : public Device{
             {
                 opResult = 0xff;
             }
+            else
+            {
+                // std::cout<< "instruction: "<< opResult<< std::endl;
+            }
         }
         void receive_clock(){
             op->before = opResult;

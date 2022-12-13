@@ -26,7 +26,9 @@ class IO: public Device{
             }
             else if (control.connection->after == 2){
                 result = 0; //for default setting of outputing
+                // std::cout << "io type "<<rd.connection -> after << std::endl;
                 switch (rd.connection -> after){
+                    
                     case 0: std::cout << int(rs.connection->after) << std::endl;; break;
                     case 1: std::cout << char(rs.connection->after); break;
                 }

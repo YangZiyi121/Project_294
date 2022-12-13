@@ -4,6 +4,7 @@
 #include "Port.h"
 #include "Logic.cpp"
 #include "Adder.cpp"
+#include "Adder4.cpp"
 #include "RegisterFile.cpp"
 #include <bitset>
 #include <vector>
@@ -15,6 +16,7 @@
 #include "IO.cpp"
 #include "control_arry_2.cpp"
 #include "Decoder_test.cpp"
+#include "PC_calc.cpp"
 
 int const NUM_LATCHES = 200; // not a real 
 Latch latches[NUM_LATCHES]; // 80-100 for input of control array
@@ -28,9 +30,13 @@ int build_arch();
 int main()
 {
 
+    int file_number;
+    std::cout << "Please enter the program you want to execute. 1 for helloworld, 2 for logic, 3 for fact6, 4 for arithmetic" << std::endl;
+    std::cin >> file_number;
+    /*load instructions to storage*/
+    readfile(file_number); //load the file
 
     /*load instructions to storage*/
-    readfile(1); //load the hello.obj
 
 
     // builds the architecture
@@ -44,21 +50,29 @@ int main()
 
     latches[1].before = 0xff; //set op code so as to not send 0 instruct
 
-    long long pc = -1; //pc starts from -1 as we have no implemented counter yet
+    latches[70].before = 0;//control signal for pc_calc is set to send
+    latches[0].before = 0xffffffffffffffff;
 
     for (int j = 0; j < 500; j++)
     {
         //this simulates the pc counter for now
-        if(j % 15 == 0)
+        // if(j % 15 == 0)
+        // {
+        //     pc++;
+        //     latches[0].before = pc;
+        // }
+        // else
+        // {
+        //     latches[0].before = 0xffffffffffffffff; //i.e send invalid address to IM to simulate not sending
+        // }
+        if(j ==5)
         {
-            pc++;
-            latches[0].before = pc;
+            latches[70].before = 1;
         }
-        else
+        if(j ==6)
         {
-            latches[0].before = 0xffffffffffffffff; //i.e send invalid address to IM to simulate not sending
+            latches[70].before = 0;
         }
-
         //call send a clock signal to all latches
         for (int i = 0; i < NUM_LATCHES; i++) 
         {
@@ -272,14 +286,14 @@ int build_arch()
     // control array takes whole latches array and takes slices of it based on input output
     devices.push_back(new ControlArray(latches));
 
-    // //PC MUX
+    //PC MUX
+    // Latch *MUX_PC_same = IM_PC;
     // Latch *MUX_PC_inc = &latches[60];
     // Latch *MUX_PC_new = &latches[61];
-    // Latch *MUX_PC_same = &latches[62];
     // Latch *MUX_PC_useless = &latches[63];
     // Latch *MUX_PC_c = &latches[170];
     // Latch *MUX_PC_output = IM_PC;
-    // devices.push_back(new Multiplexer(*MUX_PC_inc, *MUX_PC_new, *MUX_PC_same, *MUX_PC_useless, *MUX_PC_c, *MUX_PC_output));
+    // devices.push_back(new Multiplexer(*MUX_PC_same, *MUX_PC_inc, *MUX_PC_new, *MUX_PC_useless, *MUX_PC_c, *MUX_PC_output));
 
     // //output of pc mux is buffered for branching
     // Latch *PC_buffer_in_1 = MUX_PC_output;
@@ -311,10 +325,11 @@ int build_arch()
     Latch *DEC_OP = IM_OP;
     devices.push_back(new Decoder(*DEC_OP, latches));
 
-//     //adder4 that for next address
-//     Latch *ADDER_PC = MUX_PC_output;
-//     Latch *ADDER_PC_inc = MUX_PC_inc;
-//     devices.push_back(new Adder4(*ADDER_PC, *ADDER_PC_inc));
+    //adder4 that for next address
+    Latch *PC_CALC_branch = &latches[61]; // this comes from branch
+    Latch *PC_CALC_output = IM_PC;
+    Latch *PC_CALC_c = &latches[70];
+    devices.push_back(new PC_calc(*PC_CALC_branch, *PC_CALC_output, *PC_CALC_c));
 
 //     //PC_new for branch instructions
 //     Latch *PC_NEW_ALU = ALU_output;
