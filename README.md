@@ -21,11 +21,13 @@ The control part in the figure above is used to orchastrate the work of the diff
 
 In order to run the simulator, the following commands have to be run on a Linux/MacOS system.
 
-'''
+' ' '
+
 git clone --branch final-beautified https://github.com/YangZiyi121/Project_294.git
 g++ Main.cpp Device.cpp Latch.cpp Port.cpp -o tinker -w
 ./tinker
-'''
+
+' ' '
 
 ## Data Path
 
